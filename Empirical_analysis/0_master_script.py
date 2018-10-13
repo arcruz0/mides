@@ -22,7 +22,7 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
 
 3)  Objective: Generar dos archivos (hogares y personas) con datos mínimos de las
                visitas y datos completos de AFAM
-    Code:      Code\3_visitas_AFAM.do
+    Code:      Code\3_visitas_AFAM
     Input:     Output\visitas_hogares_vars.csv
                Output\visitas_personas_vars.csv
                Input\AFAM_enmascarado (todas las 13 carpetas)

@@ -75,24 +75,49 @@ forvalues i = 1/129 {
 		}
 }
 
+* Hay muchos períodos para los cuales no hay datos de TUS por lo que directamente elimino estas variables
+* Períodos sin datos: 
+* 2009: 1, 2, 3, 4, 5, 6, 7, 9, 10, 11 	(períodos 13, 14, 15, 16, 17, 18, 19, 21, 22, 23)
+* 2010: 1, 5, 7 						(períodos 25, 29, 31)
+* 2012: 11								(períodos 59)
+* 2013: 2, 4, 12						(períodos 62, 64, 72)
+
+* Períodos que elimino provisoriamente: 
+* 2009: 8								(periodos 20)
+* 2012: 1, 2, 3							(49, 50, 51)
+
+foreach val in 13 14 15 16 17 18 19 21 22 23 25 29 31 59 62 64 72 20 49 50 51 {
+	foreach var in $vars_tus {
+		drop `var'`val'
+}
+}
+
+* Armo la base TUS con una fila por numero de documento
 collapse (mean) menores_carga* monto_carga* carga_mides* carga_inda* tusDoble* cobraTus*, by(nrodocumento)
 drop menores_carga monto_carga carga_mides carga_inda tusDoble cobraTus
 save tus_para_merge.dta, replace
 
 *** Load base personas
 import delimited ..\Output\visitas_personas_vars.csv, clear
-keep flowcorrelativeid nrodocumento fechanacimiento fechavisita icc periodo year month
+keep flowcorrelativeid nrodocumento fechanacimiento fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam
 
 * Merge base personas con datos de TUS
 merge m:1 nrodocumento using tus_para_merge, keep(master matched)
 drop _merge
+
+* Cambio missing por zeros de datos merged desde TUS
+forvalues i = 1/129 {
+	foreach var in $vars_tus {
+			cap replace `var'`i' = 0 if `var'`i' ==.
+}
+}
 
 * Genero 51 variables por variable: osea 51 variables del tipo monto_carga según el período
 forvalues i = 1/24 {
 	foreach var in $vars_tus {
 		generate mas`var'`i'=.
 			forvalues j = 1/129 { 
-				replace mas`var'`i' = `var'`j' if periodo == `j' - `i'
+				cap replace mas`var'`i' = `var'`j' if periodo == `j' - `i'
 		}
 		}
 }
@@ -101,7 +126,7 @@ forvalues i = 1/24 {
 	foreach var in $vars_tus {
 		generate menos`var'`i'=.
 			forvalues j = 1/129 { 
-				replace menos`var'`i' = `var'`j' if periodo == `j' + `i'
+				cap replace menos`var'`i' = `var'`j' if periodo == `j' + `i'
 		}
 		}
 }
@@ -109,7 +134,7 @@ forvalues i = 1/24 {
 foreach var in $vars_tus {
 	generate zero`var'=.
 		forvalues j = 1/129 { 
-				replace zero`var' = `var'`j' if periodo == `j'
+				cap replace zero`var' = `var'`j' if periodo == `j'
 }
 }
 
