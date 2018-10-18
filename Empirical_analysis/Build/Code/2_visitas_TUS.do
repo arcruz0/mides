@@ -99,7 +99,7 @@ save tus_para_merge.dta, replace
 
 *** Load base personas
 import delimited ..\Output\visitas_personas_vars.csv, clear
-keep flowcorrelativeid nrodocumento fechanacimiento fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam
+keep flowcorrelativeid nrodocumento fechanacimiento fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam edad_visita asiste
 
 * Merge base personas con datos de TUS
 merge m:1 nrodocumento using tus_para_merge, keep(master matched)
@@ -138,10 +138,18 @@ foreach var in $vars_tus {
 }
 }
 
-* Elimino todas las variables por período
-drop menores_carga* monto_carga* carga_mides* carga_inda* tusDoble* cobraTus*
+* Elimino todas las variables por período excepto aquellas del año 2012, 2013, 2015, 2016
+forvalues i = 1/48 {
+cap drop menores_carga`i' monto_carga`i' carga_mides`i' carga_inda`i' tusDoble`i' cobraTus`i'
+}
+forvalues i = 73/84 {
+cap drop menores_carga`i' monto_carga`i' carga_mides`i' carga_inda`i' tusDoble`i' cobraTus`i'
+}
+forvalues i = 109/129 {
+cap drop menores_carga`i' monto_carga`i' carga_mides`i' carga_inda`i' tusDoble`i' cobraTus`i'
+}
 
-* Genero variables a nivel de hogar
+* Genero variables a nivel de hogar medidas como +- fecha de visita
 forvalues i = 1/24 {
 	foreach var in $vars_tus {
 		egen hogarMenos`var'`i' = max(menos`var'`i'), by(flowcorrelativeid)
@@ -151,6 +159,21 @@ forvalues i = 1/24 {
 
 foreach var in $vars_tus {
 		egen hogarZero`var' = max(zero`var'), by(flowcorrelativeid)
+}
+
+* Genero variables a nivel de hogar medidas según el período solamente para el 2012, 2013, 2015, 2016
+forvalues i = 49/72 {
+	foreach var in $vars_tus {
+		cap egen hogar`var'`i' = max(`var'`i'), by(flowcorrelativeid)
+		cap egen hogar`var'`i' = max(`var'`i'), by(flowcorrelativeid)
+}
+}
+
+forvalues i = 85/108 {
+	foreach var in $vars_tus {
+		cap egen hogar`var'`i' = max(`var'`i'), by(flowcorrelativeid)
+		cap egen hogar`var'`i' = max(`var'`i'), by(flowcorrelativeid)
+}
 }
 
 * Guardo base personas en csv para exportar

@@ -32,6 +32,13 @@ destring month, replace
 drop fecha_string
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
 
+* Generar variables a nivel de hogar
+global varsIng ingtotalessintransferencias ingafam ingafamotro ingjubypendiscapacidad ingjubypeninvalidez ingjubypenasistenciavejez ingjubypencajabancaria ingjubypencajaprofesional ingjubypencajanotarial ingjubypencajamilitar ingjubypencajapolicial ingotrosbeneficios ingtarjetaalimentaria
+
+foreach var in $varsIng {
+egen hog`var'= total(`var'), by(flowcorrelativeid)
+}
+
 * Merge con datos de hogares que sí o sí quiero tengo base de personas
 merge m:1 flowcorrelativeid using visitas_hogares_vars, keep (master matched) keepusing(umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam)
 drop _merge

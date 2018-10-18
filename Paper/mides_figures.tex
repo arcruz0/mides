@@ -1,0 +1,1093 @@
+\documentclass[12pt]{article}
+\usepackage{float}			% It allows [H]
+\usepackage{amstext}
+\usepackage{footnote}
+\usepackage[skip=0pt]{caption}
+\usepackage{lscape}		% Allows \begin{landscape} to rotate page
+\usepackage{longtable} 
+\usepackage{subfig}
+\usepackage{natbib}				% Allows citations to show as Author-year (instead of just a number)
+\usepackage{amsmath}			% Allows mathematical things such as \begin{equation}
+\usepackage{amsthm}				% Allows \theoremstyle{style} and \begin{proof}
+%\usepackage[dvips]{graphicx}	% Allows \includegraphics[key=value, . . . ]{file}. If this is active, Tikz package doesn't work!!!
+\usepackage{amssymb} 			% Allows command \mathbb
+%\usepackage{chicago}			% Needed for chicago-style of bibliography
+\usepackage{amsfonts} 			% I believe it allows \mathcal
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}	% Required to read tables generated in patex with pandas to_latex
+\usepackage[left=3cm,top=2cm,right=3cm,bottom=2cm]{geometry}
+\usepackage{graphicx}  % I think it allows \graphicspath
+\title{MIDES: tables and figures}
+\author{Alejandro Lagomarsino \& Lihuen Nocetto}
+\date{October 15, 2018}
+
+\linespread{1.3}										% This puts one and a half inter-line spacing (put 1.6 if I want double line spacing)
+\setlength{\parindent}{0pt}								% Sets no indentation of paragraphs
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}		% Sets space before and after paragraphs
+\addtolength{\textwidth}{4cm} 							% Permite x centrimetros más de texto hacia la derecha
+\addtolength{\hoffset}{-2cm}							% Mueve todo el texto x centrímetros hacia la derecha (hacia la izq si hay -x)
+
+%\usepackage[pdftex]{hyperref}	% It has to be last package in the preamble and it turns all internal references of your document into hyperlinks
+
+
+\graphicspath{ {../Empirical_analysis/Analysis/Output/} }	% Sets folder for \includegraphics
+
+\begin{document}
+
+\maketitle	
+
+\section{Summary statistics}
+\begin{figure}[H]
+\caption{Regarding sample size}
+\input{../Empirical_analysis/Analysis/Output/summStats1.tex}
+\centering
+\label{fig:summStats1}
+\end{figure}
+
+\begin{figure}[H]
+	\caption{Regarding the transfer}
+	\input{../Empirical_analysis/Analysis/Output/summStats2.tex}
+	\centering
+	\label{fig:summStats2}
+\end{figure}
+\section{First stage for all the years}
+
+\subsection{For those initially not receiving TUS}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_noTus_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_noTus_tus24} }}%
+	\label{fig:first_stage_noTus_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_noTus_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_noTus_tus18} }}%
+	\label{fig:first_stage_noTus_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_noTus_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_noTus_tus12} }}%
+	\label{fig:first_stage_noTus_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_noTus_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_noTus_tus9} }}%
+	\label{fig:first_stage_noTus_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_noTus_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_noTus_tus6} }}%
+	\label{fig:first_stage_noTus_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_noTus_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_noTus_tus3} }}%
+	\label{fig:first_stage_noTus_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_noTus_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_noTus_tus1} }}%
+	\label{fig:first_stage_noTus_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\subsection{For those initially receiving only 1 TUS}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si1Tus_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si1Tus_tus24} }}%
+	\label{fig:first_stage_si1Tus_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si1Tus_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si1Tus_tus18} }}%
+	\label{fig:first_stage_si1Tus_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si1Tus_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si1Tus_tus12} }}%
+	\label{fig:first_stage_si1Tus_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si1Tus_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si1Tus_tus9} }}%
+	\label{fig:first_stage_si1Tus_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si1Tus_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si1Tus_tus6} }}%
+	\label{fig:first_stage_si1Tus_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si1Tus_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si1Tus_tus3} }}%
+	\label{fig:first_stage_si1Tus_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit for those not initially receiving TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si1Tus_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si1Tus_tus1} }}%
+	\label{fig:first_stage_si1Tus_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\subsection{For those initially receiving 2 TUS}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit for those initially receiving 2 TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si2Tus_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si2Tus_tus24} }}%
+	\label{fig:first_stage_si2Tus_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit for those initially receiving 2 TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si2Tus_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si2Tus_tus18} }}%
+	\label{fig:first_stage_si2Tus_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit for those initially receiving 2 TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si2Tus_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si2Tus_tus12} }}%
+	\label{fig:first_stage_si2Tus_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit for those initially receiving 2 TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si2Tus_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si2Tus_tus9} }}%
+	\label{fig:first_stage_si2Tus_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit for those initially receiving 2 TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si2Tus_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si2Tus_tus6} }}%
+	\label{fig:first_stage_si2Tus_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit for those initially receiving 2 TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si2Tus_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si2Tus_tus3} }}%
+	\label{fig:first_stage_si2Tus_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit for those initially receiving 2 TUS}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_si2Tus_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_si2Tus_tus1} }}%
+	\label{fig:first_stage_si2Tus_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\section{First stage by year of visit}
+
+\subsection{2010}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2010_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2010_tus24} }}%
+	\label{fig:first_stage_2010_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2010_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2010_tus18} }}%
+	\label{fig:first_stage_2010_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2010_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2010_tus12} }}%
+	\label{fig:first_stage_2010_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2010_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2010_tus9} }}%
+	\label{fig:first_stage_2010_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2010_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2010_tus6} }}%
+	\label{fig:first_stage_2010_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2010_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2010_tus3} }}%
+	\label{fig:first_stage_2010_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2010_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2010_tus1} }}%
+	\label{fig:first_stage_2010_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\subsection{2011}
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2011_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2011_tus24} }}%
+	\label{fig:first_stage_2011_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2011_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2011_tus18} }}%
+	\label{fig:first_stage_2011_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2011_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2011_tus12} }}%
+	\label{fig:first_stage_2011_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2011_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2011_tus9} }}%
+	\label{fig:first_stage_2011_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2011_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2011_tus6} }}%
+	\label{fig:first_stage_2011_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2011_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2011_tus3} }}%
+	\label{fig:first_stage_2011_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2011_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2011_tus1} }}%
+	\label{fig:first_stage_2011_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\subsection{2012}
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2012_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2012_tus24} }}%
+	\label{fig:first_stage_2012_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2012_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2012_tus18} }}%
+	\label{fig:first_stage_2012_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2012_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2012_tus12} }}%
+	\label{fig:first_stage_2012_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2012_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2012_tus9} }}%
+	\label{fig:first_stage_2012_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2012_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2012_tus6} }}%
+	\label{fig:first_stage_2012_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2012_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2012_tus3} }}%
+	\label{fig:first_stage_2012_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2012_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2012_tus1} }}%
+	\label{fig:first_stage_2012_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\subsection{2013}
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2013_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2013_tus24} }}%
+	\label{fig:first_stage_2013_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2013_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2013_tus18} }}%
+	\label{fig:first_stage_2013_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2013_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2013_tus12} }}%
+	\label{fig:first_stage_2013_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2013_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2013_tus9} }}%
+	\label{fig:first_stage_2013_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2013_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2013_tus6} }}%
+	\label{fig:first_stage_2013_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2013_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2013_tus3} }}%
+	\label{fig:first_stage_2013_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2013_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2013_tus1} }}%
+	\label{fig:first_stage_2013_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\subsection{2014}
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2014_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2014_tus24} }}%
+	\label{fig:first_stage_2014_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2014_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2014_tus18} }}%
+	\label{fig:first_stage_2014_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2014_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2014_tus12} }}%
+	\label{fig:first_stage_2014_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2014_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2014_tus9} }}%
+	\label{fig:first_stage_2014_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2014_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2014_tus6} }}%
+	\label{fig:first_stage_2014_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2014_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2014_tus3} }}%
+	\label{fig:first_stage_2014_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2014_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2014_tus1} }}%
+	\label{fig:first_stage_2014_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\subsection{2015}
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2015_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2015_tus24} }}%
+	\label{fig:first_stage_2015_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2015_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2015_tus18} }}%
+	\label{fig:first_stage_2015_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2015_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2015_tus12} }}%
+	\label{fig:first_stage_2015_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2015_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2015_tus9} }}%
+	\label{fig:first_stage_2015_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2015_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2015_tus6} }}%
+	\label{fig:first_stage_2015_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2015_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2015_tus3} }}%
+	\label{fig:first_stage_2015_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2015_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2015_tus1} }}%
+	\label{fig:first_stage_2015_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\subsection{2016}
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2016_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2016_tus24} }}%
+	\label{fig:first_stage_2016_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2016_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2016_tus18} }}%
+	\label{fig:first_stage_2016_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2016_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2016_tus12} }}%
+	\label{fig:first_stage_2016_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2016_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2016_tus9} }}%
+	\label{fig:first_stage_2016_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2016_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2016_tus6} }}%
+	\label{fig:first_stage_2016_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2016_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2016_tus3} }}%
+	\label{fig:first_stage_2016_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2016_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2016_tus1} }}%
+	\label{fig:first_stage_2016_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\subsection{2017}
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2017_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2017_tus24} }}%
+	\label{fig:first_stage_2017_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2017_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2017_tus18} }}%
+	\label{fig:first_stage_2017_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2017_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2017_tus12} }}%
+	\label{fig:first_stage_2017_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2017_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2017_tus9} }}%
+	\label{fig:first_stage_2017_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2017_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2017_tus6} }}%
+	\label{fig:first_stage_2017_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2017_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2017_tus3} }}%
+	\label{fig:first_stage_2017_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2017_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2017_tus1} }}%
+	\label{fig:first_stage_2017_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\subsection{2018}
+\begin{figure}[H]%
+	\caption{Number of TUS 24 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2018_tus24} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2018_tus24} }}%
+	\label{fig:first_stage_2018_tus24}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 18 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2018_tus18} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2018_tus18} }}%
+	\label{fig:first_stage_2018_tus18}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 12 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2018_tus12} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2018_tus12} }}%
+	\label{fig:first_stage_2018_tus12}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 9 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2018_tus9} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2018_tus9} }}%
+	\label{fig:first_stage_2018_tus9}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 6 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2018_tus6} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2018_tus6} }}%
+	\label{fig:first_stage_2018_tus6}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 3 months after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2018_tus3} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2018_tus3} }}%
+	\label{fig:first_stage_2018_tus3}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\begin{figure}[H]%
+	\caption{Number of TUS 1 month after the visit}%
+	\centering
+	\caption*{ {Montevideo}}
+	\subfloat{{\includegraphics[width=12cm]{mdeo_2018_tus1} }}%
+	\qquad
+	\caption*{Interior}
+	\subfloat{{\includegraphics[width=12cm]{int_2018_tus1} }}%
+	\label{fig:first_stage_2018_tus1}%
+	\caption*{ {\footnotesize Notes: .}}
+\end{figure}
+
+\section{Ideas brainstorming}
+Ver en la frontera de Mdeo y notar que ICC es el mismo pero umbrales de corte distinto por lo que tenes gente con mismo ICC pero que de un lado de la frontera le corresponde TUS, y del otro no.
+
+Ver lo de si es mejor haber amado y perdido que nunca hacer amado: ver aquellos que fueron visitados dos veces y hacer mathced pairs y agarrar luego solo los pares que tengan uno que haya perdido la transferenca en la visita y el otro par q no haya sido visitado. Ver como probar que algo asi hace que elijas dos con ex-ante y ex-post idem probabilidad de perder la transferencia si se la dan.
+
+Ver reported AFAM vs true AFAM que recibe la gente como medida de cuánto mienten. Si hay loss aversion, gente con TUS debería mentir más.
+
+Quiza para ver lo de ``It's better to have loved and lost than never to have loved at all'' considerar primero aquellas personas con ICC en 2011 muy bajo que no ameritaban TUS pero instrumentar si lo recibieron con el asistente o supervisor que les tocó en ese período. Luego, instrumentar si lo perdieron en la segunda visita con el ICC de la primer visita. Otra forma es correr una regresion con lostandgain y nevergained como regressores y como instrumentos usar ICC de primer visita y asisten y supervisor de segunda visita.
+
+\bibliographystyle{plainnat}
+\bibliography{mides}
+
+\end{document}

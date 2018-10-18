@@ -11,7 +11,7 @@ from copy import deepcopy
 
 os.chdir('C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Temp') # Set current directory
 
-# Move files from Build/Output to Analysis/Input
-shutil.rmtree("../Input", ignore_errors= True)
-shutil.copytree("../../Build/Output", "../Input", symlinks=False, ignore=None)
+# Move files from Build/Output to Analysis/Input/MIDES
+shutil.rmtree("../Input/MIDES", ignore_errors= True)
+shutil.copytree("../../Build/Output", "../Input/MIDES", symlinks=False, ignore=None)
 

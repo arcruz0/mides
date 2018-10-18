@@ -17,7 +17,7 @@ save suspendidos_para_merge.dta, replace
 
 *** Merge datos PP y Suspendidos con base personas
 import delimited ..\Output\visitas_personas_vars.csv, clear
-keep flowcorrelativeid nrodocumento fechanacimiento fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam
+keep flowcorrelativeid nrodocumento fechanacimiento fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam edad_visita asiste
 
 merge m:1 nrodocumento using pp_para_merge, keep (master matched)
 drop _merge

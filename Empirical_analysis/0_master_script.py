@@ -109,13 +109,20 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
 
 4)  Objective: Mirar second stage de impacto TUS en variables de base visitas 
                (para hogares revistados censalmenete).
-    Code:      Code\4_tus_vars_revistadas.py
+    Code:      Code\4_tus_vars_revistadas.do
     Input:     Input\visitas_hogares_TUS.csv
                Input\visitas_personas_TUS.csv
                Input\visitas_hogares_vars.csv
                Input\visitas_personas_vars.csv
-    Output:              
+    Output:  
+            
+5)  Objective: Armar basic summary statstics.
+    Code:      Code\5_summary_stats.py
+    Input:     Input\visitas_hogares_otras_vars.csv
+               Input\visitas_personas_otras_vars.csv
+               Input\visitas_hogares_vars.csv
+               Input\visitas_personas_vars.csv
+    Output: 
         
 '''
 
-as
