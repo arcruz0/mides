@@ -5,6 +5,8 @@ cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
 
 *** Macros
 global vars_tus menores_carga monto_carga carga_mides carga_inda tusDoble cobraTus
+global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam departamento localidad template
+
 
 *** Load base TUS
 import delimited ..\Input\TUS_Muestra_enmascarado.csv, clear
@@ -99,7 +101,7 @@ save tus_para_merge.dta, replace
 
 *** Load base personas
 import delimited ..\Output\visitas_personas_vars.csv, clear
-keep flowcorrelativeid nrodocumento fechanacimiento fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam edad_visita asiste
+keep $varsKeep nrodocumento
 
 * Merge base personas con datos de TUS
 merge m:1 nrodocumento using tus_para_merge, keep(master matched)
@@ -138,14 +140,11 @@ foreach var in $vars_tus {
 }
 }
 
-* Elimino todas las variables por período excepto aquellas del año 2012, 2013, 2015, 2016
+* Elimino todas las variables por período excepto aquellas del año 2012, 2013, 2014, 2015, 2016, 2017
 forvalues i = 1/48 {
 cap drop menores_carga`i' monto_carga`i' carga_mides`i' carga_inda`i' tusDoble`i' cobraTus`i'
 }
-forvalues i = 73/84 {
-cap drop menores_carga`i' monto_carga`i' carga_mides`i' carga_inda`i' tusDoble`i' cobraTus`i'
-}
-forvalues i = 109/129 {
+forvalues i = 121/129 {
 cap drop menores_carga`i' monto_carga`i' carga_mides`i' carga_inda`i' tusDoble`i' cobraTus`i'
 }
 
@@ -161,15 +160,8 @@ foreach var in $vars_tus {
 		egen hogarZero`var' = max(zero`var'), by(flowcorrelativeid)
 }
 
-* Genero variables a nivel de hogar medidas según el período solamente para el 2012, 2013, 2015, 2016
-forvalues i = 49/72 {
-	foreach var in $vars_tus {
-		cap egen hogar`var'`i' = max(`var'`i'), by(flowcorrelativeid)
-		cap egen hogar`var'`i' = max(`var'`i'), by(flowcorrelativeid)
-}
-}
-
-forvalues i = 85/108 {
+* Genero variables a nivel de hogar medidas según el período solamente para el 2012, 2013, 2014, 2015, 2016, 2017
+forvalues i = 49/120 {
 	foreach var in $vars_tus {
 		cap egen hogar`var'`i' = max(`var'`i'), by(flowcorrelativeid)
 		cap egen hogar`var'`i' = max(`var'`i'), by(flowcorrelativeid)
@@ -185,18 +177,11 @@ save personas_para_merge.dta, replace
 
 *** Load base hogares
 import delimited ..\Output\visitas_hogares_vars.csv, clear
-keep flowcorrelativeid fechavisita year month periodo icc umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam
+keep $varsKeep
 
 * Paso datos de TUS de base personas a Hogares
 merge 1:1 flowcorrelativeid using personas_para_merge, keep(master matched) keepusing(hogar*)
 drop _merge
-
-* Cambio missing por zeros cuando corresponda
-forvalues i = 1/24 {
-	replace hogarMenoscobraTus`i' = 0 if hogarMenoscobraTus`i'==.
-	replace hogarMascobraTus`i' = 0 if hogarMascobraTus`i'==.
-	replace hogarZerocobraTus = 0 if hogarZerocobraTus==.
-}
 
 * Guardo base hogares en csv para exportar
 export delimited using ..\Output\visitas_hogares_TUS.csv, replace

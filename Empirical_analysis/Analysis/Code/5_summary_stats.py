@@ -252,9 +252,9 @@ for yr in [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]:
     summStats3.at['Number of recorr.tipo houeshold-visits', str(yr)] = dfH[(dfH['year']==yr) & (dfH['template']=='Visita por CI')]['flowcorrelativeid'].size 
     summStats3.at['Meses promedio en crítica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].mean()
     summStats3.at['Meses mediana en crítica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].median()
-    summStats3.at['Meses max en crítica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].max()
-    summStats3.at['Meses min en crítica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].min()
-    summStats3.at['Meses SD en crítica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].std()
+    summStats3.at['Meses max en critica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].max()
+    summStats3.at['Meses min en critica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].min()
+    summStats3.at['Meses SD en critica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].std()
 
 with open('../Output/summStats3.tex','w') as tf:
     tf.write(summStats3.to_latex(bold_rows=True, longtable=True))

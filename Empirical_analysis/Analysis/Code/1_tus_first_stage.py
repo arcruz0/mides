@@ -14,7 +14,7 @@ from copy import deepcopy
 # Umbral TUS duplicado:     .7568     (Mdeo) y .81       (Interior)
 
 os.chdir('C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Temp') # Set current directory
-df=pd.read_csv('../Input/visitas_hogares_TUS.csv')
+df=pd.read_csv('../Input/MIDES/visitas_hogares_TUS.csv')
 
 
 ### Macros

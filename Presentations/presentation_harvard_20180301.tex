@@ -1,0 +1,249 @@
+\documentclass{beamer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usetheme{Madrid}
+\usecolortheme{beaver}
+
+\usepackage{eurosym}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{varioref}
+\usepackage{setspace}
+\usepackage{amsthm} 
+\usepackage{lscape}
+\usepackage{epstopdf}
+\usepackage{ifthen}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{longtable}
+\usepackage{amssymb}
+\usepackage{pdflscape}
+\usepackage{palatino}
+\usepackage{rotating}
+\usepackage{changepage}
+\usepackage{alltt}
+\usepackage{parskip}
+\usepackage{textcomp}
+\usepackage{enumerate}
+\usepackage{dcolumn}
+\usepackage{adjustbox}
+\usepackage[hang,flushmargin]{footmisc} 
+\newcommand*{\myalign}[2]{\multicolumn{1}{#1}{#2}}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\newcolumntype{d}[1]{D{.}{.}{2.3} }
+
+\newtheorem{proposition}[theorem]{Proposition}
+
+\setcounter{MaxMatrixCols}{10}
+
+
+\title[Retargeting cash transfers programs] %optional
+{Retargeting cash transfer programs in Uruguay}
+
+ 
+\author[Alejandro Lagomarsino] % (optional, for multiple authors)
+{Alejandro Lagomarsino \& Lihuen Nocetto\inst{*} }
+
+\institute[Harvard University] % (optional)
+{
+	\inst{*}%
+	Harvard University\\
+	Pontifical Catholic University of Chile
+}
+
+\date[March. 2018] % (optional)
+{PE Lunch. March 1, 2018}
+ 
+ 
+\begin{document}
+	\setlength{\parindent}{10pt}
+	
+	\frame{\titlepage}
+
+\begin{frame}
+		\frametitle{Research question}
+		\begin{itemize}
+			\item How do beneficiaries of conditional and unconditional cash transfer programs (CCT and UCT) react when the government stops transferring them money?
+			\item 5 dimensions:
+			\begin{itemize}
+				\item Citizen's participation in local public good provision
+				\item Quality of the public space
+				\item Access to other governmental welfare and non-welfare programs
+				\item Schooling
+				\item Labor force participation
+			\end{itemize}
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+		\frametitle{CCT program: children's allowance}
+		\begin{itemize}
+			\item \textbf{Beginnings}: Proxy means-tested, automatic applications from PANES beneficiaries in January 2008; regular applications opened in April 2008.
+			\item \textbf{Target}: 500,000 children in worst socioeconomic conditions (402,898 in 2012).
+			\item \textbf{Amount}: Depends in a non-linear way in number of children and schooling. 90 USD in 2012 for household with two kids, one in primary school, one in secondary (25\% monthly minimum wage).
+			\item \textbf{Conditionality}: School attendance (enforcement started in 2014) and health checks (not enforced).
+			\item \textbf{Managed by}: Social Security Bank.	
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Assignment to CCT (Bergolo \& Galvan (2016))}
+\begin{center}
+	\includegraphics[width=105mm]{afam.jpg}
+	\label{afam}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{UCT program: food card}
+\begin{itemize}
+	\item \textbf{Beginnings}: PANES households with children or pregnant women administratively enrolled in 2008 + 20,000 INDA households in 2009.
+	\item \textbf{Target}: Initially ``all households with children in extreme poverty''.
+	\item \textbf{Amount}: Depends in a non-linear way in number of children. 47 USD in 2012 for household with two kids, one in primary school, one in secondary (13\% monthly minimum wage). Double amount for poorest 30,000 households (January 2011).
+	\item \textbf{Managed by}: Ministry of Social Development.		
+\end{itemize}
+\end{frame}
+	
+\begin{frame}
+\frametitle{Targeting issues}
+		\begin{itemize}
+			\item \textbf{Recognized}: On October 2011 a report by the Ministry identified severe targeting issues.
+			\begin{itemize}
+				\item Households in extreme poverty were 10,000 in 2009 and beneficiaries were 85,000.
+				\item Not clear which is the target population: 5 scenarios considered for UCT.
+				\item Type I error for UCT: 37\%, 39\%, 63\%, 42\%, 43\%.
+				\item Type II error for UCT: 92\%, 82\%, 29\%, 64\%, 34\%.
+			\end{itemize}
+			\item \textbf{Steps taken}:
+			\begin{itemize}
+				\item Set target population to 60,000 poorest households.
+				\item Proxy means-tested approach to decide whether to grant or withdraw UCT benefits.
+				\item Increase household visits: 6,000 per year in 2008-2011 and 81,178 from September 2011 to July 2013; 14,000 in 2017.
+			\end{itemize}	
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Visits}
+\begin{center}
+	\includegraphics[width=105mm]{mides.jpg}
+	\label{mides}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{UCT (DINEM (2012))}
+\begin{center}
+	\includegraphics[width=105mm]{tus.jpg}
+	\label{tus}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Outcome of the 81,178 visits}
+\begin{center}
+	\includegraphics[width=105mm]{visits_outcome.jpg}
+	\label{tus}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Regression discontinuity design}
+Within sample of individuals that were living in a household getting single UCT before the visit and with VI in the threshold Single-None UCT (analogous for CCT):
+\begin{multline}
+Y_{i,h,t+n} = \beta _0 + \beta_1\mathbf{1}[VI_{h,t}>0] + f(VI_{h,t}) + \Phi X_{i,h,t} + \epsilon_{i,h,t+n} 
+\end{multline}
+\end{frame}
+
+\begin{frame}
+\frametitle{Participatory Budgeting in Montevideo}
+\begin{itemize}
+	\item When? 2006, 2007, 2008, 2011, 2013 (October), 2016.
+	\item Who can vote? 16+, residents in one of the 8 sub-municipalities in Montevideo.
+	\item Turnout? Low, approximately 10\%.
+	\item What? 910 proposals in 2013; 57 elected ($\approx$ USD 5 MM).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Participatory Budgeting in Montevideo}
+\includegraphics[width=50mm]{win_1.jpg}
+\includegraphics[width=50mm]{win_2.jpg}
+\includegraphics[width=50mm]{win_3.jpg}
+\includegraphics[width=50mm]{win_4.jpg}
+\end{frame}	
+
+\begin{frame}
+\frametitle{Outcomes}
+\begin{itemize}
+	\item \textbf{Gov programs}: housing programs, labor training program, \textit{nini's} support program, pensions, other food assistance programs (PANRN and INDA), day care (0-12).
+	\item \textbf{Schooling}: enrollment, grade, attendance, reasons for not finishing school. 	 
+	\item \textbf{Employment}: employment dummy, unemployment/maternity/ disease subsidy. Self-reported working status and income.
+	\item \textbf{Public space}: garbage in your block, contaminated water in your block, vandalism.
+	\item \textbf{Other}: health, domestic violence, adults/children not eating, drug abuse, illegal electricity connection.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{The stable unit treatment value assumption}
+\begin{center}
+	\includegraphics[width=105mm]{visits_area.jpg}
+	\label{visits_area}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{The stable unit treatment value assumption}
+\begin{center}
+	\includegraphics[width=105mm]{visits.jpg}
+	\label{visits}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{The stable unit treatment value assumption}
+Voting turnout in 2013 for 18+ individuals that were living in households ``area'' visited in the September 2011 - March 2013 period:
+\begin{multline}
+Votes_{i,h,a,2013} = \beta _0 + \beta_1ExtremeAdj_{a,2012} +\beta_2CloseAdj_{a,2012} + \\
+\beta_3\mathbf{1}[VI_{h,a,2012}>0] + f(VI_{h,a,2012}) + \Phi X_{i,h,a,2012} + \epsilon_{i,h,a,2013}
+\end{multline}
+\begin{itemize}
+	\item Leakage is determinant of increase in crime and decrease in participation in community groups, while under-coverage is not (Cameron \& Shah (2014))
+	\item Receiving the CCT: strong impact on trust in MIDES, decreases participation in community groups, mild negative impact on interpersonal trust (Bergolo et al. (2015))
+	\item Proxy-means testing may seem arbitrary (Coady et al. (2004))
+\end{itemize}
+
+\end{frame}	
+	
+\begin{frame}
+		\frametitle{Testing for asymmetries}
+		\begin{itemize}
+			\item Ideal experiment: from a pool of people initially receiving a transfer, randomly duplicate the transfer amount to part of the group and substract it from the rest.
+			\item Closest we can get in our setting: Difference-in-Difference
+			\begin{itemize}
+				\item 27,543 were receiving a single UCT by September 2011 and were visited in the period September 2011 - July 2013.
+				\item 15,278 stopped receiving the transfer.
+				\item 7,329 duplicated their amount.
+			\end{itemize}
+			\item Other approach: two separate RDs.
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Other results to explore}
+\begin{itemize}
+	\item Intra-household: heterogeneous effects across members of the household 
+	\item Length: heterogeneous effects across ``old'' and ``recent'' beneficiaries.
+	\item Motive matters: Losing the transfer due to VI, educational conditionality or age (DID with multiple treatments, see Fricke (2017)).
+\end{itemize}
+\end{frame}
+	
+\end{document}	

@@ -9,7 +9,9 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Input:     Input\Visitas_Hogares_Muestra_enmascarado.csv
                Input\Visitas_Personas_Muestra_enmascarado.csv
     Output:    Output\visitas_hogares_vars.csv
+               Output\visitas_hogares_vars.dta
                Output\visitas_personas_vars.csv
+               Output\visitas_personas_vars.dta
 
 2)  Objective: Generar dos archivos (hogares y personas) con datos mínimos de las
                visitas y datos completos de TUS
@@ -64,7 +66,9 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
 7)  Objective: Mover bases generadas de Output del Build al Input de Analysis
     Code:      Code\7_move_build_analysis.py
     Input:     Output\visitas_hogares_vars.csv
+               Output\visitas_hogares_vars.dta
                Output\visitas_personas_vars.csv
+               Output\visitas_personas_vars.dta
                Output\visitas_hogares_otras_vars.csv
                Output\visitas_personas_otras_vars.csv
                Output\visitas_hogares_PPySusp.csv
@@ -73,16 +77,18 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Output\visitas_personas_AFAM.csv
                Output\visitas_hogares_TUS.csv
                Output\visitas_hogares_TUS.csv
-    Output:    ..Analysis\Input\visitas_hogares_vars.csv
-               ..Analysis\Input\visitas_personas_vars.csv
-               ..Analysis\Input\visitas_hogares_otras_vars.csv
-               ..Analysis\Input\visitas_personas_otras_vars.csv
-               ..Analysis\Input\visitas_hogares_PPySusp.csv
-               ..Analysis\Input\visitas_personas_PPySusp.csv
-               ..Analysis\Input\visitas_hogares_AFAM.csv
-               ..Analysis\Input\visitas_personas_AFAM.csv
-               ..Analysis\Input\visitas_hogares_TUS.csv
-               ..Analysis\Input\visitas_hogares_TUS.csv
+    Output:    ..Analysis\Input\MIDES\visitas_hogares_vars.csv
+               ..Analysis\Input\MIDES\visitas_hogares_vars.dta
+               ..Analysis\Input\MIDES\visitas_personas_vars.csv
+               ..Analysis\Input\MIDES\visitas_personas_vars.dta
+               ..Analysis\Input\MIDES\visitas_hogares_otras_vars.csv
+               ..Analysis\Input\MIDES\visitas_personas_otras_vars.csv
+               ..Analysis\Input\MIDES\visitas_hogares_PPySusp.csv
+               ..Analysis\Input\MIDES\visitas_personas_PPySusp.csv
+               ..Analysis\Input\MIDES\visitas_hogares_AFAM.csv
+               ..Analysis\Input\MIDES\visitas_personas_AFAM.csv
+               ..Analysis\Input\MIDES\visitas_hogares_TUS.csv
+               ..Analysis\Input\MIDES\visitas_hogares_TUS.csv
 
 
 ****************************** ANALYSIS ***************************************
@@ -90,38 +96,39 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
 1)  Objective: Mirar first stage en TUS tanto para perder, ganar y 
                duplicar beneficio.
     Code:      Code\1_tus_first_stage.py
-    Input:     Input\visitas_hogares_TUS.csv
-               Input\visitas_hogares_vars.csv
+    Input:     Input\MIDES\visitas_hogares_TUS.csv
+               Input\MIDES\visitas_hogares_vars.csv
     Output:    
                
 2)  Objective: Mirar second stage de impacto TUS en PP.
     Code:      Code\2_tus_PP.py
                Code\2_tus_PP.do
-    Input:     Input\visitas_personas_TUS.csv
-               Input\visitas_personas_PPySusp.csv
+    Input:     Input\MIDES\visitas_personas_TUS.csv
+               Input\MIDES\visitas_personas_PPySusp.csv
     Output:    
 
 3)  Objective: Mirar second stage de impacto TUS en suspendidos educativos.
     Code:      Code\3_tus_suspendidos.py
-    Input:     Input\visitas_personas_TUS.csv
-               Input\visitas_personas_PPySusp.csv
+    Input:     Input\MIDES\visitas_personas_TUS.csv
+               Input\MIDES\visitas_personas_PPySusp.csv
     Output:              
 
 4)  Objective: Mirar second stage de impacto TUS en variables de base visitas 
                (para hogares revistados censalmenete).
     Code:      Code\4_tus_vars_revistadas.do
-    Input:     Input\visitas_hogares_TUS.csv
-               Input\visitas_personas_TUS.csv
-               Input\visitas_hogares_vars.csv
-               Input\visitas_personas_vars.csv
+    Input:     Input\MIDES\visitas_hogares_TUS.csv
+               Input\MIDES\visitas_personas_TUS.csv
+               Input\MIDES\visitas_hogares_vars.csv
+               Input\MIDES\visitas_personas_vars.csv
     Output:  
             
 5)  Objective: Armar basic summary statstics.
     Code:      Code\5_summary_stats.py
-    Input:     Input\visitas_hogares_otras_vars.csv
-               Input\visitas_personas_otras_vars.csv
-               Input\visitas_hogares_vars.csv
-               Input\visitas_personas_vars.csv
+    Input:     Input\MIDES\visitas_hogares_otras_vars.csv
+               Input\MIDES\visitas_personas_otras_vars.csv
+               Input\MIDES\visitas_hogares_vars.csv
+               Input\MIDES\visitas_personas_vars.csv
+               Input\IPC_TC.xlsx
     Output: 
         
 '''

@@ -3,6 +3,9 @@
 clear all
 cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
 
+* Macros
+global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam departamento localidad template
+
 *** Preparo archivo PP para merge
 import delimited ..\Input\PP_Muestra_enmascarado.csv, clear
 save pp_para_merge.dta, replace
@@ -17,7 +20,7 @@ save suspendidos_para_merge.dta, replace
 
 *** Merge datos PP y Suspendidos con base personas
 import delimited ..\Output\visitas_personas_vars.csv, clear
-keep flowcorrelativeid nrodocumento fechanacimiento fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam edad_visita asiste
+keep flowcorrelativeid nrodocumento fechanacimiento $varsKeep
 
 merge m:1 nrodocumento using pp_para_merge, keep (master matched)
 drop _merge
@@ -52,12 +55,13 @@ replace habilitado2013 = 1 if fechaNacNumeric <= 13814 // Fecha numeric de votac
 gen habilitado2016 = 0
 replace habilitado2016 = 1 if fechaNacNumeric <= 14913 // Fecha numeric de votación del 30 de Oct de 2016 es 20757, por lo que aquellos nacidos el 2000/10/30 o antes podian votar (valor numeric de esta fecha 14913)
 
+drop fechanacimiento fechaNacString fechaNacNumeric
 *** Creo variables a nivel de hogar en base personas
 
 * Variable PP
 foreach yr in 2008 2011 2013 2016 {
-	egen hogar_votantes`yr' = sum(pp`yr'), by(flowcorrelativeid)
-	egen hogar_habilitados`yr' = sum(habilitado`yr'), by(flowcorrelativeid)
+	egen hogar_votantes`yr' = total(pp`yr'), by(flowcorrelativeid)
+	egen hogar_habilitados`yr' = total(habilitado`yr'), by(flowcorrelativeid)
 	gen hogar_voto_sobre_habil`yr' = .
 	replace hogar_voto_sobre_habil`yr' = hogar_votantes`yr'/hogar_habilitados`yr' if hogar_habilitados`yr'!=.
 	gen hogar_voto`yr'=0
@@ -66,12 +70,12 @@ foreach yr in 2008 2011 2013 2016 {
 
 * Variables suspendidos educativos
 foreach yr in 2013 2014 2015 2016 2017 2018 {
-	egen hogarSusp`yr' = sum(susp`yr'), by(flowcorrelativeid)
+	egen hogarSusp`yr' = total(susp`yr'), by(flowcorrelativeid)
 }
 
 * Guardo base personas en csv para exportar y para merge
 export delimited using ..\Output\visitas_personas_PPySusp.csv, replace
-save ..\Temp\visitas_personas_PPySusp.dta, replace
+save visitas_personas_PPySusp.dta, replace
 
 * Guardo base personas para merge con base hogares
 collapse (mean) hogar*, by (flowcorrelativeid)
@@ -79,11 +83,11 @@ save personas_pp_susp_merge.dta, replace
 
 *** Armo base hogares
 import delimited ..\Output\visitas_hogares_vars.csv, clear
-keep flowcorrelativeid fechavisita year month periodo icc umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam
+keep $varsKeep
 
 merge 1:1 flowcorrelativeid using personas_pp_susp_merge, keep (master matched)
 drop _merge
 
 * Guardo base hogares en csv para exportar y para merge
 export delimited using ..\Output\visitas_hogares_PPySusp.csv, replace
-save ..\Temp\visitas_hogares_PPySusp.dta, replace
+save visitas_hogares_PPySusp.dta, replace
