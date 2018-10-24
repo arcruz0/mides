@@ -149,7 +149,7 @@ replace hogPerdio2013`ms' = 1 if (hogPerdioDoub2013`ms' == 1 | hogPerdioSimple20
 
 * 2016
 * Hogar perdió una simple
-foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
+foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12 {
 	generate hogPerdioSimple2016`ms' = 0
 	local per = 106 - `ms'
 	local per2 = 106 - `ms' -1
@@ -157,7 +157,7 @@ foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
 	}
 	
 * Hogar ganó una simple
-foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
+foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12 {
 	generate hogGanoSimple2016`ms' = 0
 	local per = 106 - `ms'
 	local per2 = 106 - `ms' -1
@@ -166,7 +166,7 @@ foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
 	
 	
 * Hogar pasó de simple a doble
-foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
+foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12 {
 	generate hogSimpleToDoub2016`ms' = 0
 	local per = 106 - `ms'
 	local per2 = 106 - `ms' -1
@@ -174,7 +174,7 @@ foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
 	}
 	
 * Hogar pasó de doble a simple
-foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
+foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12 {
 	generate hogDoubToSimple2016`ms' = 0
 	local per = 106 - `ms'
 	local per2 = 106 - `ms' -1
@@ -269,6 +269,8 @@ foreach yr in 2013 2016 20132016 {
 	replace hogarCambioEnThres`yr'1t3 = 1 if (hogPerdioSimple`yr'1t3 + hogGanoSimple`yr'1t3 + hogSimpleToDoub`yr'1t3 + hogDoubToSimple`yr'1t3)>0
 	generate hogGano`yr'1t3 = hogGano`yr'1 + hogGano`yr'2 + hogGano`yr'3
 	generate hogPerdio`yr'1t3 = hogPerdio`yr'1 + hogPerdio`yr'2 + hogPerdio`yr'3		
+	generate hogGanoDoub`yr'1t3 = hogGanoDoub`yr'1 + hogGanoDoub`yr'2 + hogGanoDoub`yr'3
+	generate hogPerdioDoub`yr'1t3 = hogPerdioDoub`yr'1 + hogPerdioDoub`yr'2 + hogPerdioDoub`yr'3
 	}
 
 * 1-2
@@ -295,8 +297,8 @@ foreach yr in 2013 2016 20132016 {
 	generate hogPerdio`yr'1t5 = hogPerdio`yr'1 + hogPerdio`yr'2 + hogPerdio`yr'3 + hogPerdio`yr'4 + hogPerdio`yr'5			
 	}
 
-* 4-6 (CORREGIR)
-foreach yr in 2013 2016 20132016 {
+* 4-6
+foreach yr in 2013 20132016 {
 	generate hogPerdioSimple`yr'4t6 = hogPerdioSimple`yr'4 + hogPerdioSimple`yr'5
 	generate hogGanoSimple`yr'4t6 = hogGanoSimple`yr'4 + hogGanoSimple`yr'5
 	generate hogSimpleToDoub`yr'4t6 = hogSimpleToDoub`yr'4 + hogSimpleToDoub`yr'5
@@ -306,9 +308,22 @@ foreach yr in 2013 2016 20132016 {
 	generate hogGano`yr'4t6 = hogGano`yr'4 + hogGano`yr'5
 	generate hogPerdio`yr'4t6 = hogPerdio`yr'4 + hogPerdio`yr'5		
 	}
+	
+	foreach yr in 2016 {
+	generate hogPerdioSimple`yr'4t6 = hogPerdioSimple`yr'4 + hogPerdioSimple`yr'5 + hogPerdioSimple`yr'6
+	generate hogGanoSimple`yr'4t6 = hogGanoSimple`yr'4 + hogGanoSimple`yr'5 + hogGanoSimple`yr'6
+	generate hogSimpleToDoub`yr'4t6 = hogSimpleToDoub`yr'4 + hogSimpleToDoub`yr'5 + hogSimpleToDoub`yr'6
+	generate hogDoubToSimple`yr'4t6 = hogDoubToSimple`yr'4 + hogDoubToSimple`yr'5 + hogDoubToSimple`yr'6
+	gen hogarCambioEnThres`yr'4t6 = 0
+	replace hogarCambioEnThres`yr'4t6 = 1 if (hogPerdioSimple`yr'4t6 + hogGanoSimple`yr'4t6 + hogSimpleToDoub`yr'4t6 + hogDoubToSimple`yr'4t6)>0
+	generate hogGano`yr'4t6 = hogGano`yr'4 + hogGano`yr'5 + hogGano`yr'6
+	generate hogPerdio`yr'4t6 = hogPerdio`yr'4 + hogPerdio`yr'5 + hogPerdio`yr'6
+	generate hogGanoDoub`yr'4t6 = hogGanoDoub`yr'4 + hogGanoDoub`yr'5 + hogGanoDoub`yr'6
+	generate hogPerdioDoub`yr'4t6 = hogPerdioDoub`yr'4 + hogPerdioDoub`yr'5 + hogPerdioDoub`yr'6
+	}
 
-* 7-9 (CORREGIR)
-foreach yr in 2013 2016 20132016 {
+* 7-9
+foreach yr in 2013 20132016 {
 	generate hogPerdioSimple`yr'7t9 = hogPerdioSimple`yr'7 + hogPerdioSimple`yr'9
 	generate hogGanoSimple`yr'7t9 = hogGanoSimple`yr'7 + hogGanoSimple`yr'9
 	generate hogSimpleToDoub`yr'7t9 = hogSimpleToDoub`yr'7 + hogSimpleToDoub`yr'9
@@ -318,9 +333,22 @@ foreach yr in 2013 2016 20132016 {
 	generate hogGano`yr'7t9 = hogGano`yr'7 + hogGano`yr'9
 	generate hogPerdio`yr'7t9 = hogPerdio`yr'7 + hogPerdio`yr'9		
 	}
+	
+foreach yr in 2016 {
+	generate hogPerdioSimple`yr'7t9 = hogPerdioSimple`yr'7 + hogPerdioSimple`yr'8 + hogPerdioSimple`yr'9
+	generate hogGanoSimple`yr'7t9 = hogGanoSimple`yr'7 + hogGanoSimple`yr'8 + hogGanoSimple`yr'9
+	generate hogSimpleToDoub`yr'7t9 = hogSimpleToDoub`yr'7 + hogSimpleToDoub`yr'8 + hogSimpleToDoub`yr'9
+	generate hogDoubToSimple`yr'7t9 = hogDoubToSimple`yr'7 + hogDoubToSimple`yr'8 + hogDoubToSimple`yr'9
+	gen hogarCambioEnThres`yr'7t9 = 0
+	replace hogarCambioEnThres`yr'7t9 = 1 if (hogPerdioSimple`yr'7t9 + hogGanoSimple`yr'7t9 + hogSimpleToDoub`yr'7t9 + hogDoubToSimple`yr'7t9)>0
+	generate hogGano`yr'7t9 = hogGano`yr'7 + hogGano`yr'8 + hogGano`yr'9
+	generate hogPerdio`yr'7t9 = hogPerdio`yr'7 + hogPerdio`yr'8 + hogPerdio`yr'9		
+	generate hogGanoDoub`yr'7t9 = hogGanoDoub`yr'7 + hogGanoDoub`yr'8 + hogGanoDoub`yr'9
+	generate hogPerdioDoub`yr'7t9 = hogPerdioDoub`yr'7 + hogPerdioDoub`yr'8 + hogPerdioDoub`yr'9
+	}
 
-* 10-12 (CORREGIR)
-foreach yr in 2013 2016 20132016 {
+* 10-12
+foreach yr in 2013 20132016 {
 	generate hogPerdioSimple`yr'10t12 = hogPerdioSimple`yr'10 + hogPerdioSimple`yr'12
 	generate hogGanoSimple`yr'10t12 = hogGanoSimple`yr'10 + hogGanoSimple`yr'12
 	generate hogSimpleToDoub`yr'10t12 = hogSimpleToDoub`yr'10 + hogSimpleToDoub`yr'12
@@ -329,6 +357,19 @@ foreach yr in 2013 2016 20132016 {
 	replace hogarCambioEnThres`yr'10t12 = 1 if (hogPerdioSimple`yr'10t12 + hogGanoSimple`yr'10t12 + hogSimpleToDoub`yr'10t12 + hogDoubToSimple`yr'10t12)>0
 	generate hogGano`yr'10t12 = hogGano`yr'10 + hogGano`yr'12
 	generate hogPerdio`yr'10t12 = hogPerdio`yr'10 + hogPerdio`yr'12		
+	}
+	
+foreach yr in 2016 {
+	generate hogPerdioSimple`yr'10t12 = hogPerdioSimple`yr'10 + hogPerdioSimple`yr'11 + hogPerdioSimple`yr'12
+	generate hogGanoSimple`yr'10t12 = hogGanoSimple`yr'10 + hogGanoSimple`yr'11 + hogGanoSimple`yr'12
+	generate hogSimpleToDoub`yr'10t12 = hogSimpleToDoub`yr'10 + hogSimpleToDoub`yr'11 + hogSimpleToDoub`yr'12
+	generate hogDoubToSimple`yr'10t12 = hogDoubToSimple`yr'10 + hogDoubToSimple`yr'11 + hogDoubToSimple`yr'12
+	gen hogarCambioEnThres`yr'10t12 = 0
+	replace hogarCambioEnThres`yr'10t12 = 1 if (hogPerdioSimple`yr'10t12 + hogGanoSimple`yr'10t12 + hogSimpleToDoub`yr'10t12 + hogDoubToSimple`yr'10t12)>0
+	generate hogGano`yr'10t12 = hogGano`yr'10 + hogGano`yr'11 + hogGano`yr'12
+	generate hogPerdio`yr'10t12 = hogPerdio`yr'10 + hogPerdio`yr'11 + hogPerdio`yr'12		
+	generate hogGanoDoub`yr'10t12 = hogGanoDoub`yr'10 + hogGanoDoub`yr'11 + hogGanoDoub`yr'12
+	generate hogPerdioDoub`yr'10t12 = hogPerdioDoub`yr'10 + hogPerdioDoub`yr'11 + hogPerdioDoub`yr'12
 	}
 			
 ** Variable de si hogar ganó o perdió 1 o 2 TUS 1,...,12 meses DESPUÉS de la elección de 2013 o de 2016
@@ -426,7 +467,7 @@ foreach ms in 0 1 3 4 5 7 9 10 12 {
 	
 * 2016
 * Hogar perdió una simple
-foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
+foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12 {
 	generate DhogPerdioSimple2016`ms' = 0
 	local per = 106 + `ms'
 	local per2 = 106 + `ms' -1
@@ -434,7 +475,7 @@ foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
 	}
 	
 * Hogar ganó una simple
-foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
+foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12 {
 	generate DhogGanoSimple2016`ms' = 0
 	local per = 106 + `ms'
 	local per2 = 106 + `ms' -1
@@ -443,7 +484,7 @@ foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
 	
 	
 * Hogar pasó de simple a doble
-foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
+foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12 {
 	generate DhogSimpleToDoub2016`ms' = 0
 	local per = 106 + `ms'
 	local per2 = 106 + `ms' -1
@@ -451,7 +492,7 @@ foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
 	}
 	
 * Hogar pasó de doble a simple
-foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12{
+foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12 {
 	generate DhogDoubToSimple2016`ms' = 0
 	local per = 106 + `ms'
 	local per2 = 106 + `ms' -1
@@ -486,17 +527,31 @@ foreach ms in 0 1 3 4 5 7 9 10 12 {
 	
 * Agregados por períodos	
 
-* 0-3 (CORREGIR)
-foreach yr in 2013 2016 20132016 {
+* 0-3
+foreach yr in 2013 20132016 {
 	generate DhogPerdioSimple`yr'0t3 = DhogPerdioSimple`yr'0 + DhogPerdioSimple`yr'1 + DhogPerdioSimple`yr'3
 	generate DhogGanoSimple`yr'0t3 = DhogGanoSimple`yr'0 + DhogGanoSimple`yr'1 + DhogGanoSimple`yr'3
 	generate DhogSimpleToDoub`yr'0t3 = DhogSimpleToDoub`yr'0 + DhogSimpleToDoub`yr'1 + DhogSimpleToDoub`yr'3
 	generate DhogDoubToSimple`yr'0t3 = DhogDoubToSimple`yr'0 + DhogDoubToSimple`yr'1 + DhogDoubToSimple`yr'3
+	generate DhogGanoDoub`yr'0t3 = DhogGanoDoub`yr'0 + DhogGanoDoub`yr'1 + DhogGanoDoub`yr'3
+	generate DhogPerdioDoub`yr'0t3 = DhogPerdioDoub`yr'0 + DhogPerdioDoub`yr'1 + DhogPerdioDoub`yr'3
 	gen DhogarCambioEnThres`yr'0t3 = 0
 	replace DhogarCambioEnThres`yr'0t3 = 1 if (DhogPerdioSimple`yr'0t3 + DhogGanoSimple`yr'0t3 + DhogSimpleToDoub`yr'0t3 + DhogDoubToSimple`yr'0t3)>0
 }
-* 0-2 (CORREGIR)
-foreach yr in 2013 2016 20132016 {
+
+foreach yr in 2016 {
+	generate DhogPerdioSimple`yr'0t3 = DhogPerdioSimple`yr'0 + DhogPerdioSimple`yr'1 + DhogPerdioSimple`yr'2 + DhogPerdioSimple`yr'3
+	generate DhogGanoSimple`yr'0t3 = DhogGanoSimple`yr'0 + DhogGanoSimple`yr'1 + DhogGanoSimple`yr'2 + DhogGanoSimple`yr'3
+	generate DhogSimpleToDoub`yr'0t3 = DhogSimpleToDoub`yr'0 + DhogSimpleToDoub`yr'1 + DhogSimpleToDoub`yr'2 + DhogSimpleToDoub`yr'3
+	generate DhogDoubToSimple`yr'0t3 = DhogDoubToSimple`yr'0 + DhogDoubToSimple`yr'1 + DhogDoubToSimple`yr'2 + DhogDoubToSimple`yr'3
+	generate DhogGanoDoub`yr'0t3 = DhogGanoDoub`yr'0 + DhogGanoDoub`yr'1 + DhogGanoDoub`yr'2 + DhogGanoDoub`yr'3
+	generate DhogPerdioDoub`yr'0t3 = DhogPerdioDoub`yr'0 + DhogPerdioDoub`yr'1 + DhogPerdioDoub`yr'2 + DhogPerdioDoub`yr'3
+	gen DhogarCambioEnThres`yr'0t3 = 0
+	replace DhogarCambioEnThres`yr'0t3 = 1 if (DhogPerdioSimple`yr'0t3 + DhogGanoSimple`yr'0t3 + DhogSimpleToDoub`yr'0t3 + DhogDoubToSimple`yr'0t3)>0
+}
+
+* 0-2
+foreach yr in 2013 20132016 {
 	generate DhogPerdioSimple`yr'0t2 = DhogPerdioSimple`yr'0 + DhogPerdioSimple`yr'1
 	generate DhogGanoSimple`yr'0t2 = DhogGanoSimple`yr'0 + DhogGanoSimple`yr'1
 	generate DhogSimpleToDoub`yr'0t2 = DhogSimpleToDoub`yr'0 + DhogSimpleToDoub`yr'1
@@ -504,8 +559,18 @@ foreach yr in 2013 2016 20132016 {
 	gen DhogarCambioEnThres`yr'0t2 = 0
 	replace DhogarCambioEnThres`yr'0t2 = 1 if (DhogPerdioSimple`yr'0t2 + DhogGanoSimple`yr'0t2 + DhogSimpleToDoub`yr'0t2 + DhogDoubToSimple`yr'0t2)>0
 }
-* 0-5 (CORREGIR)
-foreach yr in 2013 2016 20132016 {
+
+foreach yr in 2016 {
+	generate DhogPerdioSimple`yr'0t2 = DhogPerdioSimple`yr'0 + DhogPerdioSimple`yr'1 + DhogPerdioSimple`yr'2
+	generate DhogGanoSimple`yr'0t2 = DhogGanoSimple`yr'0 + DhogGanoSimple`yr'1 + DhogGanoSimple`yr'2
+	generate DhogSimpleToDoub`yr'0t2 = DhogSimpleToDoub`yr'0 + DhogSimpleToDoub`yr'1 + DhogSimpleToDoub`yr'2
+	generate DhogDoubToSimple`yr'0t2 = DhogDoubToSimple`yr'0 + DhogDoubToSimple`yr'1 + DhogDoubToSimple`yr'2
+	gen DhogarCambioEnThres`yr'0t2 = 0
+	replace DhogarCambioEnThres`yr'0t2 = 1 if (DhogPerdioSimple`yr'0t2 + DhogGanoSimple`yr'0t2 + DhogSimpleToDoub`yr'0t2 + DhogDoubToSimple`yr'0t2)>0
+}
+
+* 0-5
+foreach yr in 2013 20132016 {
 	generate DhogPerdioSimple`yr'0t5 = DhogPerdioSimple`yr'0 + DhogPerdioSimple`yr'1 + DhogPerdioSimple`yr'3 + DhogPerdioSimple`yr'4 + DhogPerdioSimple`yr'5
 	generate DhogGanoSimple`yr'0t5 = DhogGanoSimple`yr'0 + DhogGanoSimple`yr'1 + DhogGanoSimple`yr'3 + DhogGanoSimple`yr'4 + DhogGanoSimple`yr'5
 	generate DhogSimpleToDoub`yr'0t5 = DhogSimpleToDoub`yr'0 + DhogSimpleToDoub`yr'1 + DhogSimpleToDoub`yr'3 + DhogSimpleToDoub`yr'4 + DhogSimpleToDoub`yr'5
@@ -514,8 +579,17 @@ foreach yr in 2013 2016 20132016 {
 	replace DhogarCambioEnThres`yr'0t5 = 1 if (DhogPerdioSimple`yr'0t5 + DhogGanoSimple`yr'0t5 + DhogSimpleToDoub`yr'0t5 + DhogDoubToSimple`yr'0t5)>0
 	}
 
-* 1-3 (CORREGIR)
-foreach yr in 2013 2016 20132016 {
+foreach yr in 2016 {
+	generate DhogPerdioSimple`yr'0t5 = DhogPerdioSimple`yr'0 + DhogPerdioSimple`yr'1 + DhogPerdioSimple`yr'2 + DhogPerdioSimple`yr'3 + DhogPerdioSimple`yr'4 + DhogPerdioSimple`yr'5
+	generate DhogGanoSimple`yr'0t5 = DhogGanoSimple`yr'0 + DhogGanoSimple`yr'1 + DhogGanoSimple`yr'2 + DhogGanoSimple`yr'3 + DhogGanoSimple`yr'4 + DhogGanoSimple`yr'5
+	generate DhogSimpleToDoub`yr'0t5 = DhogSimpleToDoub`yr'0 + DhogSimpleToDoub`yr'1 + DhogSimpleToDoub`yr'2 + DhogSimpleToDoub`yr'3 + DhogSimpleToDoub`yr'4 + DhogSimpleToDoub`yr'5
+	generate DhogDoubToSimple`yr'0t5 = DhogDoubToSimple`yr'0 + DhogDoubToSimple`yr'1 + DhogDoubToSimple`yr'2 + DhogDoubToSimple`yr'3 + DhogDoubToSimple`yr'4 + DhogDoubToSimple`yr'5
+	gen DhogarCambioEnThres`yr'0t5 = 0
+	replace DhogarCambioEnThres`yr'0t5 = 1 if (DhogPerdioSimple`yr'0t5 + DhogGanoSimple`yr'0t5 + DhogSimpleToDoub`yr'0t5 + DhogDoubToSimple`yr'0t5)>0
+	}
+	
+* 1-3
+foreach yr in 2013 20132016 {
 	generate DhogPerdioSimple`yr'1t3 = DhogPerdioSimple`yr'1 + DhogPerdioSimple`yr'3
 	generate DhogGanoSimple`yr'1t3 = DhogGanoSimple`yr'1 + DhogGanoSimple`yr'3
 	generate DhogSimpleToDoub`yr'1t3 = DhogSimpleToDoub`yr'1 + DhogSimpleToDoub`yr'3
@@ -524,8 +598,19 @@ foreach yr in 2013 2016 20132016 {
 	replace DhogarCambioEnThres`yr'1t3 = 1 if (DhogPerdioSimple`yr'1t3 + DhogGanoSimple`yr'1t3 + DhogSimpleToDoub`yr'1t3 + DhogDoubToSimple`yr'1t3)>0
 	}
 	
-* 1-2 (CORREGIR)
-foreach yr in 2013 2016 20132016 {
+foreach yr in 2016 {
+	generate DhogPerdioSimple`yr'1t3 = DhogPerdioSimple`yr'1 + DhogPerdioSimple`yr'2 + DhogPerdioSimple`yr'3
+	generate DhogGanoSimple`yr'1t3 = DhogGanoSimple`yr'1 + DhogGanoSimple`yr'2 + DhogGanoSimple`yr'3
+	generate DhogSimpleToDoub`yr'1t3 = DhogSimpleToDoub`yr'1 + DhogSimpleToDoub`yr'2 + DhogSimpleToDoub`yr'3
+	generate DhogDoubToSimple`yr'1t3 = DhogDoubToSimple`yr'1 + DhogDoubToSimple`yr'2 + DhogDoubToSimple`yr'3
+	gen DhogarCambioEnThres`yr'1t3 = 0
+	replace DhogarCambioEnThres`yr'1t3 = 1 if (DhogPerdioSimple`yr'1t3 + DhogGanoSimple`yr'1t3 + DhogSimpleToDoub`yr'1t3 + DhogDoubToSimple`yr'1t3)>0
+	generate DhogGanoDoub`yr'1t3 = DhogGanoDoub`yr'1 + DhogGanoDoub`yr'2 + DhogGanoDoub`yr'3
+	generate DhogPerdioDoub`yr'1t3 = DhogPerdioDoub`yr'1 + DhogPerdioDoub`yr'2 + DhogPerdioDoub`yr'3
+	}
+	
+* 1-2
+foreach yr in 2013 20132016 {
 	generate DhogPerdioSimple`yr'1t2 = DhogPerdioSimple`yr'1
 	generate DhogGanoSimple`yr'1t2 = DhogGanoSimple`yr'1
 	generate DhogSimpleToDoub`yr'1t2 = DhogSimpleToDoub`yr'1
@@ -533,8 +618,18 @@ foreach yr in 2013 2016 20132016 {
 	gen DhogarCambioEnThres`yr'1t2 = 0
 	replace DhogarCambioEnThres`yr'1t2 = 1 if (DhogPerdioSimple`yr'1t2 + DhogGanoSimple`yr'1t2 + DhogSimpleToDoub`yr'1t2 + DhogDoubToSimple`yr'1t2)>0
 	}
-* 1-5 (CORREGIR)
-foreach yr in 2013 2016 20132016 {
+	
+foreach yr in 2016 {
+	generate DhogPerdioSimple`yr'1t2 = DhogPerdioSimple`yr'1 + DhogPerdioSimple`yr'2
+	generate DhogGanoSimple`yr'1t2 = DhogGanoSimple`yr'1 + DhogGanoSimple`yr'2
+	generate DhogSimpleToDoub`yr'1t2 = DhogSimpleToDoub`yr'1 + DhogSimpleToDoub`yr'2
+	generate DhogDoubToSimple`yr'1t2 = DhogDoubToSimple`yr'1 + DhogDoubToSimple`yr'2
+	gen DhogarCambioEnThres`yr'1t2 = 0
+	replace DhogarCambioEnThres`yr'1t2 = 1 if (DhogPerdioSimple`yr'1t2 + DhogGanoSimple`yr'1t2 + DhogSimpleToDoub`yr'1t2 + DhogDoubToSimple`yr'1t2)>0
+	}
+	
+* 1-5
+foreach yr in 2013 20132016 {
 	generate DhogPerdioSimple`yr'1t5 = DhogPerdioSimple`yr'1 + DhogPerdioSimple`yr'3 + DhogPerdioSimple`yr'4 + DhogPerdioSimple`yr'5
 	generate DhogGanoSimple`yr'1t5 = DhogGanoSimple`yr'1 + DhogGanoSimple`yr'3 + DhogGanoSimple`yr'4 + DhogGanoSimple`yr'5
 	generate DhogSimpleToDoub`yr'1t5 = DhogSimpleToDoub`yr'1 + DhogSimpleToDoub`yr'3 + DhogSimpleToDoub`yr'4 + DhogSimpleToDoub`yr'5
@@ -543,7 +638,51 @@ foreach yr in 2013 2016 20132016 {
 	replace DhogarCambioEnThres`yr'1t5 = 1 if (DhogPerdioSimple`yr'1t5 + DhogGanoSimple`yr'1t5 + DhogSimpleToDoub`yr'1t5 + DhogDoubToSimple`yr'1t5)>0
 	}
 
+foreach yr in 2016 {
+	generate DhogPerdioSimple`yr'1t5 = DhogPerdioSimple`yr'1 + DhogPerdioSimple`yr'2 + DhogPerdioSimple`yr'3 + DhogPerdioSimple`yr'4 + DhogPerdioSimple`yr'5
+	generate DhogGanoSimple`yr'1t5 = DhogGanoSimple`yr'1 + DhogGanoSimple`yr'2 + DhogGanoSimple`yr'3 + DhogGanoSimple`yr'4 + DhogGanoSimple`yr'5
+	generate DhogSimpleToDoub`yr'1t5 = DhogSimpleToDoub`yr'1 + DhogSimpleToDoub`yr'2 + DhogSimpleToDoub`yr'3 + DhogSimpleToDoub`yr'4 + DhogSimpleToDoub`yr'5
+	generate DhogDoubToSimple`yr'1t5 = DhogDoubToSimple`yr'1 + DhogDoubToSimple`yr'2 + DhogDoubToSimple`yr'3 + DhogDoubToSimple`yr'4 + DhogDoubToSimple`yr'5
+	gen DhogarCambioEnThres`yr'1t5 = 0
+	replace DhogarCambioEnThres`yr'1t5 = 1 if (DhogPerdioSimple`yr'1t5 + DhogGanoSimple`yr'1t5 + DhogSimpleToDoub`yr'1t5 + DhogDoubToSimple`yr'1t5)>0
+	}
 
+* 4-6
+foreach yr in 2016 {
+	generate DhogPerdioSimple`yr'4t6 = DhogPerdioSimple`yr'4 + DhogPerdioSimple`yr'5 + DhogPerdioSimple`yr'6
+	generate DhogGanoSimple`yr'4t6 = DhogGanoSimple`yr'4 + DhogGanoSimple`yr'5 + DhogGanoSimple`yr'6
+	generate DhogSimpleToDoub`yr'4t6 = DhogSimpleToDoub`yr'4 + DhogSimpleToDoub`yr'5 + DhogSimpleToDoub`yr'6
+	generate DhogDoubToSimple`yr'4t6 = DhogDoubToSimple`yr'4 + DhogDoubToSimple`yr'5 + DhogDoubToSimple`yr'6
+	gen DhogarCambioEnThres`yr'4t6 = 0
+	replace DhogarCambioEnThres`yr'4t6 = 1 if (DhogPerdioSimple`yr'4t6 + DhogGanoSimple`yr'4t6 + DhogSimpleToDoub`yr'4t6 + DhogDoubToSimple`yr'4t6)>0
+	generate DhogGanoDoub`yr'4t6 = DhogGanoDoub`yr'4 + DhogGanoDoub`yr'5 + DhogGanoDoub`yr'6
+	generate DhogPerdioDoub`yr'4t6 = DhogPerdioDoub`yr'4 + DhogPerdioDoub`yr'5 + DhogPerdioDoub`yr'6
+	}
+	
+* 7-9
+foreach yr in 2016 {
+	generate DhogPerdioSimple`yr'7t9 = DhogPerdioSimple`yr'7 + DhogPerdioSimple`yr'8 + DhogPerdioSimple`yr'9
+	generate DhogGanoSimple`yr'7t9 = DhogGanoSimple`yr'7 + DhogGanoSimple`yr'8 + DhogGanoSimple`yr'9
+	generate DhogSimpleToDoub`yr'7t9 = DhogSimpleToDoub`yr'7 + DhogSimpleToDoub`yr'8 + DhogSimpleToDoub`yr'9
+	generate DhogDoubToSimple`yr'7t9 = DhogDoubToSimple`yr'7 + DhogDoubToSimple`yr'8 + DhogDoubToSimple`yr'9
+	gen DhogarCambioEnThres`yr'7t9 = 0
+	replace DhogarCambioEnThres`yr'7t9 = 1 if (DhogPerdioSimple`yr'7t9 + DhogGanoSimple`yr'7t9 + DhogSimpleToDoub`yr'7t9 + DhogDoubToSimple`yr'7t9)>0
+	generate DhogGanoDoub`yr'7t9 = DhogGanoDoub`yr'7 + DhogGanoDoub`yr'8 + DhogGanoDoub`yr'9
+	generate DhogPerdioDoub`yr'7t9 = DhogPerdioDoub`yr'7 + DhogPerdioDoub`yr'8 + DhogPerdioDoub`yr'9
+	}
+	
+* 10-12
+foreach yr in 2016 {
+	generate DhogPerdioSimple`yr'10t12 = DhogPerdioSimple`yr'10 + DhogPerdioSimple`yr'11 + DhogPerdioSimple`yr'12
+	generate DhogGanoSimple`yr'10t12 = DhogGanoSimple`yr'10 + DhogGanoSimple`yr'11 + DhogGanoSimple`yr'12
+	generate DhogSimpleToDoub`yr'10t12 = DhogSimpleToDoub`yr'10 + DhogSimpleToDoub`yr'11 + DhogSimpleToDoub`yr'12
+	generate DhogDoubToSimple`yr'10t12 = DhogDoubToSimple`yr'10 + DhogDoubToSimple`yr'11 + DhogDoubToSimple`yr'12
+	gen DhogarCambioEnThres`yr'10t12 = 0
+	replace DhogarCambioEnThres`yr'10t12 = 1 if (DhogPerdioSimple`yr'10t12 + DhogGanoSimple`yr'10t12 + DhogSimpleToDoub`yr'10t12 + DhogDoubToSimple`yr'10t12)>0
+	generate DhogGanoDoub`yr'10t12 = DhogGanoDoub`yr'10 + DhogGanoDoub`yr'11 + DhogGanoDoub`yr'12
+	generate DhogPerdioDoub`yr'10t12 = DhogPerdioDoub`yr'10 + DhogPerdioDoub`yr'11 + DhogPerdioDoub`yr'12
+	}
+	
 * Cobro de TUS
 foreach per in 3 6 12 {
 	generate hogarmascobratusSimple`per' = hogarmascobratus`per'
@@ -754,6 +893,52 @@ replace binMthHogGanoDoub16 = 9 if DhogGanoDoub20163 == 1
 replace binMthHogGanoDoub16 = 10 if DhogGanoDoub20164 == 1  
 replace binMthHogGanoDoub16 = 11 if DhogGanoDoub20165 == 1 
 
+* 2016: 3-months bins (1-3, 4-6, 7-9, 10-12)
+gen binMthGHogPerdSimp16 = .
+
+replace binMthGHogPerdSimp16 = 1 if hogPerdioSimple201610t12 == 1
+replace binMthGHogPerdSimp16 = 2 if hogPerdioSimple20167t9 == 1
+replace binMthGHogPerdSimp16 = 3 if hogPerdioSimple20164t6 == 1 
+replace binMthGHogPerdSimp16 = 4 if hogPerdioSimple20161t3 == 1
+replace binMthGHogPerdSimp16 = 5 if hogPerdioSimple20160 == 1 
+replace binMthGHogPerdSimp16 = 6 if DhogPerdioSimple20161t3 == 1
+replace binMthGHogPerdSimp16 = 7 if DhogPerdioSimple20164t6 == 1 
+replace binMthGHogPerdSimp16 = 8 if DhogPerdioSimple20167t9 == 1  
+replace binMthGHogPerdSimp16 = 9 if DhogPerdioSimple201610t12 == 1  
+
+gen binMthGHogGanoSimp16 = .
+replace binMthGHogGanoSimp16 = 1 if hogGanoSimple201610t12 == 1
+replace binMthGHogGanoSimp16 = 2 if hogGanoSimple20167t9 == 1
+replace binMthGHogGanoSimp16 = 3 if hogGanoSimple20164t6 == 1 
+replace binMthGHogGanoSimp16 = 4 if hogGanoSimple20161t3 == 1
+replace binMthGHogGanoSimp16 = 5 if hogGanoSimple20160 == 1 
+replace binMthGHogGanoSimp16 = 6 if DhogGanoSimple20161t3 == 1
+replace binMthGHogGanoSimp16 = 7 if DhogGanoSimple20164t6 == 1 
+replace binMthGHogGanoSimp16 = 8 if DhogGanoSimple20167t9 == 1  
+replace binMthGHogGanoSimp16 = 9 if DhogGanoSimple201610t12 == 1  
+
+gen binMthGHogPerdDoub16 = .
+replace binMthGHogPerdDoub16 = 1 if hogPerdioDoub201610t12 == 1
+replace binMthGHogPerdDoub16 = 2 if hogPerdioDoub20167t9 == 1
+replace binMthGHogPerdDoub16 = 3 if hogPerdioDoub20164t6 == 1 
+replace binMthGHogPerdDoub16 = 4 if hogPerdioDoub20161t3 == 1
+replace binMthGHogPerdDoub16 = 5 if hogPerdioDoub20160 == 1 
+replace binMthGHogPerdDoub16 = 6 if DhogPerdioDoub20161t3 == 1
+replace binMthGHogPerdDoub16 = 7 if DhogPerdioDoub20164t6 == 1 
+replace binMthGHogPerdDoub16 = 8 if DhogPerdioDoub20167t9 == 1  
+replace binMthGHogPerdDoub16 = 9 if DhogPerdioDoub201610t12 == 1   
+
+gen binMthGHogGanoDoub16 = .
+replace binMthGHogGanoDoub16 = 1 if hogGanoDoub201610t12 == 1
+replace binMthGHogGanoDoub16 = 2 if hogGanoDoub20167t9 == 1
+replace binMthGHogGanoDoub16 = 3 if hogGanoDoub20164t6 == 1 
+replace binMthGHogGanoDoub16 = 4 if hogGanoDoub20161t3 == 1
+replace binMthGHogGanoDoub16 = 5 if hogGanoDoub20160 == 1 
+replace binMthGHogGanoDoub16 = 6 if DhogGanoDoub20161t3 == 1
+replace binMthGHogGanoDoub16 = 7 if DhogGanoDoub20164t6 == 1 
+replace binMthGHogGanoDoub16 = 8 if DhogGanoDoub20167t9 == 1  
+replace binMthGHogGanoDoub16 = 9 if DhogGanoDoub201610t12 == 1  
+
 * Instruments for losing/gaining/doubling TUS
 gen iccSuperaPrimerTUS20130t3 = 0
 replace iccSuperaPrimerTUS20130t3 = 1 if icc >= umbral_nuevo_tus & (periodo == 70 | periodo == 69 | periodo ==68 | periodo == 67)
@@ -903,6 +1088,7 @@ graph export ..\Output\pp20132016_3_seg_2TUS.png, replace
 
 *** RD plots (considerando aquellos que perdieron/ganaron/duplicaron la TUS x meses antes o x meses después de la elección)
 *2013
+* Bins por meses
 binscatter pp2013 binMthHogPerdSimp13 if habilitado2013==1 & departamento==1, rd(6) discrete linetype(qfit) xtitle(Months before/after from 1 TUS to 0) ytitle(Perc. voting in 2013)
 graph export ..\Output\binMthHogPerdSimp13.png, replace
 
@@ -916,17 +1102,32 @@ binscatter pp2013 binMthHogGanoDoub13 if habilitado2013==1 & departamento==1, rd
 graph export ..\Output\binMthHogGanoDoub13.png, replace
 
 *2016
+* Bins por meses
 binscatter pp2016 binMthHogPerdSimp16 if habilitado2016==1 & departamento==1, rd(6) discrete linetype(qfit) xtitle(Months before/after from 1 TUS to 0) ytitle(Perc. voting in 2016)
 graph export ..\Output\binMthHogPerdSimp16.png, replace
 
-binscatter pp2016 binMthHogGanoSimp13 if habilitado2016==1 & departamento==1, rd(6) discrete linetype(qfit) xtitle(Months before/after from 0 TUS to 1) ytitle(Perc. voting in 2016)
+binscatter pp2016 binMthHogGanoSimp16 if habilitado2016==1 & departamento==1, rd(6) discrete linetype(qfit) xtitle(Months before/after from 0 TUS to 1) ytitle(Perc. voting in 2016)
 graph export ..\Output\binMthHogGanoSimp16.png, replace
 
-binscatter pp2016 binMthHogPerdDoub13 if habilitado2016==1 & departamento==1, rd(6) discrete linetype(qfit) xtitle(Months before/after from 2 TUS to 0) ytitle(Perc. voting in 2016)
+binscatter pp2016 binMthHogPerdDoub16 if habilitado2016==1 & departamento==1, rd(6) discrete linetype(qfit) xtitle(Months before/after from 2 TUS to 0) ytitle(Perc. voting in 2016)
 graph export ..\Output\binMthHogPerdDoub16.png, replace
 
-binscatter pp2016 binMthHogGanoDoub13 if habilitado2016==1 & departamento==1, rd(6) discrete linetype(qfit) xtitle(Months before/after from 0 TUS to 2) ytitle(Perc. voting in 2016)
+binscatter pp2016 binMthHogGanoDoub16 if habilitado2016==1 & departamento==1, rd(6) discrete linetype(qfit) xtitle(Months before/after from 0 TUS to 2) ytitle(Perc. voting in 2016)
 graph export ..\Output\binMthHogGanoDoub16.png, replace
+
+* Bins por grupos de meses
+binscatter pp2016 binMthGHogPerdSimp16 if habilitado2016==1 & departamento==1, rd(5) discrete linetype(qfit) xtitle(Months before/after from 1 TUS to 0) ytitle(Perc. voting in 2016)
+graph export ..\Output\binMthGHogPerdSimp16.png, replace
+
+binscatter pp2016 binMthGHogGanoSimp16 if habilitado2016==1 & departamento==1, rd(5) discrete linetype(qfit) xtitle(Months before/after from 0 TUS to 1) ytitle(Perc. voting in 2016)
+graph export ..\Output\binMthHogGanoSimp16.png, replace
+
+binscatter pp2016 binMthGHogPerdDoub16 if habilitado2016==1 & departamento==1, rd(5) discrete linetype(qfit) xtitle(Months before/after from 2 TUS to 0) ytitle(Perc. voting in 2016)
+graph export ..\Output\binMthGHogPerdDoub16.png, replace
+
+binscatter pp2016 binMthGHogGanoDoub16 if habilitado2016==1 & departamento==1, rd(5) discrete linetype(qfit) xtitle(Months before/after from 0 TUS to 2) ytitle(Perc. voting in 2016)
+graph export ..\Output\binMthGHogGanoDoub16.png, replace
+
 
 *** Regressions: IV on outcomes (con endogeneous regressors siendo si perdió/ganó/duplicó la TUS x meses antes de la elección)
 
@@ -968,10 +1169,12 @@ regress pp2016 hogarcobratus106 hogartusdoble106 iccNormPrimerTus pp2011 pp2008 
 
 *** Regressions: with RD of chanigng TUS before and after the election
 *2013
+/*
 regress pp2013 hogPerdioSimple20130t3 pp2011 pp2008 if habilitado2013==1 & departamento == 1 & (DhogPerdioSimple20130t3 == 1 | hogPerdioSimple20130t3 == 1) & hogPerdioSimple20130 == 0, robust
 regress pp2013 hogGanoSimple20130t3 pp2011 pp2008 if habilitado2013==1 & departamento == 1 & (DhogGanoSimple20130t3 == 1 | hogGanoSimple20130t3 == 1) & hogGanoSimple20130 == 0, robust
 regress pp2013 hogPerdioDoub20130t3 pp2011 pp2008 if habilitado2013==1 & departamento == 1 & (DhogPerdioDoub20130t3 == 1 | hogPerdioDoub20130t3 == 1) & hogPerdioDoub20130 == 0, robust
 regress pp2013 hogGanoDoub20130t3 pp2011 pp2008 if habilitado2013==1 & departamento == 1 & (DhogGanoDoub20130t3 == 1 | hogGanoDoub20130t3 == 1) & hogGanoDoub20130 == 0, robust
+*/
 
 *2016
 regress pp2016 hogPerdioSimple20160t3 pp2013 pp2011 pp2008 if habilitado2016==1 & departamento == 1 & (DhogPerdioSimple20160t3 == 1 | hogPerdioSimple20160t3 == 1) & hogPerdioSimple20160 == 0, robust

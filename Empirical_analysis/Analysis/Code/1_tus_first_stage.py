@@ -40,9 +40,27 @@ df['iccMenosThreshold1'] = df['icc'] - df['umbral_nuevo_tus']
 for ms in mesesLags:
     df['hogarCuantasTusMas' + ms] = df['hogarMascobraTus'+ ms] + df['hogarMastusDoble'+ ms].fillna(value=0)
 
+### First stage para todos
+for rg in region:
+    for ms in mesesLags:
+        xLinspace=np.arange(xLinspaceStart[rg], xLinspaceEnd[rg], xLinspaceStep[rg])  # It will give me the first value of every bin
+        yBins=np.ones((binsRegion[rg],1))                    # The share of household with TUS in every bin
+        
+        for i in range(binsRegion[rg]-1):
+            yBins[i]=df['hogarCuantasTusMas' + ms][(df['icc']>=xLinspace[i]) & (df['icc']<xLinspace[i+1]) & (df['umbral_nuevo_tus']==tus1Threshold[rg]) & (df['year']>2012)].mean()
+        
+        plt.figure()
+        plt.axvline(x=afamThreshold[rg], color='orange', linestyle='dashed')   # AFAM threshold
+        plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
+        plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
+        plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
+        plt.ylabel('Mean # UCT, ' + ms + ' months after visit')
+        plt.xlabel('VI')
+        plt.title('Mean number of UCT by binned VI, ' + ms + ' months after visit')
+        plt.savefig('../Output/' + rg + '_tus' + ms + '.png')
+        plt.show()
 
-### First stage para quienes no recibian TUS al momento de la visita
-    
+### First stage para quienes no recibian TUS al momento de la visita   
 for rg in region:
     for ms in mesesLags:
         xLinspace=np.arange(xLinspaceStart[rg], xLinspaceEnd[rg], xLinspaceStep[rg])  # It will give me the first value of every bin
@@ -56,15 +74,14 @@ for rg in region:
         plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
         plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
         plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
-        plt.ylabel('Mean # TUS, ' + ms + ' months after visit')
-        plt.xlabel('ICC')
-        plt.title('Mean number of TUS by binned ICC, ' + ms + ' months after visit')
+        plt.ylabel('Mean # UCT, ' + ms + ' months after visit')
+        plt.xlabel('VI')
+        plt.title('Mean number of UCT by binned VI, ' + ms + ' months after visit')
         plt.savefig('../Output/' + rg + '_noTus_tus' + ms + '.png')
         plt.show()
 
 
 ### First stage para quienes recibian 1 TUS (no doble) al momento de la visita
-
 for rg in region:
     for ms in mesesLags:
         xLinspace=np.arange(xLinspaceStart[rg], xLinspaceEnd[rg], xLinspaceStep[rg])  # It will give me the first value of every bin
@@ -78,9 +95,9 @@ for rg in region:
         plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
         plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
         plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
-        plt.ylabel('Mean # TUS, ' + ms + ' months after visit')
+        plt.ylabel('Mean # UCT, ' + ms + ' months after visit')
         plt.xlabel('ICC')
-        plt.title('Mean number of TUS by binned ICC, ' + ms + ' months after visit')
+        plt.title('Mean number of UCT by binned VI, ' + ms + ' months after visit')
         plt.savefig('../Output/' + rg + '_si1Tus_tus' + ms + '.png')
         plt.show()
 
@@ -100,9 +117,9 @@ for rg in region:
         plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
         plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
         plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
-        plt.ylabel('Mean # TUS, ' + ms + ' months after visit')
+        plt.ylabel('Mean # UCT, ' + ms + ' months after visit')
         plt.xlabel('ICC')
-        plt.title('Mean number of TUS by binned ICC, ' + ms + ' months after visit')
+        plt.title('Mean number of UCT by binned VI, ' + ms + ' months after visit')
         plt.savefig('../Output/' + rg + '_si2Tus_tus' + ms + '.png')
         plt.show()
 
@@ -121,8 +138,27 @@ for rg in region:
             plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
             plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
             plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
-            plt.ylabel('Mean # TUS, ' + ms + ' months after visit')
-            plt.xlabel('ICC')
-            plt.title('Mean number of TUS by binned ICC, ' + ms + ' months after visit')
+            plt.ylabel('Mean # UCT, ' + ms + ' months after visit')
+            plt.xlabel('VI')
+            plt.title('Mean number of UCT by binned VI, ' + ms + ' months after visit')
             plt.savefig('../Output/' + rg + '_' + str(yr) + '_tus' + ms + '.png')
             plt.show()
+
+# Histograma de visitas
+for rg in region:
+    xLinspace=np.arange(xLinspaceStart[rg], xLinspaceEnd[rg], xLinspaceStep[rg])  # It will give me the first value of every bin
+    yBins=np.ones((binsRegion[rg],1))                    # The share of household with TUS in every bin
+        
+    for i in range(binsRegion[rg]-1):
+        yBins[i]=df[(df['icc']>=xLinspace[i]) & (df['icc']<xLinspace[i+1]) & (df['umbral_nuevo_tus']==tus1Threshold[rg])]['icc'].size
+        
+    plt.figure()
+    plt.axvline(x=afamThreshold[rg], color='orange', linestyle='dashed')   # AFAM threshold
+    plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
+    plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
+    plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
+    plt.ylabel('Household-visits')
+    plt.xlabel('Vulnerability Index')
+    plt.title('Distribution of visits by Vulnerability Index')
+    plt.savefig('../Output/' + rg + 'distrib.png')
+    plt.show()

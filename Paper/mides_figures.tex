@@ -1499,6 +1499,11 @@ Ver reported AFAM vs true AFAM que recibe la gente como medida de cuánto miente
 
 Quiza para ver lo de ``It's better to have loved and lost than never to have loved at all'' considerar primero aquellas personas con ICC en 2011 muy bajo que no ameritaban TUS pero instrumentar si lo recibieron con el asistente o supervisor que les tocó en ese período. Luego, instrumentar si lo perdieron en la segunda visita con el ICC de la primer visita. Otra forma es correr una regresion con lostandgain y nevergained como regressores y como instrumentos usar ICC de primer visita y asisten y supervisor de segunda visita.
 
+Existe tradeoff entre asegurarme q ambos RD estan medidos sobre misma poblacion y hacer el bandwith más chico cuando se comparan dos RD con poblaciones superpuestas.? osea, en double-RD, mientras mas grande el bandwith, sobre grupo más grande que mido efecto supuestamente y los dos grupos se acercan so to speak.
+
+Pensar que dentro del conjunto de gente q cobraba 0 tus, puedo ver q pasa en umbral 1/2 TUS para ver si es concava la reacción ahi (si 1 vs 0 crece menos q proporcionalmente que 2 vs 0), idem con aquellos q empiezan con 2 y terminan entre 0/1. Tanto loss aversion como von neuman utility sobre wealth predicirian lo mismo aca sin embargo.
+Algo q se puede hacer es: mirar umbral 0/1 y controlando por si recibias 1 TUS, ver efecto de tener TUS mas regresso de efecto de tener TUS interactuado con si no recibias TUS. Si este último coeficiente es distinto de 0, entonces tenes loss aversion. Problema igual es q puede q los 0, 1 iniciales sean poblaciones muy distintas. Para asegurarme q sean las mismas poblaciones, puedo tomar el umbral 0/1 de primer visita de individuos y agarrar los q estan en ese umbral y luego ver de esas poblaciones, qué sucede cuando pierden o ganas TUS en su segunda visita.
+
 \bibliographystyle{plainnat}
 \bibliography{mides}
 

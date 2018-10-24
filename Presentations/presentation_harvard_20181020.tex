@@ -35,6 +35,7 @@
 \usepackage{enumerate}
 \usepackage{dcolumn}
 \usepackage{adjustbox}
+\usepackage{xcolor}
 \usepackage[hang,flushmargin]{footmisc} 
 \newcommand*{\myalign}[2]{\multicolumn{1}{#1}{#2}}
 \setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
@@ -45,7 +46,7 @@
 \setcounter{MaxMatrixCols}{10}
 
 
-\title[Retargeting cash transfers programs] %optional
+\title[Retargeting cash transfer programs] %optional
 {Retargeting cash transfer programs in Uruguay}
 
  
@@ -60,9 +61,10 @@
 }
 
 \date[October. 2018] % (optional)
-{PE Lunch. October 23, 2018}
+{Development Lunch. October 23, 2018}
  
- 
+\graphicspath{ {../Empirical_analysis/Analysis/Output/} }	% Sets folder for \includegraphics
+
 \begin{document}
 	\setlength{\parindent}{10pt}
 	
@@ -71,51 +73,60 @@
 \begin{frame}
 \frametitle{Motivation}
 \begin{itemize}
-	\item How do beneficiaries of conditional and unconditional cash transfer programs (CCT and UCT) react when the government stops transferring them money?
-	\item 5 dimensions:
+	\item Mistargeting of cash transfer programs is ubiquitous in the developing world.
+	\item Retargeting could produce susbstantial financial gains in terms of poverty alleviation and fiscal savings (Robles, Rubio \& Stampini (2015))
 	\begin{itemize}
-		\item Citizen's participation in local public good provision
-		\item Quality of the public space
-		\item Access to other governmental welfare and non-welfare programs
-		\item Schooling
-		\item Labor force participation
+		\item Logic behind the argument lies on a static model with no loss aversion.
 	\end{itemize}
 \end{itemize}
 \end{frame}
 
-
 \begin{frame}
-		\frametitle{Research question}
-		\begin{itemize}
-			\item How do beneficiaries of conditional and unconditional cash transfer programs (CCT and UCT) react when the government stops transferring them money?
-			\item 5 dimensions:
-			\begin{itemize}
-				\item Citizen's participation in local public good provision
-				\item Quality of the public space
-				\item Access to other governmental welfare and non-welfare programs
-				\item Schooling
-				\item Labor force participation
-			\end{itemize}
-		\end{itemize}
+\frametitle{Research questions}
+\begin{itemize}
+	\item Behavior differs when experiencing a loss relative to a gain of a governmental cash transfer?
+	\item How can we use these results to assess the costs and benefits of retargeting cash transfer programs?
+	\item How peer effects exacerbate or attenuate the impact of gaining or losing a cash transfer?
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-		\frametitle{CCT program: children's allowance}
-		\begin{itemize}
-			\item \textbf{Beginnings}: Proxy means-tested, automatic applications from PANES beneficiaries in January 2008; regular applications opened in April 2008.
-			\item \textbf{Target}: 500,000 children in worst socioeconomic conditions (402,898 in 2012).
-			\item \textbf{Amount}: Depends in a non-linear way in number of children and schooling. 90 USD in 2012 for household with two kids, one in primary school, one in secondary (25\% monthly minimum wage).
-			\item \textbf{Conditionality}: School attendance (enforcement started in 2014) and health checks (not enforced).
-			\item \textbf{Managed by}: Social Security Bank.	
-		\end{itemize}
+\frametitle{What this paper is about}
+\begin{itemize}
+	\item FRDD in which households that were initially receiving 1 cash transfer, ``randomly'' kept it, lost it, or doubled it, and how that impacts:
+	\begin{itemize}
+	\item Pro-social behavior
+	\item Food consumption
+	\item Durable goods consumption
+	\item Access to other government welfare and non-welfare programs 
+	\item Education
+	\item Income/Employment:
+	\item Health
+	\item Domestic violence
+	\end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Assignment to CCT (Bergolo \& Galvan (2016))}
-\begin{center}
-	\includegraphics[width=105mm]{afam.jpg}
-	\label{afam}
-\end{center}
+\frametitle{Outline}
+\begin{itemize}
+	\item Background
+	\item Data
+	\item Proxy means test
+	\item Empirical strategies
+	\item Results (very few)
+	\item Further steps
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Uruguay}
+\begin{itemize}
+	\item \textbf{Population}: 3.5 MM
+	\item \textbf{GDP Per Capita USD}: 16,000 (2017)
+	\item \textbf{Avg. annual real GDP growth 2011-2017}: 3.0 \%
+	\item \textbf{Poverty, less than \$5.5 (2011 PPP)}: 2011: 6\%; 2016: 3.7\%	
+\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -148,7 +159,16 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Visits}
+\frametitle{Number of household visits}
+\begin{center}
+	\includegraphics[width=105mm]{nHouse.png}
+	\label{nHouse}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Questionnaire}
 \begin{center}
 	\includegraphics[width=105mm]{mides.jpg}
 	\label{mides}
@@ -156,56 +176,135 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{UCT (DINEM (2012))}
+\frametitle{Vulnerability Index}
+\begin{itemize}
+	\item Probit where $Y$ is a dummy equal to 1 when household belongs to the first income quantile.
+	\item Model run separately for Montevideo and the rest of the country.
+	\item Thresholds defined to capture target population.	
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Data}
+\begin{itemize}
+	\item Ministry of Development: Universe of household visits performed by the Ministry from January 2011 until July 2018 {\color{gray}(georeferenced)}.
+	\item Montevideo's municipal government: Individual level data on turnout during the 2008, 2011, 2013 and 2016 Participatory Budgeting elections.
+	\item {\color{gray}Social Security Bank: Monthly data on formal income, employment, CCT for visited-CCT recipients.}	
+	\item {\color{gray}SIIAS: access to government welfare and non-welfare programs, education, health, employment.}
+	\item {\color{gray}Data we are requesting: vandalism, consumer credit, other electoral turnout data, participation in political parties, water and electricity claims.}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Data}
 \begin{center}
-	\includegraphics[width=105mm]{tus.jpg}
-	\label{tus}
+	\includegraphics[width=105mm]{summ.png}
+	\label{summ}
 \end{center}
 \end{frame}
 
 \begin{frame}
-\frametitle{Outcome of the 81,178 visits}
+\frametitle{Distribution of visits by Vulnerability Index}
 \begin{center}
-	\includegraphics[width=105mm]{visits_outcome.jpg}
-	\label{tus}
+	\includegraphics[width=61mm]{mdeodistrib.png}
+	\includegraphics[width=61mm]{intdistrib.png}
+	\label{dist}
 \end{center}
 \end{frame}
 
 \begin{frame}
-\frametitle{Regression discontinuity design}
-Within sample of individuals that were living in a household getting single UCT before the visit and with VI in the threshold Single-None UCT (analogous for CCT):
+\frametitle{McCrary test}
+	\begin{center}
+		\includegraphics[width=50mm]{mccraryPrimTot.png} 
+		\includegraphics[width=50mm]{mccrarySecTot.png}
+		\label{mccrary}
+	\end{center}
+	\begin{itemize}
+		\item UCT first threshold t-stat: 0.16
+		\item UCT second threshold t-stat: 4.39
+		\item CCT threshold t-stat: 0.75
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 1 month after the visit}
+\begin{center}
+	\includegraphics[width=105mm]{int_noTus_tus1.png}
+	\label{int_noTus_tus1}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 3 month after the visit}
+\begin{center}
+	\includegraphics[width=105mm]{int_noTus_tus3.png}
+	\label{int_noTus_tus3}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 6 month after the visit}
+\begin{center}
+	\includegraphics[width=105mm]{int_noTus_tus6.png}
+	\label{int_noTus_tus6}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 9 month after the visit}
+\begin{center}
+	\includegraphics[width=105mm]{int_noTus_tus9.png}
+	\label{int_noTus_tus9}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 1 year after the visit}
+\begin{center}
+	\includegraphics[width=105mm]{int_noTus_tus12.png}
+	\label{int_noTus_tus12}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Empirical strategy: Impact of gaining or losing a transfer}
+\begin{itemize}
+	\item FRDD with VI as running variable.
+	\item FRDD with number of months before/after the event that a household lost/gained the transfer.
+	\item Diff-in-Diff
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{RDD with overlapping control functions}
+\begin{center}
+	\includegraphics[width=105mm]{pic1.png}
+	\label{pic1}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{RDD with overlapping control functions}
+\begin{center}
+	\includegraphics[width=105mm]{pic2.png}
+	\label{pic2}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{RDD with overlapping control functions}
+\begin{center}
+	\includegraphics[width=105mm]{pic3.png}
+	\label{pic3}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{RDD with overlapping control functions}
 \begin{multline}
-Y_{i,h,t+n} = \beta _0 + \beta_1\mathbf{1}[VI_{h,t}>0] + f(VI_{h,t}) + \Phi X_{i,h,t} + \epsilon_{i,h,t+n} 
+Y_{i} = \beta _0 + \beta_1 \mathbf{1}[VI_{i}>T_{1}]*{1}[VI_{i}<\frac{T_{1}+T{2}{2}] +\beta_2CloseAdj_{a,2012} + \\
+\beta_3\mathbf{1}[VI_{h,a,2012}>0] + f(VI_{h,a,2012}) + \Phi X_{i,h,a,2012} + \epsilon_{i,h,a,2013}
 \end{multline}
-\end{frame}
-
-\begin{frame}
-\frametitle{Participatory Budgeting in Montevideo}
-\begin{itemize}
-	\item When? 2006, 2007, 2008, 2011, 2013 (October), 2016.
-	\item Who can vote? 16+, residents in one of the 8 sub-municipalities in Montevideo.
-	\item Turnout? Low, approximately 10\%.
-	\item What? 910 proposals in 2013; 57 elected ($\approx$ USD 5 MM).
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Participatory Budgeting in Montevideo}
-\includegraphics[width=50mm]{win_1.jpg}
-\includegraphics[width=50mm]{win_2.jpg}
-\includegraphics[width=50mm]{win_3.jpg}
-\includegraphics[width=50mm]{win_4.jpg}
-\end{frame}	
-
-\begin{frame}
-\frametitle{Outcomes}
-\begin{itemize}
-	\item \textbf{Gov programs}: housing programs, labor training program, \textit{nini's} support program, pensions, other food assistance programs (PANRN and INDA), day care (0-12).
-	\item \textbf{Schooling}: enrollment, grade, attendance, reasons for not finishing school. 	 
-	\item \textbf{Employment}: employment dummy, unemployment/maternity/ disease subsidy. Self-reported working status and income.
-	\item \textbf{Public space}: garbage in your block, contaminated water in your block, vandalism.
-	\item \textbf{Other}: health, domestic violence, adults/children not eating, drug abuse, illegal electricity connection.
-\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -223,40 +322,26 @@ Y_{i,h,t+n} = \beta _0 + \beta_1\mathbf{1}[VI_{h,t}>0] + f(VI_{h,t}) + \Phi X_{i
 	\label{visits}
 \end{center}
 \end{frame}
-
-\begin{frame}
-\frametitle{The stable unit treatment value assumption}
-Voting turnout in 2013 for 18+ individuals that were living in households ``area'' visited in the September 2011 - March 2013 period:
-\begin{multline}
-Votes_{i,h,a,2013} = \beta _0 + \beta_1ExtremeAdj_{a,2012} +\beta_2CloseAdj_{a,2012} + \\
-\beta_3\mathbf{1}[VI_{h,a,2012}>0] + f(VI_{h,a,2012}) + \Phi X_{i,h,a,2012} + \epsilon_{i,h,a,2013}
-\end{multline}
-\begin{itemize}
-	\item Leakage is determinant of increase in crime and decrease in participation in community groups, while under-coverage is not (Cameron \& Shah (2014))
-	\item Receiving the CCT: strong impact on trust in MIDES, decreases participation in community groups, mild negative impact on interpersonal trust (Bergolo et al. (2015))
-	\item Proxy-means testing may seem arbitrary (Coady et al. (2004))
-\end{itemize}
-
-\end{frame}	
 	
 \begin{frame}
-		\frametitle{Testing for asymmetries}
-		\begin{itemize}
-			\item Ideal experiment: from a pool of people initially receiving a transfer, randomly duplicate the transfer amount to part of the group and substract it from the rest.
-			\item Closest we can get in our setting: Difference-in-Difference
-			\begin{itemize}
-				\item 27,543 were receiving a single UCT by September 2011 and were visited in the period September 2011 - July 2013.
-				\item 15,278 stopped receiving the transfer.
-				\item 7,329 duplicated their amount.
-			\end{itemize}
-			\item Other approach: two separate RDs.
-		\end{itemize}
+\frametitle{Results: No food because of lack of money in the previous 30 days}
+\begin{itemize}
+	\item Ideal experiment: from a pool of people initially receiving a transfer, randomly duplicate the transfer amount to part of the group and substract it from the rest.
+	\item Closest we can get in our setting: Difference-in-Difference
+	\begin{itemize}
+		\item 27,543 were receiving a single UCT by September 2011 and were visited in the period September 2011 - July 2013.
+		\item 15,278 stopped receiving the transfer.
+		\item 7,329 duplicated their amount.
+	\end{itemize}
+	\item Other approach: two separate RDs.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Other results to explore}
+\frametitle{Potential contributions}
 \begin{itemize}
-	\item Intra-household: heterogeneous effects across members of the household 
+	\item First paper to look at impact of losing a cash transfer from a CCT or UCT program.
+	Intra-household: heterogeneous effects across members of the household 
 	\item Length: heterogeneous effects across ``old'' and ``recent'' beneficiaries.
 	\item Motive matters: Losing the transfer due to VI, educational conditionality or age (DID with multiple treatments, see Fricke (2017)).
 \end{itemize}

@@ -241,7 +241,7 @@ docs2Visitas = docs2Visitas[docs2Visitas==2].index.tolist()
 docs2VisitasF = pd.DataFrame(data={'Value': [0]}, index=docs2Visitas)
 
   
-summStats3 = pd.DataFrame(data={'2009': [0], '2010': [0], '2011': [0], '2012': [0], '2013': [0], '2014': [0], \
+summStats3 = pd.DataFrame(data={'2011': [0], '2012': [0], '2013': [0], '2014': [0], \
                                 '2015': [0], '2016': [0], '2017': [0], '2018': [0]})
 
 for yr in [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]:    
@@ -258,4 +258,16 @@ for yr in [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]:
 
 with open('../Output/summStats3.tex','w') as tf:
     tf.write(summStats3.to_latex(bold_rows=True, longtable=True))
+    
+# Plot visits by year
+plt.figure()
+plt.bar(['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018*'], summStats3.iloc[1], color='darkred')
+plt.axhline(y=6000, color='orange', linestyle='dashed')
+#plt.text(0.5, 0.5,'08-11 avg.')
+#plt.annotate('local max', xy=(5, 1), xytext=(6, 5),
+#            arrowprops=dict(facecolor='black', shrink=0.05),
+#            )
+plt.legend()
+plt.savefig('../Output/nHouse.png')
+plt.show()
    

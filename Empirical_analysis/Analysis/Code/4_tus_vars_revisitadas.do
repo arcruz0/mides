@@ -170,6 +170,36 @@ generate iccNormSegundoTus2One = iccNormSegundoTusOne * iccNormSegundoTusOne
 generate iccNorm2InteractedPrimerTusOne = iccNormPrimerTus2One * iccSuperaPrimerTUSOne
 generate iccNorm2InteractedSegundoTusOne = iccNormSegundoTus2One * iccSuperaSegundoTUSOne
 
+generate mitadBajaICCOne = .
+replace mitadBajaICCOne = 1 if iccOne < umbral_nuevo_tus + (umbral_nuevo_tus_dup - umbral_nuevo_tus)/2
+replace mitadBajaICCOne = 0 if iccOne >= umbral_nuevo_tus + (umbral_nuevo_tus_dup - umbral_nuevo_tus)/2
+
+generate iccNormPrimerTusSi = iccNormPrimerTus * mitadBajaICC
+generate iccNormSegundoTusSi = iccNormSegundoTus * (1 - mitadBajaICC)
+generate iccNormInteractedPrimerTusSi = iccNormInteractedPrimerTus * mitadBajaICC
+generate iccNormInteractedSegundoTusSi = iccNormInteractedSegundoTus * (1 - mitadBajaICC)
+generate iccSuperaPrimerTUSNoSec = iccSuperaPrimerTUS
+replace iccSuperaPrimerTUSNoSec = 0 if iccSuperaSegundoTUS == 1
+
+generate iccNormPrimerTus2Si = iccNormPrimerTus2 * mitadBajaICC
+generate iccNormSegundoTus2Si = iccNormSegundoTus2 * (1 - mitadBajaICC)
+generate iccNorm2InteractedPrimerTusSi = iccNorm2InteractedPrimerTus * mitadBajaICC
+generate iccNorm2InteractedSegundoTusSi = iccNorm2InteractedSegundoTus * (1 - mitadBajaICC)
+
+* Control variables not normalized
+gen iccLessPrimTUSOne = 0
+replace iccLessPrimTUSOne = iccOne if iccOne <= umbral_nuevo_tus
+
+gen iccMoreSecTUSOne = 0
+replace iccMoreSecTUSOne = iccOne if iccOne >= umbral_nuevo_tus_dup
+
+gen iccMiddTUSOne = 0
+replace iccMiddTUSOne = iccOne if iccOne < umbral_nuevo_tus_dup & iccOne > umbral_nuevo_tus
+
+gen iccLessPrimTUS2One= iccLessPrimTUSOne * iccLessPrimTUSOne
+gen iccMoreSecTUS2One = iccMoreSecTUSOne * iccMoreSecTUSOne
+gen iccMiddTUS2One = iccMiddTUSOne * iccMiddTUSOne
+
 * Variable to define bins
 gen iccPrimTusOne0025 = . 
 foreach bin in 1 2 3 4 5 6 7 8 9 10 11 {
@@ -195,10 +225,49 @@ foreach bin in 1 2 3 4 5 6 7 8 9 {
 	replace iccSegTusOne002 = `bin' if iccNormSegundoTusOne < -0.02*(`bin'-1) & iccNormSegundoTusOne>=-0.02*`bin'
 }
 
+gen iccSegTusOne0025 = . 
+foreach bin in 1 2 3 4 5 6 7 {
+	replace iccSegTusOne0025 = `bin'+7 if iccNormSegundoTusOne >= 0.025*(`bin'-1) & iccNormSegundoTusOne<0.025*`bin'
+	replace iccSegTusOne0025 = `bin' if iccNormSegundoTusOne < -0.025*(`bin'-1) & iccNormSegundoTusOne>=-0.025*`bin'
+}
+
+gen iccSegTusOne005 = . 
+foreach bin in 1 2 3 4 {
+	replace iccSegTusOne005 = `bin'+4 if iccNormSegundoTusOne >= 0.05*(`bin'-1) & iccNormSegundoTusOne<0.05*`bin'
+	replace iccSegTusOne005 = `bin' if iccNormSegundoTusOne < -0.05*(`bin'-1) & iccNormSegundoTusOne>=-0.05*`bin'
+}
+
+gen iccPrimTusOne003 = . 
+foreach bin in 1 2 3 4 5 {
+	replace iccPrimTusOne003 = `bin'+5 if iccNormPrimerTusOne >= 0.03*(`bin'-1) & iccNormPrimerTusOne<0.03*`bin'
+	replace iccPrimTusOne003 = `bin' if iccNormPrimerTusOne < -0.03*(`bin'-1) & iccNormPrimerTusOne>=-0.03*`bin'
+}
+
+gen iccSegTusOne0017 = . 
+foreach bin in 1 2 3 {
+	replace iccSegTusOne0017 = `bin'+3 if iccNormSegundoTusOne >= 0.017*(`bin'-1) & iccNormSegundoTusOne<0.017*`bin'
+	replace iccSegTusOne0017 = `bin' if iccNormSegundoTusOne < -0.017*(`bin'-1) & iccNormSegundoTusOne>=-0.017*`bin'
+}
+
+gen iccPrimTusOne0017 = . 
+foreach bin in 1 2 3 {
+	replace iccPrimTusOne0017 = `bin'+3 if iccNormPrimerTusOne >= 0.017*(`bin'-1) & iccNormPrimerTusOne<0.017*`bin'
+	replace iccPrimTusOne0017 = `bin' if iccNormPrimerTusOne < -0.017*(`bin'-1) & iccNormPrimerTusOne>=-0.017*`bin'
+}
+
 *** Binscatters por persona
-local bandwith = "002"
+local bandwith = "0017"
 
 ** Educación
+* All the sample (around 1st TUS)
+binscatter asisteEscuelaTwo iccNormPrimerTusOne if edad_visitaTwo<18, xq (iccPrimTusOne`bandwith') rd(0) linetype(qfit) xtitle(ICCOne - First TUS thres) ytitle(Asiste segunda visita)
+graph export ..\Output\asisteEscuelaTwo_prim_TUS.png, replace
+
+* All the sample (around 2nd TUS)
+binscatter asisteEscuelaTwo iccNormSegundoTusOne if edad_visitaTwo<18, xq (iccSegTusOne`bandwith') rd(0) linetype(qfit) xtitle(ICCOne - Sec TUS thres) ytitle(Asiste segunda visita)
+graph export ..\Output\asisteEscuelaTwo_seg_TUS.png, replace
+
+
 * Not receiving TUS initially
 binscatter asisteEscuelaTwo iccNormPrimerTusOne if edad_visitaTwo<18 & hogarzerocobratusOne == 0, xq (iccPrimTusOne`bandwith') rd(0) linetype(qfit) xtitle(ICCOne - First TUS thres) ytitle(Asiste segunda visita)
 graph export ..\Output\asisteEscuelaTwo_prim_0TUS.png, replace
@@ -321,7 +390,11 @@ foreach var in sinalimentos adultonocomio menornocomio merendero canasta {
 	* Receiving 2 TUS initially and in the threshold of losing it
 	binscatter `var'Two iccNormSegundoTusOne if hogarzerocobratusOne == 1 & hogarzerotusdobleOne == 1, xq (iccSegTusOne`bandwith') rd(0) linetype(qfit) xtitle(ICCOne - Sec TUS thres) ytitle(`var' segunda visita)
 	graph export ..\Output\\`var'Two_seg_2TUS.png, replace
-
+	
+	* Receiving 1 TUS initially and in the threshold of losing it Para Mdeo
+	binscatter `var'Two iccNormSegundoTusOne if hogarzerocobratusOne == 1 & hogarzerotusdobleOne == 1 & umbral_nuevo_tus<0.7, xq (iccSegTusOne`bandwith') rd(0) linetype(qfit) xtitle(ICCOne - Sec TUS thres) ytitle(`var' segunda visita)
+	graph export ..\Output\\`var'Two_seg_2TUSMdeo.png, replace
+	
 }
 
 * UTE, OSE regularizado
@@ -419,10 +492,11 @@ foreach var in sinalimentos adultonocomio menornocomio merendero canasta {
 	* Receiving 2 TUS initially and in the threshold of losing it
 	ivregress 2sls `var'Two `var'One iccNormSegundoTusOne iccNormInteractedSegundoTusOne iccNormSegundoTus2One iccNorm2InteractedSegundoTusOne (hogarzerotusdobleTwo = iccSuperaSegundoTUSOne)  if hogarzerocobratusOne == 1 & hogarzerotusdobleOne == 1, robust first	
 	
-	* Receiving 1 TUS and looking at both thresholds
-	ivregress 2sls `var'Two `var'One iccNormSegundoTusOne iccNormInteractedSegundoTusOne iccNormSegundoTus2One iccNorm2InteractedSegundoTusOne (hogarzerotusdobleTwo hogarNOzerocobratusTwo = iccSuperaPrimerTUSOne iccSuperaSegundoTUSOne)  if hogarzerocobratusOne == 1 & hogarzerotusdobleOne == 0, robust first	
+	* Receiving 1 TUS and looking at both thresholds for Mdeo
+	ivregress 2sls `var'Two `var'One iccLessPrimTUSOne iccMoreSecTUSOne iccMiddTUSOne iccLessPrimTUS2One iccMoreSecTUS2One iccMiddTUS2One (hogarzerotusdobleTwo hogarNOzerocobratusTwo = iccSuperaPrimerTUSOne iccSuperaSegundoTUSOne)  if hogarzerocobratusOne == 1 & hogarzerotusdobleOne == 0, robust first	
 	
 	}
+
 
 ** Domestic violence
 foreach var in vd vdMujer vdMenor vdAdultomayor vdVaron {
