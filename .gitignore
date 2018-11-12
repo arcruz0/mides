@@ -17,6 +17,13 @@
 *.gdbtable
 *.gdbtablx
 *.mxd
+*.lyr
+*.cpg
+*.dbf
+*.sbn
+*.sbx
+*.shp
+*.shx
 
 ## Other files
 *.tmp
@@ -53,6 +60,7 @@
 *.gif
 *.png
 *.bmp
+*.emf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
@@ -149,3 +157,9 @@ sympy-plots-for-*.tex/
 
 ## Folders
 Empirical_analysis/Old/
+Empirical_analysis/Build/Input/
+Empirical_analysis/Build/Temp/
+Empirical_analysis/Build/Output/
+Empirical_analysis/Analysis/Input/
+Empirical_analysis/Analysis/Temp/
+Empirical_analysis/Analysis/Output/

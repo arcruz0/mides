@@ -51,7 +51,7 @@ xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['sinalimentosTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])].mean()
+    yBins[i]=df['sinalimentosTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])  & (df['parentescoOne']==1)].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
@@ -67,7 +67,7 @@ xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['adultonocomioTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])].mean()
+    yBins[i]=df['adultonocomioTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])  & (df['parentescoOne']==1)].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
@@ -83,7 +83,7 @@ xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['menornocomioTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])].mean()
+    yBins[i]=df['menornocomioTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])  & (df['parentescoOne']==1)].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
@@ -94,12 +94,27 @@ plt.title('Perc. of households with "No Food for Minors" during 2nd visit')
 plt.savefig('../Output/menornocomio.png')
 plt.show()
 
-
 xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['vdTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])].mean()
+    yBins[i]=df['menrenderoTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])  & (df['parentescoOne']==1)].mean()
+        
+plt.figure()
+plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
+plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
+plt.ylabel('% No Food for Minors')
+plt.xlabel('VI - First threshold')
+plt.title('Perc. of households with "No Food for Minors" during 2nd visit')
+plt.savefig('../Output/merendero.png')
+plt.show()
+
+## Violencia Doméstica
+xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+yBins=np.ones((bins,1))               # The share of household with TUS in every bin
+        
+for i in range(bins-1):
+    yBins[i]=df['vdTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])  & (df['parentescoOne']==1)].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
@@ -114,7 +129,7 @@ xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['vdMujerTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])].mean()
+    yBins[i]=df['vdMujerTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])  & (df['parentescoOne']==1)].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
@@ -125,12 +140,12 @@ plt.title('Perc. of households with Domestic Violence situations during 2nd visi
 plt.savefig('../Output/vd.png')
 plt.show()
 
-
+## Embarazada
 xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['embarazadaTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['hombreOne']==0) & (df['edad_visitaTwo']<40)].mean()
+    yBins[i]=df['embarazadaTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['hombreOne']==0) & (df['edad_visitaTwo']<30)].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
@@ -145,7 +160,7 @@ xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['canastaTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['hombreOne']==0) & (df['edad_visitaTwo']<40)].mean()
+    yBins[i]=df['canastaTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])  & (df['parentescoOne']==1)].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
@@ -153,15 +168,45 @@ plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='re
 plt.ylabel('% Pregnant')
 plt.xlabel('VI - First threshold')
 plt.title('Perc. of pregnants during 2nd visit')
-plt.savefig('../Output/embarazada.png')
+plt.savefig('../Output/canasta.png')
 plt.show()
-
 
 xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['tienetelefonocelularTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['hombreOne']==0) & (df['edad_visitaTwo']<40)].mean()
+    yBins[i]=df['tienetelefonocelularTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])].mean()
+        
+plt.figure()
+plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
+plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
+plt.ylabel('% Pregnant')
+plt.xlabel('VI - First threshold')
+plt.title('Perc. of pregnants during 2nd visit')
+plt.savefig('../Output/indocumentados.png')
+plt.show()
+
+### Regularizado agua y UTE (aguacorriente, redelectrica)
+xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+yBins=np.ones((bins,1))               # The share of household with TUS in every bin
+        
+for i in range(bins-1):
+    yBins[i]=df['uteRegularizadoTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])  & (df['parentescoOne']==1)].mean()
+        
+plt.figure()
+plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
+plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
+plt.ylabel('% Pregnant')
+plt.xlabel('VI - First threshold')
+plt.title('Perc. of pregnants during 2nd visit')
+plt.savefig('../Output/indocumentados.png')
+plt.show()
+
+xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+yBins=np.ones((bins,1))               # The share of household with TUS in every bin
+        
+for i in range(bins-1):
+    yBins[i]=df['oseRegularizadoTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])  & (df['parentescoOne']==1)].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
@@ -173,7 +218,48 @@ plt.savefig('../Output/indocumentados.png')
 plt.show()
 
 
-
-### Regularizado agua y UTE (aguacorriente, redelectrica)
-
 ### Residuos cuadra y aguas contaminadas (residuoscuadra, aguascontaminadas)
+xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+yBins=np.ones((bins,1))               # The share of household with TUS in every bin
+        
+for i in range(bins-1):
+    yBins[i]=df['residuoscuadraTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])  & (df['parentescoOne']==1)].mean()
+        
+plt.figure()
+plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
+plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
+plt.ylabel('% Pregnant')
+plt.xlabel('VI - First threshold')
+plt.title('Perc. of pregnants during 2nd visit')
+plt.savefig('../Output/indocumentados.png')
+plt.show()
+
+xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+yBins=np.ones((bins,1))               # The share of household with TUS in every bin
+        
+for i in range(bins-1):
+    yBins[i]=df['aguascontaminadasTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['parentescoOne']==1)].mean()
+        
+plt.figure()
+plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
+plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
+plt.ylabel('% Pregnant')
+plt.xlabel('VI - First threshold')
+plt.title('Perc. of pregnants during 2nd visit')
+plt.savefig('../Output/indocumentados.png')
+plt.show()
+
+xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+yBins=np.ones((bins,1))               # The share of household with TUS in every bin
+        
+for i in range(bins-1):
+    yBins[i]=df['indocumentadosTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['parentescoOne']==1)].mean()
+        
+plt.figure()
+plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
+plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
+plt.ylabel('Number of undocumented')
+plt.xlabel('VI - First threshold')
+plt.title('Number of undocumented')
+plt.savefig('../Output/indocumentados.png')
+plt.show()

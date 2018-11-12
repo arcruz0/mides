@@ -16,7 +16,7 @@ merge 1:1 flowcorrelativeid nrodocumento using ..\Input\MIDES\visitas_personas_v
 drop _merge
 
 * Merge con base hogares para agregar variables de hogares que quiera
-merge m:1 flowcorrelativeid using ..\Input\MIDES\visitas_hogares_vars.dta, keep (master matched) keepusing (colecho aguacorriente redelectrica residuoscuadra accesosaneamiento canasta aguascontaminadas merendero sinalimentos adultonocomio menornocomio contramujer contravaron contramenor contraadultomayor indocumentados calidadocupacionvivienda tienecalefon tienerefrigerador tienetvcable tienevideo tienelavarropas tienelavavajilla tienemicroondas tienecomputador tienetelefonofijo tienetelefonocelular tieneautomovil tienecomputadorplanceibal)
+merge m:1 flowcorrelativeid using ..\Input\MIDES\visitas_hogares_vars.dta, keep (master matched) keepusing (colecho aguacorriente redelectrica residuoscuadra accesosaneamiento canasta aguascontaminadas merendero sinalimentos adultonocomio menornocomio contramujer contravaron contramenor contraadultomayor indocumentados calidadocupacionvivienda tienecalefon tienerefrigerador tienetvcable tienevideo tienelavarropas tienelavavajilla tienemicroondas tienecomputador tienetelefonofijo tienetelefonocelular tieneautomovil tienecomputadorplanceibal pedido_visita cuando_pedido)
 drop _merge
 
 * Elimino personas que fueron visitadas más de 3 veces (98% de los revisitados fueron revisitads solamente 1,2, o 3 veces)

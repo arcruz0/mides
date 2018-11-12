@@ -55,7 +55,44 @@ replace habilitado2013 = 1 if fechaNacNumeric <= 13814 // Fecha numeric de votac
 gen habilitado2016 = 0
 replace habilitado2016 = 1 if fechaNacNumeric <= 14913 // Fecha numeric de votación del 30 de Oct de 2016 es 20757, por lo que aquellos nacidos el 2000/10/30 o antes podian votar (valor numeric de esta fecha 14913)
 
+* Creo variable con edad del individuo al momento de cada elección
+generate yearNacimiento = substr(fechaNacString, 1, 4)
+generate monthNacimiento = substr(fechaNacString, 5, 2)
+generate dayNacimiento = substr(fechaNacString, 7, 2)
+destring yearNacimiento, replace
+destring monthNacimiento, replace
+destring dayNacimiento, replace
+
+gen edadPP2008 = .
+replace edadPP2008 = 0 if fechaNacNumeric<=17831 & fechaNacNumeric>17465 // (17465 es el 26 de oct de 2007)
+replace edadPP2008 = 2008 - yearNacimiento if monthNacimiento<10 & fechaNacNumeric<=17465
+replace edadPP2008 = 2008 - yearNacimiento - 1 if monthNacimiento>10 & fechaNacNumeric<=17465
+replace edadPP2008 = 2008 - yearNacimiento - 1 if monthNacimiento==10 & dayNacimiento>26 & fechaNacNumeric<=17465
+replace edadPP2008 = 2008 - yearNacimiento if monthNacimiento==10 & dayNacimiento<=26 & fechaNacNumeric<=17465
+
+gen edadPP2011 = .
+replace edadPP2011 = 0 if fechaNacNumeric<=18930 & fechaNacNumeric>18565 // (18565 es el 30 de oct de 2010)
+replace edadPP2011 = 2011 - yearNacimiento if monthNacimiento<10 & fechaNacNumeric<=18565
+replace edadPP2011 = 2011 - yearNacimiento - 1 if monthNacimiento>10 & fechaNacNumeric<=18565
+replace edadPP2011 = 2011 - yearNacimiento - 1 if monthNacimiento==10 & dayNacimiento>30 & fechaNacNumeric<=18565
+replace edadPP2011 = 2011 - yearNacimiento if monthNacimiento==10 & dayNacimiento<=30 & fechaNacNumeric<=18565
+
+gen edadPP2013 = .
+replace edadPP2013 = 0 if fechaNacNumeric<=19658 & fechaNacNumeric>19293 // (19293 es el 27 de oct de 2012)
+replace edadPP2013 = 2013 - yearNacimiento if monthNacimiento<10 & fechaNacNumeric<=19293
+replace edadPP2013 = 2013 - yearNacimiento - 1 if monthNacimiento>10 & fechaNacNumeric<=19293
+replace edadPP2013 = 2013 - yearNacimiento - 1 if monthNacimiento==10 & dayNacimiento>27 & fechaNacNumeric<=19293
+replace edadPP2013 = 2013 - yearNacimiento if monthNacimiento==10 & dayNacimiento<=27 & fechaNacNumeric<=19293
+
+gen edadPP2016 = .
+replace edadPP2016 = 0 if fechaNacNumeric<=20757 & fechaNacNumeric>20391 // (20391 es el 30 de oct de 2015)
+replace edadPP2016 = 2016 - yearNacimiento if monthNacimiento<10 & fechaNacNumeric<=20391
+replace edadPP2016 = 2016 - yearNacimiento - 1 if monthNacimiento>10 & fechaNacNumeric<=20391
+replace edadPP2016 = 2016 - yearNacimiento - 1 if monthNacimiento==10 & dayNacimiento>30 & fechaNacNumeric<=20391
+replace edadPP2016 = 2016 - yearNacimiento if monthNacimiento==10 & dayNacimiento<=30 & fechaNacNumeric<=20391
+
 drop fechanacimiento fechaNacString fechaNacNumeric
+
 *** Creo variables a nivel de hogar en base personas
 
 * Variable PP

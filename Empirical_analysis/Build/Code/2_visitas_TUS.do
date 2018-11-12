@@ -168,6 +168,74 @@ forvalues i = 49/120 {
 }
 }
 
+* Genero variables de si hogar perdió, ganó, mantuvo transferencia 12 y 6 meses luego de visita (para los mapas)
+foreach val in 6 12 {
+gen hogar0a0Mes`val' = .
+replace hogar0a0Mes`val' = 0 if hogarZerocobraTus!=. & hogarMascobraTus`val'!=.
+replace hogar0a0Mes`val' = 1 if hogarZerocobraTus==0 & hogarMascobraTus`val'==0
+
+gen hogar0a1Mes`val' = .
+replace hogar0a1Mes`val' = 0 if hogarZerocobraTus!=. & hogarMascobraTus`val'!=. & hogarMastusDoble`val'!=.
+replace hogar0a1Mes`val' = 1 if hogarZerocobraTus==0 & hogarMascobraTus`val'==1 & hogarMastusDoble`val'==0
+
+gen hogar0a2Mes`val' = .
+replace hogar0a2Mes`val' = 0 if hogarZerocobraTus!=. & hogarMascobraTus`val'!=. & hogarMastusDoble`val'!=.
+replace hogar0a2Mes`val' = 1 if hogarZerocobraTus==0 & hogarMascobraTus`val'==1 & hogarMastusDoble`val'==1
+
+gen hogar1a0Mes`val' = .
+replace hogar1a0Mes`val' = 0 if hogarZerocobraTus!=. & hogarMascobraTus`val'!=. & hogarZerotusDoble!=.
+replace hogar1a0Mes`val' = 1 if hogarZerotusDoble==0 & hogarZerocobraTus==1 & hogarMascobraTus`val'==0
+
+gen hogar1a1Mes`val' = .
+replace hogar1a1Mes`val' = 0 if hogarZerocobraTus!=. & hogarMascobraTus`val'!=. & hogarZerotusDoble!=. & hogarMastusDoble`val'!=.
+replace hogar1a1Mes`val' = 1 if hogarZerotusDoble==0 & hogarZerocobraTus==1 & hogarMascobraTus`val'==1 & hogarMastusDoble`val'==0
+
+gen hogar1a2Mes`val' = .
+replace hogar1a2Mes`val' = 0 if hogarZerocobraTus!=. & hogarMascobraTus`val'!=. & hogarZerotusDoble!=. & hogarMastusDoble`val'!=.
+replace hogar1a2Mes`val' = 1 if hogarZerotusDoble==0 & hogarZerocobraTus==1 & hogarMascobraTus`val'==1 & hogarMastusDoble`val'==1
+
+gen hogar2a0Mes`val' = .
+replace hogar2a0Mes`val' = 0 if hogarZerocobraTus!=. & hogarMascobraTus`val'!=. & hogarZerotusDoble!=.
+replace hogar2a0Mes`val' = 1 if hogarZerotusDoble==1 & hogarZerocobraTus==1 & hogarMascobraTus`val'==0
+
+gen hogar2a1Mes`val' = .
+replace hogar2a1Mes`val' = 0 if hogarZerocobraTus!=. & hogarMascobraTus`val'!=. & hogarZerotusDoble!=. & hogarMastusDoble`val'!=.
+replace hogar2a1Mes`val' = 1 if hogarZerotusDoble==1 & hogarZerocobraTus==1 & hogarMascobraTus`val'==1 & hogarMastusDoble`val'==0
+
+gen hogar2a2Mes`val' = .
+replace hogar2a2Mes`val' = 0 if hogarZerocobraTus!=. & hogarMascobraTus`val'!=. & hogarZerotusDoble!=. & hogarMastusDoble`val'!=.
+replace hogar2a2Mes`val' = 1 if hogarZerotusDoble==1 & hogarZerocobraTus==1 & hogarMascobraTus`val'==1 & hogarMastusDoble`val'==1
+
+gen hogarMantuvoMes`val' = .
+replace hogarMantuvoMes`val' = 1 if (hogar2a2Mes`val'==1 | hogar1a1Mes`val'==1 | hogar0a0Mes`val'==1)
+
+gen hogarPerdioMes`val' = .
+replace hogarPerdioMes`val' = 1 if (hogar2a1Mes`val'==1 | hogar2a0Mes`val'==1 | hogar1a0Mes`val'==1)
+
+gen hogarGanoMes`val' = .
+replace hogarGanoMes`val' = 1 if (hogar0a1Mes`val'==1 | hogar0a2Mes`val'==1 | hogar1a2Mes`val'==1)
+
+replace hogarMantuvoMes`val' = 0 if (hogarPerdioMes`val'==1 | hogarGanoMes`val')
+replace hogarPerdioMes`val' = 0 if (hogarMantuvoMes`val'==1 | hogarGanoMes`val')
+replace hogarGanoMes`val' = 0 if (hogarMantuvoMes`val'==1 | hogarPerdioMes`val')
+
+generate hogarIndexTotCambios`val' = .
+replace hogarIndexTotCambios`val' = 1 if hogar0a0Mes`val'==1
+replace hogarIndexTotCambios`val' = 2 if hogar0a1Mes`val'==1
+replace hogarIndexTotCambios`val' = 3 if hogar0a2Mes`val'==1
+replace hogarIndexTotCambios`val' = 4 if hogar1a0Mes`val'==1
+replace hogarIndexTotCambios`val' = 5 if hogar1a1Mes`val'==1
+replace hogarIndexTotCambios`val' = 6 if hogar1a2Mes`val'==1
+replace hogarIndexTotCambios`val' = 7 if hogar2a0Mes`val'==1
+replace hogarIndexTotCambios`val' = 8 if hogar2a1Mes`val'==1
+replace hogarIndexTotCambios`val' = 9 if hogar2a2Mes`val'==1
+
+generate hogarIndexCambios`val' = .
+replace hogarIndexCambios`val' = 1 if hogarPerdioMes`val'==1
+replace hogarIndexCambios`val' = 2 if hogarMantuvoMes`val'==1
+replace hogarIndexCambios`val' = 3 if hogarGanoMes`val'==1
+}
+
 * Guardo base personas en csv para exportar
 export delimited using ..\Output\visitas_personas_TUS.csv, replace
 
