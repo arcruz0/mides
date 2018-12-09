@@ -3,11 +3,15 @@
 clear all
 cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Analysis\Temp"
 
-* Load dataset a nivel de personas
-import delimited ..\Input\MIDES\visitas_personas_otras_vars.csv, clear
+* Load dataset a nivel de personas con datos de voting PP
+import delimited ..\Input\MIDES\visitas_personas_PPySusp.csv, clear
 
 * Agrego variables de personas de base completa
 merge 1:1 flowcorrelativeid nrodocumento using ..\Input\MIDES\visitas_personas_vars.dta, keep (master matched) keepusing(edad_visita sexo parentesco)
+drop _merge
+
+* Agrego variables de base TUS
+merge 1:1 flowcorrelativeid using ..\Input\MIDES\visitas_hogares_TUS.dta, keep (master matched) keepusing(hogarzerocobratus hogarzerotusdoble hogarcobratus5* hogartusdoble5* hogarcobratus6* hogartusdoble6* hogarcobratus7* hogartusdoble7* hogarcobratus8* hogartusdoble8* hogarcobratus9* hogartusdoble9* hogarcobratus10* hogartusdoble10* hogarcobratus11* hogartusdoble11* hogarmascobratus* hogarmenoscobratus* hogarmastusdoble* hogarmenostusdoble*)
 drop _merge
 
 * Macros
@@ -50,7 +54,7 @@ foreach ms in 0 1 2 3 4 5 7 9 10 12 {	// No genero variables en nov-2012, feb-20
 	generate hogPerdioSimple2013`ms' = 0
 	local per = 70 - `ms'
 	local per2 = 70 - `ms' -1
-	local per3 = 70 - `ms' -1
+	local per3 = 70 - `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace hogPerdioSimple2013`ms' = 1 if hogarcobratus`per' == 0 & hogarcobratus`per2' == 1 & hogartusdoble`per2' == 0
@@ -65,7 +69,7 @@ foreach ms in 0 1 2 3 4 5 7 9 10 12 {
 	generate hogGanoSimple2013`ms' = 0
 	local per = 70 - `ms'
 	local per2 = 70 - `ms' -1
-	local per3 = 70 - `ms' -1
+	local per3 = 70 - `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace hogGanoSimple2013`ms' = 1 if hogarcobratus`per' == 1 & hogarcobratus`per2' == 0 & hogartusdoble`per2' == 0
@@ -80,7 +84,7 @@ foreach ms in 0 1 2 3 4 5 7 9 10 12 {
 	generate hogSimpleToDoub2013`ms' = 0
 	local per = 70 - `ms'
 	local per2 = 70 - `ms' -1
-	local per3 = 70 - `ms' -1
+	local per3 = 70 - `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace hogSimpleToDoub2013`ms' = 1 if hogartusdoble`per' == 1 & hogarcobratus`per2' == 1 & hogartusdoble`per2' == 0
@@ -95,7 +99,7 @@ foreach ms in 0 1 2 3 4 5 7 9 10 12 {
 	generate hogDoubToSimple2013`ms' = 0
 	local per = 70 - `ms'
 	local per2 = 70 - `ms' -1
-	local per3 = 70 - `ms' -1
+	local per3 = 70 - `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace hogDoubToSimple2013`ms' = 1 if hogartusdoble`per' == 0 & hogarcobratus`per' == 1 & hogartusdoble`per2' == 1
@@ -110,7 +114,7 @@ foreach ms in 0 1 2 3 4 5 7 9 10 12 {
 	generate hogPerdioDoub2013`ms' = 0
 	local per = 70 - `ms'
 	local per2 = 70 - `ms' -1
-	local per3 = 70 - `ms' -1
+	local per3 = 70 - `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace hogPerdioDoub2013`ms' = 1 if hogartusdoble`per' == 0 & hogarcobratus`per' == 0 & hogartusdoble`per2' == 1
@@ -125,7 +129,7 @@ foreach ms in 0 1 2 3 4 5 7 9 10 12 {
 	generate hogGanoDoub2013`ms' = 0
 	local per = 70 - `ms'
 	local per2 = 70 - `ms' -1
-	local per3 = 70 - `ms' -1
+	local per3 = 70 - `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace hogGanoDoub2013`ms' = 1 if hogartusdoble`per' == 1 & hogarcobratus`per2' == 0
@@ -376,11 +380,11 @@ foreach yr in 2016 {
 
 * 2013
 * Hogar perdió una simple
-foreach ms in 0 1 3 4 5 7 9 10 12 {	// No genero variables en dic-2013 por no haber datos TUS en ese momento
+foreach ms in 0 1 3 4 5 6 7 8 9 10 11 12 {	// No genero variables en dic-2013 por no haber datos TUS en ese momento
 	generate DhogPerdioSimple2013`ms' = 0
 	local per = 70 + `ms'
 	local per2 = 70 + `ms' -1
-	local per3 = 70 + `ms' -1
+	local per3 = 70 + `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace DhogPerdioSimple2013`ms' = 1 if hogarcobratus`per' == 0 & hogarcobratus`per2' == 1 & hogartusdoble`per2' == 0
@@ -391,11 +395,11 @@ foreach ms in 0 1 3 4 5 7 9 10 12 {	// No genero variables en dic-2013 por no ha
 	}
 
 * Hogar ganó una simple
-foreach ms in 0 1 3 4 5 7 9 10 12 {
+foreach ms in 0 1 3 4 5 6 7 8 9 10 11 12 {
 	generate DhogGanoSimple2013`ms' = 0
 	local per = 70 + `ms'
 	local per2 = 70 + `ms' -1
-	local per3 = 70 + `ms' -1
+	local per3 = 70 + `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace DhogGanoSimple2013`ms' = 1 if hogarcobratus`per' == 1 & hogarcobratus`per2' == 0 & hogartusdoble`per2' == 0
@@ -406,11 +410,11 @@ foreach ms in 0 1 3 4 5 7 9 10 12 {
 	}
 	
 * Hogar pasó de simple a doble
-foreach ms in 0 1 3 4 5 7 9 10 12 {
+foreach ms in 0 1 3 4 5 6 7 8 9 10 11 12 {
 	generate DhogSimpleToDoub2013`ms' = 0
 	local per = 70 + `ms'
 	local per2 = 70 + `ms' -1
-	local per3 = 70 + `ms' -1
+	local per3 = 70 + `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace DhogSimpleToDoub2013`ms' = 1 if hogartusdoble`per' == 1 & hogarcobratus`per2' == 1 & hogartusdoble`per2' == 0
@@ -421,11 +425,11 @@ foreach ms in 0 1 3 4 5 7 9 10 12 {
 	}
 	
 * Hogar pasó de doble a simple
-foreach ms in 0 1 3 4 5 7 9 10 12 {
+foreach ms in 0 1 3 4 5 6 7 8 9 10 11 12 {
 	generate DhogDoubToSimple2013`ms' = 0
 	local per = 70 + `ms'
 	local per2 = 70 + `ms' -1
-	local per3 = 70 + `ms' -1
+	local per3 = 70 + `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace DhogDoubToSimple2013`ms' = 1 if hogartusdoble`per' == 0 & hogarcobratus`per' == 1 & hogartusdoble`per2' == 1
@@ -436,11 +440,11 @@ foreach ms in 0 1 3 4 5 7 9 10 12 {
 	}
 
 * Hogar pasó de doble a 0
-foreach ms in 0 1 3 4 5 7 9 10 12 {
+foreach ms in 0 1 3 4 5 6 7 8 9 10 11 12 {
 	generate DhogPerdioDoub2013`ms' = 0
 	local per = 70 + `ms'
 	local per2 = 70 + `ms' -1
-	local per3 = 70 + `ms' -1
+	local per3 = 70 + `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace DhogPerdioDoub2013`ms' = 1 if hogartusdoble`per' == 0 & hogarcobratus`per' == 0 & hogartusdoble`per2' == 1
@@ -451,11 +455,11 @@ foreach ms in 0 1 3 4 5 7 9 10 12 {
 	}
 
 * Hogar pasó de 0 a doble
-foreach ms in 0 1 3 4 5 7 9 10 12 {
+foreach ms in 0 1 3 4 5 6 7 8 9 10 11 12 {
 	generate DhogGanoDoub2013`ms' = 0
 	local per = 70 + `ms'
 	local per2 = 70 + `ms' -1
-	local per3 = 70 + `ms' -1
+	local per3 = 70 + `ms' -2
 	capture confirm variable hogarcobratus`per2'
 	if !_rc {
 		replace DhogGanoDoub2013`ms' = 1 if hogartusdoble`per' == 1 & hogarcobratus`per2' == 0
@@ -516,7 +520,7 @@ foreach ms in 0 1 2 3 4 5 6 7 8 9 10 11 12 {
 	}	
 	
 * 2013 y 2016
-foreach ms in 0 1 3 4 5 7 9 10 12 {
+foreach ms in 0 1 3 4 5 6 7 8 9 10 11 12 {
 	generate DhogDoubToSimple20132016`ms' = DhogDoubToSimple2013`ms' + DhogDoubToSimple2016`ms'
 	generate DhogSimpleToDoub20132016`ms' = DhogSimpleToDoub2013`ms' + DhogSimpleToDoub2016`ms'
 	generate DhogGanoSimple20132016`ms' = DhogGanoSimple2013`ms' + DhogGanoSimple2016`ms'

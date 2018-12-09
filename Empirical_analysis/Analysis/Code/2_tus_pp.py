@@ -59,6 +59,3 @@ plt.savefig('../Output/pp.png')
 plt.show()
 
 
-
-
-(df['hogarzerocobratus']==1)

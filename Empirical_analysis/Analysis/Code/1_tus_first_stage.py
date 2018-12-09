@@ -18,7 +18,7 @@ df=pd.read_csv('../Input/MIDES/visitas_hogares_TUS.csv')
 
 
 ### Macros
-mesesLags = ['24','18','12','9','6','3','1']
+mesesLags = ['12','9','6','3','1']
 region = ['mdeo', 'int']
 years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
 
@@ -55,9 +55,10 @@ for rg in region:
         plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
         plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
         plt.ylabel('Mean # UCT, ' + ms + ' months after visit')
-        plt.xlabel('VI')
+        plt.ylim(-0.05,2.05) 
+        plt.xlabel('Vulnerability Index')
         plt.title('Mean number of UCT by binned VI, ' + ms + ' months after visit')
-        plt.savefig('../Output/' + rg + '_tus' + ms + '.png')
+        plt.savefig('../Output/' + rg + '_tus' + ms + '.pdf')
         plt.show()
 
 ### First stage para quienes no recibian TUS al momento de la visita   
@@ -75,9 +76,10 @@ for rg in region:
         plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
         plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
         plt.ylabel('Mean # UCT, ' + ms + ' months after visit')
-        plt.xlabel('VI')
+        plt.ylim(-0.05,2.05)           
+        plt.xlabel('Vulnerability Index')
         plt.title('Mean number of UCT by binned VI, ' + ms + ' months after visit')
-        plt.savefig('../Output/' + rg + '_noTus_tus' + ms + '.png')
+        plt.savefig('../Output/' + rg + '_noTus_tus' + ms + '.pdf')
         plt.show()
 
 
@@ -94,16 +96,16 @@ for rg in region:
         plt.axvline(x=afamThreshold[rg], color='orange', linestyle='dashed')   # AFAM threshold
         plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
         plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
-        plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
+        plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='green')
         plt.ylabel('Mean # UCT, ' + ms + ' months after visit')
-        plt.xlabel('ICC')
+        plt.ylim(-0.05,2.05)            
+        plt.xlabel('Vulnerability Index')
         plt.title('Mean number of UCT by binned VI, ' + ms + ' months after visit')
-        plt.savefig('../Output/' + rg + '_si1Tus_tus' + ms + '.png')
+        plt.savefig('../Output/' + rg + '_si1Tus_tus' + ms + '.pdf')
         plt.show()
 
 
 ### First stage para quienes recibian TUS duplicada al momento de la visita
-
 for rg in region:
     for ms in mesesLags:
         xLinspace=np.arange(xLinspaceStart[rg], xLinspaceEnd[rg], xLinspaceStep[rg])  # It will give me the first value of every bin
@@ -118,9 +120,10 @@ for rg in region:
         plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
         plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
         plt.ylabel('Mean # UCT, ' + ms + ' months after visit')
-        plt.xlabel('ICC')
+        plt.ylim(-0.05,2.05) 
+        plt.xlabel('Vulnerability Index')
         plt.title('Mean number of UCT by binned VI, ' + ms + ' months after visit')
-        plt.savefig('../Output/' + rg + '_si2Tus_tus' + ms + '.png')
+        plt.savefig('../Output/' + rg + '_si2Tus_tus' + ms + '.pdf')
         plt.show()
 
 ### First stage by year of visit
@@ -139,9 +142,10 @@ for rg in region:
             plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
             plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
             plt.ylabel('Mean # UCT, ' + ms + ' months after visit')
-            plt.xlabel('VI')
+            plt.ylim(-0.05,2.05)            
+            plt.xlabel('Vulnerability Index')
             plt.title('Mean number of UCT by binned VI, ' + ms + ' months after visit')
-            plt.savefig('../Output/' + rg + '_' + str(yr) + '_tus' + ms + '.png')
+            plt.savefig('../Output/' + rg + '_' + str(yr) + '_tus' + ms + '.pdf')
             plt.show()
 
 # Histograma de visitas
@@ -156,9 +160,9 @@ for rg in region:
     plt.axvline(x=afamThreshold[rg], color='orange', linestyle='dashed')   # AFAM threshold
     plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
     plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
-    plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
-    plt.ylabel('Household-visits')
+    plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2, np.log(yBins[:-1]+1), color=colorsRegion[rg])
+    plt.ylabel('Log # Household-visits (2011-2018)')
     plt.xlabel('Vulnerability Index')
     plt.title('Distribution of visits by Vulnerability Index')
-    plt.savefig('../Output/' + rg + 'distrib.png')
+    plt.savefig('../Output/' + rg + 'distrib.pdf')
     plt.show()

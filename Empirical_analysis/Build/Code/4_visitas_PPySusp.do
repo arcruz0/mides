@@ -110,9 +110,9 @@ foreach yr in 2013 2014 2015 2016 2017 2018 {
 	egen hogarSusp`yr' = total(susp`yr'), by(flowcorrelativeid)
 }
 
-* Guardo base personas en csv para exportar y para merge
+* Guardo base personas en csv y dta para exportar y para merge
 export delimited using ..\Output\visitas_personas_PPySusp.csv, replace
-save visitas_personas_PPySusp.dta, replace
+save ..\Output\visitas_personas_PPySusp.dta, replace
 
 * Guardo base personas para merge con base hogares
 collapse (mean) hogar*, by (flowcorrelativeid)
@@ -125,6 +125,6 @@ keep $varsKeep
 merge 1:1 flowcorrelativeid using personas_pp_susp_merge, keep (master matched)
 drop _merge
 
-* Guardo base hogares en csv para exportar y para merge
+* Guardo base hogares en csv y dta para exportar y para merge
 export delimited using ..\Output\visitas_hogares_PPySusp.csv, replace
-save visitas_hogares_PPySusp.dta, replace
+save ..\Output\visitas_hogares_PPySusp.dta, replace

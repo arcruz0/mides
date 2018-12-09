@@ -9,11 +9,11 @@ global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuev
 
 
 *** Load base TUS
-import delimited ..\Input\TUS_Muestra_enmascarado.csv, clear
+import delimited ..\Input\TUS_Muestra_enmascarado.csv, clear case(preserve)
 
 *** Me fijo si hay cédulas de identidad con más de una carga en mismo año y mes
-generate n=_n // Voy a utilizar esta variable para drop observations repetidas
-egen grupo=group(nrodocumento year month)
+generate n = _n // Voy a utilizar esta variable para drop observations repetidas
+egen grupo = group(nrodocumento year month)
 duplicates tag grupo, generate (grupo_unico)
 *browse if grupo_unico!=0
 
@@ -37,29 +37,34 @@ drop if n==3193302 & nrodocumento=="137331DF628C1D39268624DC04FD40E7"
 * 2013: Hay solo una persona repetida pero tiene distintos origenes de tarjeta. A priori se elimina una observacion random pero habría que revisar
 drop if n==2617553 & nrodocumento=="2B806DEB8330D4ED08C7461E9F9241BA"
 
-* 2012: Hay varias observaciones repetidas en los meses 1, 2 y 3. Para simplificar elimino todas las observaciones de estos meses pero habría que revisar esto
-drop if year==2012 & (month==1 | month==2 | month==3)
+* 2012: Hay varias observaciones repetidas en los meses 1, 2 y 3. Elimino aleatoriamente una de las repetidas
+sort grupo_unico year month nrodocumento
+gen number = 1
+replace number = 2 if grupo[_n] == grupo[_n-1]
+replace number = 3 if grupo[_n] == grupo[_n-1] & grupo[_n-1] == grupo[_n-2]
+drop if year==2012 & (month==1 | month==2 | month==3) & (number == 2 | number ==3)
 
 * 2011: en meses 10, 11 y 12 hay en varios casos observaciones idénticamente repetidas. Se elimina una de cada par.
-drop if n==1367682 & nrodocumento=="3367766381A33561B4B58F529D9D1242"
-forvalues j=1/20 {
-	drop if n==1367682 + `j'*2
-}
+drop if year==2011 & (month==10 | month==11 | month==12) & number == 2
 
-* 2009: Hay observaciones repetidas en mes 8. Por ahora, elimino todas las observaciones de este mes pero habría que revisar esto
-drop if year==2009 & month==8
+* 2009: Hay observaciones repetidas en mes 8. Por ahora, elimino aleatoriamente una de ellas y pongo datos de monto_carga, carga_inda, carga_mides, menores_carga como missing
+drop if year==2009 & month==8 & number==2
+foreach var in menores_carga monto_carga carga_mides carga_inda {
+replace `var' = . if year==2009 & month==8 & grupo_unico ==1
+}
 
 *** Corrijo variables TUS que voy a quedarme
 replace carga_mides=0 if carga_mides==.	// En algunos períodos coexistía la tarjeta MIDES y la INDA.
 replace carga_inda=0 if carga_inda==.	
 
+* En algunos casos duplica y duplicada no coinciden!!! Aquí estoy tomando 1 si una de las dos es 1 pero habría que REVISAR ESTO
 generate tusDoble=.
-replace tusDoble=1 if duplicada==1
-replace tusDoble=1 if duplica==1
-replace tusDoble=1 if duplica_anterior==1
 replace tusDoble=0 if duplicada==0
 replace tusDoble=0 if duplica==0
 replace tusDoble=0 if duplica_anterior==0
+replace tusDoble=1 if duplicada==1
+replace tusDoble=1 if duplica==1
+replace tusDoble=1 if duplica_anterior==1
 
 generate cobraTus=1
 
@@ -68,27 +73,23 @@ generate periodo = (year-2008)*12 + month	// Genero variable que se llama perío
 keep nrodocumento periodo year month menores_carga monto_carga carga_mides carga_inda tusDoble cobraTus
 
 
-* Genero 129 variables por variable: osea 129 variables del tipo monto_carga según el período
-* Períodos van de 1 (ene-2008) hasta 129 (set-2018) que es último dato disponible de TUS
-forvalues i = 1/129 {
+* Genero 110 variables por variable: osea 110 variables del tipo monto_carga según el período
+* Períodos van de 20 (ago-2008) hasta 129 (set-2018) que es último dato disponible de TUS (datos TUS comienzan en agosto 2009)
+forvalues i = 20/129 {
 	foreach var in $vars_tus {
 		generate `var'`i'=.
 		replace `var'`i'=`var' if periodo == `i'
 		}
 }
 
-* Hay muchos períodos para los cuales no hay datos de TUS por lo que directamente elimino estas variables
+* Hay muchos períodos para los cuales no hay datos de TUS por lo que directamente elimino estas variables (datos TUS comienzan en agosto 2009)
 * Períodos sin datos: 
-* 2009: 1, 2, 3, 4, 5, 6, 7, 9, 10, 11 	(períodos 13, 14, 15, 16, 17, 18, 19, 21, 22, 23)
+* 2009: 9, 10, 11 						(períodos 21, 22, 23)
 * 2010: 1, 5, 7 						(períodos 25, 29, 31)
 * 2012: 11								(períodos 59)
 * 2013: 2, 4, 12						(períodos 62, 64, 72)
 
-* Períodos que elimino provisoriamente: 
-* 2009: 8								(periodos 20)
-* 2012: 1, 2, 3							(49, 50, 51)
-
-foreach val in 13 14 15 16 17 18 19 21 22 23 25 29 31 59 62 64 72 20 49 50 51 {
+foreach val in 21 22 23 25 29 31 59 62 64 72 {
 	foreach var in $vars_tus {
 		drop `var'`val'
 }
@@ -100,7 +101,7 @@ drop menores_carga monto_carga carga_mides carga_inda tusDoble cobraTus
 save tus_para_merge.dta, replace
 
 *** Load base personas
-import delimited ..\Output\visitas_personas_vars.csv, clear
+import delimited ..\Output\visitas_personas_vars.csv, clear case(preserve)
 keep $varsKeep nrodocumento
 
 * Merge base personas con datos de TUS
@@ -108,18 +109,25 @@ merge m:1 nrodocumento using tus_para_merge, keep(master matched)
 drop _merge
 
 * Cambio missing por zeros de datos merged desde TUS
-forvalues i = 1/129 {
+forvalues i = 20/129 {
 	foreach var in $vars_tus {
 			cap replace `var'`i' = 0 if `var'`i' ==.
 }
 }
 
-* Genero 51 variables por variable: osea 51 variables del tipo monto_carga según el período
+* Genero 49 variables por variable: osea 49 variables del tipo monto_carga como +- fecha de visita
+* (para algunas fechas pongo dato del mes anterior si hay missing value para cierto mes-año)
 forvalues i = 1/24 {
 	foreach var in $vars_tus {
 		generate mas`var'`i'=.
-			forvalues j = 1/129 { 
-				cap replace mas`var'`i' = `var'`j' if periodo == `j' - `i'
+			forvalues j = 20/129 {
+				local j2 = `j' - 1
+				if (`j' == 59 | `j' == 62 | `j' == 64 | `j' == 72) {
+					replace mas`var'`i' = `var'`j2' if periodo == `j' - `i'
+					}
+				else {
+					cap replace mas`var'`i' = `var'`j' if periodo == `j' - `i'
+					}
 		}
 		}
 }
@@ -127,44 +135,67 @@ forvalues i = 1/24 {
 forvalues i = 1/24 {
 	foreach var in $vars_tus {
 		generate menos`var'`i'=.
-			forvalues j = 1/129 { 
-				cap replace menos`var'`i' = `var'`j' if periodo == `j' + `i'
+			forvalues j = 20/129 {
+				local j2 = `j' - 1
+				if (`j' == 59 | `j' == 62 | `j' == 64 | `j' == 72) {
+					replace menos`var'`i' = `var'`j2' if periodo == `j' + `i'
+					}
+				else {
+					cap replace menos`var'`i' = `var'`j' if periodo == `j' + `i'
+					}
 		}
 		}
 }
 
 foreach var in $vars_tus {
 	generate zero`var'=.
-		forvalues j = 1/129 { 
+		forvalues j = 20/129 {
+			local j2 = `j' - 1
+			if (`j' == 59 | `j' == 62 | `j' == 64 | `j' == 72) {
+				cap replace zero`var' = `var'`j2' if periodo == `j'
+				}
+			else {
 				cap replace zero`var' = `var'`j' if periodo == `j'
+				}
 }
 }
 
-* Elimino todas las variables por período excepto aquellas del año 2012, 2013, 2014, 2015, 2016, 2017
-forvalues i = 1/48 {
-cap drop menores_carga`i' monto_carga`i' carga_mides`i' carga_inda`i' tusDoble`i' cobraTus`i'
-}
-forvalues i = 121/129 {
-cap drop menores_carga`i' monto_carga`i' carga_mides`i' carga_inda`i' tusDoble`i' cobraTus`i'
-}
 
 * Genero variables a nivel de hogar medidas como +- fecha de visita
 forvalues i = 1/24 {
 	foreach var in $vars_tus {
 		egen hogarMenos`var'`i' = max(menos`var'`i'), by(flowcorrelativeid)
 		egen hogarMas`var'`i' = max(mas`var'`i'), by(flowcorrelativeid)
+		}
+	egen hogarMenoscuantTus`i' = total(menoscobraTus`i'), by(flowcorrelativeid)
+	egen hogarMascuantTus`i' = total(mascobraTus`i'), by(flowcorrelativeid)
+	egen hogarMenoscuantTusDob`i' = total(menostusDoble`i'), by(flowcorrelativeid)
+	egen hogarMascuantTusDob`i' = total(mastusDoble`i'), by(flowcorrelativeid)
+	egen hogarMenoscuantMinor`i' = total(menosmenores_carga`i'), by(flowcorrelativeid)
+	egen hogarMascuantMinor`i' = total(masmenores_carga`i'), by(flowcorrelativeid)
+	egen hogarMenoscuantMto`i' = total(menosmonto_carga`i'), by(flowcorrelativeid)
+	egen hogarMascuantMto`i' = total(masmonto_carga`i'), by(flowcorrelativeid)
 }
-}
+
 
 foreach var in $vars_tus {
 		egen hogarZero`var' = max(zero`var'), by(flowcorrelativeid)
 }
+egen hogarZerocuantTus = total(zerocobraTus), by(flowcorrelativeid)
+egen hogarZerocuantTusDob = total(zerotusDoble), by(flowcorrelativeid)
+egen hogarZerocuantMinor = total(zeromenores_carga), by(flowcorrelativeid)
+egen hogarZerocuantMto = total(zeromonto_carga), by(flowcorrelativeid)
 
-* Genero variables a nivel de hogar medidas según el período solamente para el 2012, 2013, 2014, 2015, 2016, 2017
-forvalues i = 49/120 {
+
+* Genero variables a nivel de hogar medidas según el período
+forvalues i = 20/129 {
 	foreach var in $vars_tus {
 		cap egen hogar`var'`i' = max(`var'`i'), by(flowcorrelativeid)
 		cap egen hogar`var'`i' = max(`var'`i'), by(flowcorrelativeid)
+	cap egen hogarcuantTus`i' = total(cobraTus`i'), by(flowcorrelativeid)
+	cap egen hogarcuantTusDob`i' = total(tusDoble`i'), by(flowcorrelativeid)
+	cap egen hogarcuantMinor`i' = total(menores_carga`i'), by(flowcorrelativeid)
+	cap egen hogarcuantMto`i' = total(monto_carga`i'), by(flowcorrelativeid)
 }
 }
 
@@ -215,9 +246,9 @@ replace hogarPerdioMes`val' = 1 if (hogar2a1Mes`val'==1 | hogar2a0Mes`val'==1 | 
 gen hogarGanoMes`val' = .
 replace hogarGanoMes`val' = 1 if (hogar0a1Mes`val'==1 | hogar0a2Mes`val'==1 | hogar1a2Mes`val'==1)
 
-replace hogarMantuvoMes`val' = 0 if (hogarPerdioMes`val'==1 | hogarGanoMes`val')
-replace hogarPerdioMes`val' = 0 if (hogarMantuvoMes`val'==1 | hogarGanoMes`val')
-replace hogarGanoMes`val' = 0 if (hogarMantuvoMes`val'==1 | hogarPerdioMes`val')
+replace hogarMantuvoMes`val' = 0 if (hogarPerdioMes`val'==1 | hogarGanoMes`val' ==1)
+replace hogarPerdioMes`val' = 0 if (hogarMantuvoMes`val'==1 | hogarGanoMes`val' ==1)
+replace hogarGanoMes`val' = 0 if (hogarMantuvoMes`val'==1 | hogarPerdioMes`val' ==1)
 
 generate hogarIndexTotCambios`val' = .
 replace hogarIndexTotCambios`val' = 1 if hogar0a0Mes`val'==1
@@ -236,15 +267,16 @@ replace hogarIndexCambios`val' = 2 if hogarMantuvoMes`val'==1
 replace hogarIndexCambios`val' = 3 if hogarGanoMes`val'==1
 }
 
-* Guardo base personas en csv para exportar
+* Guardo base personas en csv y dta para exportar
 export delimited using ..\Output\visitas_personas_TUS.csv, replace
+save ..\Output\visitas_personas_TUS.dta, replace
 
 * Guardo base personas en dta para merge
 collapse (mean) hogar*, by(flowcorrelativeid)
 save personas_para_merge.dta, replace
 
 *** Load base hogares
-import delimited ..\Output\visitas_hogares_vars.csv, clear
+import delimited ..\Output\visitas_hogares_vars.csv, clear case(preserve)
 keep $varsKeep
 
 * Paso datos de TUS de base personas a Hogares
@@ -253,4 +285,4 @@ drop _merge
 
 * Guardo base hogares en csv para exportar
 export delimited using ..\Output\visitas_hogares_TUS.csv, replace
-
+save ..\Output\visitas_hogares_TUS.dta, replace

@@ -38,7 +38,7 @@ region = ['mdeo', 'int']
 afamThreshold={'mdeo': 0.22488130, 'int': 0.25648700}
 tus1Threshold={'mdeo': 0.62260001, 'int': 0.70024847}
 tus2Threshold={'mdeo': 0.7568, 'int': 0.81}
-xLinspaceStart={'mdeo': 0.42260001, 'int': 0.50024847}
+xLinspaceStart={'mdeo': 0.12260001, 'int': 0.20024847}
 xLinspaceEnd={'mdeo': 0.82260001, 'int': 0.90024847}
 xLinspaceStep={'mdeo': 0.02, 'int': 0.02}
 binsRegion={'mdeo': int(round((xLinspaceEnd['mdeo']-xLinspaceStart['mdeo'])/xLinspaceStep['mdeo'])), 'int': int(round((xLinspaceEnd['int']-xLinspaceStart['int'])/xLinspaceStep['int']))}
@@ -65,43 +65,93 @@ dfSusp2['susp20152016'] = dfSusp2[['susp2015','susp2016']].max(axis=1)
 dfSusp2['montevideo'] = dfSusp2['departamento_x'].where(dfSusp2['departamento_x']==1, 0)
 dfSusp2['iccMenosThreshold1'] = dfSusp2['icc'] - dfSusp2['umbral_nuevo_tus']
 
+# Exporto base para cargar en Stata
+dfSusp2.to_csv('dfSusp2.csv', header=list(dfSusp2), index=None)
+
 ### Graphs
 
-# Por region
-for rg in region:
-    xLinspace=np.arange(xLinspaceStart[rg], xLinspaceEnd[rg], xLinspaceStep[rg])  # It will give me the first value of every bin
-    yBins=np.ones((binsRegion[rg],1))                    # The share of household with TUS in every bin
-    
-    for i in range(binsRegion[rg]-1):
-        yBins[i] = dfSusp2['susp2014'][(dfSusp2['icc']>=xLinspace[i]) & (dfSusp2['icc']<xLinspace[i+1]) \
-                   & (dfSusp2['montevideo']==montevideo[rg]) & (dfSusp2['year']==2013) \
-                   & (dfSusp2['edad_visita']>13) & (dfSusp2['edad_visita']<17)].mean()
-    
-    plt.figure()
-    #plt.axvline(x=afamThreshold[rg], color='orange', linestyle='dashed')   # AFAM threshold for Montevideo
-    plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold for Montevideo
-    plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold for Montevideo
+## Suspended on 2014 (or after)
 
-    plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='darkslateblue')
-    plt.ylabel('Suspended 2014')
-    plt.xlabel('ICC')
-    plt.title("Suspended 2014")
-    plt.savefig('../Output/cobraTusMdeo.png')
-    plt.show()
+# Por region
+for var in ['susp2014', 'susp20142015', 'suspPost2014', 'hogarMascobraTus12']:
+    for rg in region:
+        xLinspace=np.arange(xLinspaceStart[rg], xLinspaceEnd[rg], xLinspaceStep[rg])  # It will give me the first value of every bin
+        yBins=np.ones((binsRegion[rg],1))                    # The share of household with TUS in every bin
+        
+        for i in range(binsRegion[rg]-1):
+            yBins[i] = dfSusp2[var][(dfSusp2['icc']>=xLinspace[i]) & (dfSusp2['icc']<xLinspace[i+1]) \
+                       & (dfSusp2['montevideo']==montevideo[rg]) & (dfSusp2['year']==2012) \
+                       & (dfSusp2['edad_visita']>7) & (dfSusp2['edad_visita']<18) & (dfSusp2['asiste']!= 2)].mean()
+        
+        plt.figure()
+        #plt.axvline(x=afamThreshold[rg], color='orange', linestyle='dashed')   # AFAM threshold for Montevideo
+        plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold for Montevideo
+        plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold for Montevideo
+    
+        plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
+        plt.ylabel(var)
+        plt.xlabel('Vulnerability Index')
+        plt.title("Suspended 2014 " + rg)
+        plt.savefig('../Output/cobraTus' + rg + '.pdf')
+        plt.show()
 
 # Mdeo e interior juntos y solo primer umbral de TUS
-xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
-yBins=np.ones((20,1))                    # The share of household with TUS in every bin
+    xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+    yBins=np.ones((20,1))                    # The share of household with TUS in every bin
+        
+    for i in range(20-1):
+        yBins[i] = dfSusp2[var][(dfSusp2['iccMenosThreshold1']>=xLinspace[i]) & (dfSusp2['iccMenosThreshold1']<xLinspace[i+1]) \
+                     & (dfSusp2['year']==2012) & (dfSusp2['edad_visita']>13) & (dfSusp2['edad_visita']<17) & (dfSusp2['asiste']!= 2)].mean()
+        
+    plt.figure()
+    plt.axvline(x=0, color='orange', linestyle='dashed')   # First TUS threshold for Montevideo
+    plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='green')
+    plt.ylabel(var)
+    plt.xlabel('Vulnerability Index')
+    plt.title("Suspended 2014")
+    plt.savefig('../Output/cobraTus.pdf')
+    plt.show()
     
-for i in range(20-1):
-    yBins[i] = dfSusp2['susp20132014'][(dfSusp2['iccMenosThreshold1']>=xLinspace[i]) & (dfSusp2['iccMenosThreshold1']<xLinspace[i+1]) \
-                 & (dfSusp2['year']<2014) & (dfSusp2['edad_visita']>10) & (dfSusp2['edad_visita']<18) & (dfSusp2['hogarZerocobraTus']==1)].mean()
+## Suspended on 2015 (or after)
+
+# Por region
+for var in ['susp2015', 'susp20152016', 'suspPost2015', 'hogarMascobraTus12']:
+    for rg in region:
+        xLinspace=np.arange(xLinspaceStart[rg], xLinspaceEnd[rg], xLinspaceStep[rg])  # It will give me the first value of every bin
+        yBins=np.ones((binsRegion[rg],1))                    # The share of household with TUS in every bin
+        
+        for i in range(binsRegion[rg]-1):
+            yBins[i] = dfSusp2[var][(dfSusp2['icc']>=xLinspace[i]) & (dfSusp2['icc']<xLinspace[i+1]) \
+                       & (dfSusp2['montevideo']==montevideo[rg]) & (dfSusp2['year']>=2012) & (dfSusp2['year']<=2014) \
+                       & (dfSusp2['edad_visita']>0) & (dfSusp2['edad_visita']<17)].mean()
+        
+        plt.figure()
+        #plt.axvline(x=afamThreshold[rg], color='orange', linestyle='dashed')   # AFAM threshold for Montevideo
+        plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold for Montevideo
+        plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold for Montevideo
     
-plt.figure()
-plt.axvline(x=0, color='orange', linestyle='dashed')   # First TUS threshold for Montevideo
-plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='darkslateblue')
-plt.ylabel('Suspended 2014')
-plt.xlabel('ICC')
-plt.title("Suspended 2014")
-plt.savefig('../Output/cobraTusMdeo.png')
-plt.show()
+        plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
+        plt.ylabel(var)
+        plt.xlabel('Vulnerability Index')
+        plt.title("Suspended 2015 " + rg)
+        plt.savefig('../Output/cobraTus' + rg + '.pdf')
+        plt.show()
+
+# Mdeo e interior juntos y solo primer umbral de TUS
+    xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+    yBins=np.ones((20,1))                    # The share of household with TUS in every bin
+        
+    for i in range(20-1):
+        yBins[i] = dfSusp2[var][(dfSusp2['iccMenosThreshold1']>=xLinspace[i]) & (dfSusp2['iccMenosThreshold1']<xLinspace[i+1]) \
+                     & (dfSusp2['year']>=2012) & (dfSusp2['year']<=2014) & (dfSusp2['edad_visita']>0) & (dfSusp2['edad_visita']<17)].mean()
+        
+    plt.figure()
+    plt.axvline(x=0, color='orange', linestyle='dashed')   # First TUS threshold for Montevideo
+    plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='green')
+    plt.ylabel(var)
+    plt.xlabel('Vulnerability Index')
+    plt.title("Suspended 2015")
+    plt.savefig('../Output/cobraTus.pdf')
+    plt.show()
+   
+# Regressions    

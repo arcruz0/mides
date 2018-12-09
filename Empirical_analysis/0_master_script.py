@@ -20,7 +20,9 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Output\visitas_personas_vars.csv
                Input\TUS_Muestra_enmascarado.csv
     Output:    Output\visitas_hogares_TUS.csv
+               Output\visitas_hogares_TUS.dta
                Output\visitas_personas_TUS.csv
+               Output\visitas_personas_TUS.dta
 
 3)  Objective: Generar dos archivos (hogares y personas) con datos mínimos de las
                visitas y datos completos de AFAM
@@ -29,7 +31,9 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Output\visitas_personas_vars.csv
                Input\AFAM_enmascarado (todas las 13 carpetas)
     Output:    Output\visitas_hogares_AFAM.csv
+               Output\visitas_hogares_AFAM.dta
                Output\visitas_personas_AFAM.csv
+               Output\visitas_personas_AFAM.dta
 
 4)  Objective: Generar dos archivos (hogares y personas) con datos mínimos de las
                visitas y datos PP y suspendidos educativos
@@ -39,7 +43,9 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Input\PP_Muestra_enmascarado.csv
                Input\Suspendidos_Muestra_enmascarado.csv
     Output:    Output\visitas_hogares_PPySusp.csv
+               Output\visitas_hogares_PPySusp.dta
                Output\visitas_personas_PPySusp.csv
+               Output\visitas_personas_PPySusp.dta
 
 5)  Objective: Generar variables de umbrales de AFAM y TUS según individuos 
                están en programas especiales (ej. Jóvenes en RED) y reemplazar 
@@ -59,21 +65,33 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Output\visitas_personas_vars.csv
                Output\visitas_personas_vars.dta
                Output\visitas_hogares_PPySusp.csv
+               Output\visitas_hogares_PPySusp.dta
                Output\visitas_personas_PPySusp.csv
-               Output\visitas_hogares_AFAM.csv
-               Output\visitas_personas_AFAM.csv
+               Output\visitas_personas_PPySusp.dta
                Output\visitas_hogares_TUS.csv
+               Output\visitas_hogares_TUS.dta
                Output\visitas_personas_TUS.csv
+               Output\visitas_personas_TUS.dta
+               Output\visitas_hogares_AFAM.csv
+               Output\visitas_hogares_AFAM.dta
+               Output\visitas_personas_AFAM.csv
+               Output\visitas_personas_AFAM.dta
     Output:    ..Analysis\Input\MIDES\visitas_hogares_vars.csv
                ..Analysis\Input\MIDES\visitas_hogares_vars.dta
                ..Analysis\Input\MIDES\visitas_personas_vars.csv
                ..Analysis\Input\MIDES\visitas_personas_vars.dta
                ..Analysis\Input\MIDES\visitas_hogares_PPySusp.csv
-               ..Analysis\Input\MIDES\visitas_personas_PPySusp.csv
-               ..Analysis\Input\MIDES\visitas_hogares_AFAM.csv
-               ..Analysis\Input\MIDES\visitas_personas_AFAM.csv
+               ..Analysis\Input\MIDES\visitas_hogares_PPySusp.dta
+               ..Analysis\Input\MIDES\visitas_personas_PPySusp.csv             
+               ..Analysis\Input\MIDES\visitas_personas_PPySusp.dta
                ..Analysis\Input\MIDES\visitas_hogares_TUS.csv
-               ..Analysis\Input\MIDES\visitas_personas_TUS.csv
+               ..Analysis\Input\MIDES\visitas_hogares_TUS.dta
+               ..Analysis\Input\MIDES\visitas_personas_TUS.csv               
+               ..Analysis\Input\MIDES\visitas_personas_TUS.dta
+               ..Analysis\Input\MIDES\visitas_hogares_AFAM.csv
+               ..Analysis\Input\MIDES\visitas_hogares_AFAM.dta
+               ..Analysis\Input\MIDES\visitas_personas_AFAM.csv              
+               ..Analysis\Input\MIDES\visitas_personas_AFAM.dta
 
 
 ****************************** ANALYSIS ***************************************
@@ -138,5 +156,23 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Input\MIDES\visitas_personas_vars.csv
                
     Output: 
+        
+9)  Objective: Mirar impactos por meses antes y después de visita con variables AFAM.
+    Code:      Code\9_tus_envars_afam.py
+    Input:     Input\MIDES\visitas_hogares_TUS.csv
+               Input\MIDES\visitas_personas_TUS.csv
+               Input\MIDES\visitas_hogares_AFAM.csv
+               Input\MIDES\visitas_personas_AFAM.csv
+               
+    Output:
+
+10) Objective: Mirar impactos ganar/perder en revisitas para grupos 
+               con mismos inobservables
+    Code:      Code\10_revisitados_inobservables.py
+               Code\10_revisitados_inobservables.do
+    Input:     Temp\vars_personas_revisitadas.csv
+
+               
+    Output:
 '''
 

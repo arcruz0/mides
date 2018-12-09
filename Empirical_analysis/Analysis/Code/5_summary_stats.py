@@ -273,8 +273,8 @@ for yr in [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]:
     summStats3.at['Number of houeshold-visits Int', str(yr)] = dfH[(dfH['year']==yr) & (dfH['departamento']>1)]['flowcorrelativeid'].size 
     summStats3.at['Number of census houeshold-visits', str(yr)] = dfH[(dfH['year']==yr) & (dfH['template']=='Censo')]['flowcorrelativeid'].size 
     summStats3.at['Number of recorr.tipo houeshold-visits', str(yr)] = dfH[(dfH['year']==yr) & (dfH['template']=='Visita por CI')]['flowcorrelativeid'].size 
-    summStats3.at['Meses promedio en crítica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].mean()
-    summStats3.at['Meses mediana en crítica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].median()
+    summStats3.at['Meses promedio en critica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].mean()
+    summStats3.at['Meses mediana en critica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].median()
     summStats3.at['Meses max en critica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].max()
     summStats3.at['Meses min en critica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].min()
     summStats3.at['Meses SD en critica', str(yr)] = dfH[(dfH['year']==yr) & (dfH['yearStartCritica'].isna()==False) & (dfH['yearEndCritica'].isna()==False)]['monthsEnCritica'].std()
@@ -291,7 +291,7 @@ plt.axhline(y=6000, color='orange', linestyle='dashed')
 #            arrowprops=dict(facecolor='black', shrink=0.05),
 #            )
 plt.legend()
-plt.savefig('../Output/nHouse.png')
+plt.savefig('../Output/nHouse.pdf')
 plt.show()
 
 

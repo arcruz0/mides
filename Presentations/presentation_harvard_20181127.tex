@@ -1,0 +1,555 @@
+\documentclass{beamer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usetheme{Madrid}
+\usecolortheme{beaver}
+
+\usepackage{eurosym}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{varioref}
+\usepackage{setspace}
+\usepackage{amsthm} 
+\usepackage{lscape}
+\usepackage{epstopdf}
+\usepackage{ifthen}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{longtable}
+\usepackage{amssymb}
+\usepackage{pdflscape}
+\usepackage{palatino}
+\usepackage{rotating}
+\usepackage{changepage}
+\usepackage{alltt}
+\usepackage{parskip}
+\usepackage{textcomp}
+\usepackage{enumerate}
+\usepackage{dcolumn}
+\usepackage{adjustbox}
+\usepackage{xcolor}
+\usepackage[hang,flushmargin]{footmisc} 
+\newcommand*{\myalign}[2]{\multicolumn{1}{#1}{#2}}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\newcolumntype{d}[1]{D{.}{.}{2.3} }
+
+\newtheorem{proposition}[theorem]{Proposition}
+
+\setcounter{MaxMatrixCols}{10}
+\usenavigationsymbolstemplate{} % Takes out beamer navigation buttons
+\setbeamertemplate{page number in head/foot}{} % Takes out numbering of slides
+
+\title[Retargeting Cash Transfer Programs] %optional
+{Retargeting Cash Transfer Programs: Evidence from Uruguay}
+
+ 
+\author[Alejandro Lagomarsino] % (optional, for multiple authors)
+{Alejandro Lagomarsino \& Lihuen Nocetto\inst{*} }
+
+\institute[] % (optional)
+{
+	\inst{*}%
+	Harvard University\\
+	Pontifical Catholic University of Chile
+}
+
+\date[PF/Labor Lunch - November 2018] % (optional)
+{PF/Labor Lunch. November 27, 2018}
+ 
+\graphicspath{ {../Empirical_analysis/Analysis/Output/} }	% Sets folder for \includegraphics
+
+\begin{document}
+	\setlength{\parindent}{10pt}
+	
+	\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Motivation}
+\begin{itemize}
+	\item Mistargeting of cash transfer programs is ubiquitous in the developing world. On a sample of 16 LAC economies:
+	\begin{itemize}
+		\item CCTs cover only 51\% of the extreme poor in households with children (coverage).
+		\item 39\% of CCT beneficiaries beneficiaries are not poor (leakage).
+
+	\end{itemize}
+	\item Lots of work on how to reduce leakage or increase coverage (Banerjee et al (2017), Alatas et al (2012)). 
+	\item Retargeting could produce substantial financial gains in terms of poverty alleviation and fiscal savings (Robles, Rubio \& Stampini (2015))
+	\begin{itemize}
+		\item These type of arguments rest on static models with no loss aversion.
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Research question}
+\begin{itemize}
+	\item Broad: How do people differentially respond to gains and losses from government cash transfers?
+	\item Today: How elastic to losses and gains of an unconditional cash transfer (UCT) are consumption and ``complaint'' behaviors?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{What this paper is about in a nutshell}
+\begin{itemize}
+\item FRDD in which individuals that were receiving one (zero) cash transfer, quasi-randomly lost (gained) it, and how that differentially impacts:
+\begin{itemize}
+	\item Complaints/demands to the government
+	\item Self-reported food insecurity
+	\item {\color{gray}Pro-social behavior}
+	\item {\color{gray}Access to other government welfare and non-welfare programs}
+	\item {\color{gray}Domestic violence}
+	\item {\color{gray}Durable goods}
+	\item {\color{gray}Education}
+	\item {\color{gray}Income/Employment}
+	\item {\color{gray}Health}
+\end{itemize}
+\item First paper to look at losses of UCTs or CCTs.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Outline}
+\begin{itemize}
+\item Background
+\item Empirical strategy
+\item First stage
+\item Preliminary results on complaints and food insecurity
+\item Discussion on robustness checks
+\item Conclusions and further steps
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Uruguay}
+\begin{itemize}
+\item \textbf{Population}: 3.5 MM
+\item \textbf{GDP Per Capita USD}: 16,000 (2017)
+\item \textbf{Avg. annual real GDP growth 2011-2017}: 3.0 \%
+\item \textbf{Poverty, less than \$5.5 (2011 PPP)}: 2011: 6\%; 2016: 3.7\%	
+\end{itemize}
+\begin{center}
+	\includegraphics[width=60mm]{map.png}
+	\label{map}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{UCT program: food card}
+\begin{itemize}
+\item \textbf{Managed by}: Ministry of Social Development.
+\item \textbf{Amount}: Depends in a non-linear way in number of children. 47 USD (monthly) in 2012 for household with two kids. Double amount for poorest 30,000 households.
+\item \textbf{Beginnings}: PANES households with children or pregnant women administratively enrolled in 2008 + 20,000 INDA households in 2009.
+\item \textbf{Target}: Initially ``all households with children in extreme poverty''.		
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Targeting issues}
+\begin{itemize}
+\item \textbf{Recognized}: On October 2011 a report by the Ministry identified severe targeting issues.
+\begin{itemize}
+\item Households in extreme poverty were 10,000 in 2009 and beneficiaries were 85,000.
+\item Not clear which is the target population: 5 scenarios considered for UCT.
+\item Type I error for UCT: 37\%, 39\%, 63\%, 42\%, 43\%.
+\item Type II error for UCT: 92\%, 82\%, 29\%, 64\%, 34\%.
+\end{itemize}
+\item \textbf{Steps taken}:
+\begin{itemize}
+\item Set target population to 60,000 poorest households.
+\item Proxy means-tested approach to decide whether to grant or withdraw UCT benefits.
+\item Increase household visits to (re) assess their status in the program.
+\end{itemize}	
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Household visits}
+\begin{center}
+\includegraphics[width=80mm]{nHouse.pdf}
+\label{nHouse}
+\end{center}
+{\small Who and how decided to visit which households?}
+\begin{itemize}
+	\item {\small``Requested'' visits: By phone or in one of the 38 regional offices.}
+	\item {\small``Non-requested'' visits: 2011 Census, administrative records from other programs, other ad-hoc criteria.}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Administrative data from the Ministry of Development}
+\begin{center}
+	\includegraphics[width=115mm]{summ.png}
+	\label{summ}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Questionnaire}
+\begin{center}
+\includegraphics[width=105mm]{mides.jpg}
+\label{mides}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Vulnerability Index}
+\begin{itemize}
+\item Construction: Estimated a probit in 2007 where $Y$ is a dummy equal to 1 when household belongs to the first income quintile (ECH 2006 sample: household below median income and with children).
+\item Independent variables considered in the estimation are confidential.
+\item Model run separately for Montevideo and the rest of the country.
+\item Thresholds defined to capture target population.
+\item Households never learn their Vulnerability Index.	
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Distribution of visits by Vulnerability Index (Montevideo)}
+\begin{center}
+	\includegraphics[width=110mm]{mdeodistrib.pdf}
+	\label{mdeodistrib}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Distribution of visits by Vulnerability Index (Rest of the country)}
+\begin{center}
+	\includegraphics[width=110mm]{intdistrib.pdf}
+	\label{intdistrib}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Empirical strategy}
+\begin{itemize}
+	\item Two FRDD (for beneficiaries and non-beneficiaries at $t=0$) with the Vulnerability Index as running variable, beneficiary status 1yr after the visit as the endogenous regressor, and outcome variables related to complaints and consumption.
+	\begin{itemize}
+		\item First stage:	
+		\begin{align*}
+		UCT_{i,t+12} & = \beta _0 + \beta_1\mathbf{1}[VI_{i,t}>0] + f(VI_{i,t}) + \epsilon_{i,t+12}
+		\end{align*}
+		\item Second stage:	
+		\begin{align*}
+		Y_{T} & = \beta _0 + \beta_1\hat{UCT}_{i,t+12} + f(VI_{i,t}) + \epsilon_{i,T}
+		\end{align*}
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Balance check: household income}
+\begin{center}
+	\includegraphics[width=110mm]{hogingtotsintransfOne.pdf} 
+	\label{hogingtotsintransfOne}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Balance check: food insecurity}
+\begin{center}
+	\includegraphics[width=110mm]{sinalimentos1.pdf} 
+	\label{sinalimentos1}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Balance check: schooling}
+\begin{center}
+	\includegraphics[width=110mm]{asisteEscuela1.pdf} 
+	\label{asisteEscuela1}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Balance check: computer at home}
+\begin{center}
+	\includegraphics[width=110mm]{tienecomputadorSi1.pdf} 
+	\label{tienecomputadorSi1}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{McCrary test for selective sorting}
+\begin{center}
+	\includegraphics[width=75mm]{mccraryPrimTot.png} 
+	\label{mccrary}
+\end{center}
+\begin{itemize}
+	\item UCT first threshold t-stat: 0.16
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 1 month after the visit}
+\begin{center}
+	\includegraphics[width=105mm]{int_noTus_tus1.pdf}
+	\label{int_noTus_tus1}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 3 month after the visit}
+\begin{center}
+\includegraphics[width=105mm]{int_noTus_tus3.pdf}
+\label{int_noTus_tus3}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 6 month after the visit}
+\begin{center}
+\includegraphics[width=105mm]{int_noTus_tus6.pdf}
+\label{int_noTus_tus6}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 9 month after the visit}
+\begin{center}
+\includegraphics[width=105mm]{int_noTus_tus9.pdf}
+\label{int_noTus_tus9}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 1 year after the visit}
+\begin{center}
+	\includegraphics[width=105mm]{int_noTus_tus12.pdf}
+	\label{int_noTus_tus12}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for beneficiaries: 1 month after the visit}
+\begin{center}
+	\includegraphics[width=105mm]{int_si1Tus_tus1.pdf}
+	\label{int_si1Tus_tus1}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{First stage for non-beneficiaries: 1 year after the visit}
+\begin{center}
+\includegraphics[width=105mm]{int_si1Tus_tus12.pdf}
+\label{int_si1Tus_tus12.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Outcomes}
+\begin{itemize}
+	\item Probability of having a ``non-requested'' visit after the 1st visit.
+	\item {\color{gray}Probability of having a ``requested'' visit after the 1st visit.}
+	\item {\color{gray}Self-reported food insecurity at the 2nd visit.}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{``Non-requested'' visits}
+\begin{center}
+	\includegraphics[width=105mm]{revisitedPorGovOne.pdf}
+	\label{revisitedPorGovOne}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{``Non-requested'' visits}
+\begin{figure}
+\input{../Empirical_analysis/Analysis/Output/revisitedPorGovOne1.tex}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{``Non-requested'' visits}
+\begin{figure}
+\input{../Empirical_analysis/Analysis/Output/revisitedPorGovOne2.tex}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Outcomes}
+\begin{itemize}
+	\item {\color{gray}Probability of having a ``non-requested'' visit after the 1st visit.}
+	\item Probability of having a ``requested'' visit after the 1st visit.
+	\item {\color{gray}Self-reported food insecurity at the 2nd visit.}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Complaints: demanding a visit}
+\begin{center}
+	\includegraphics[width=105mm]{DpedidoRevisitedOne.pdf}
+	\label{DpedidoRevisitedOne}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Complaints: demanding a visit}
+\begin{figure}
+	\input{../Empirical_analysis/Analysis/Output/DpedidoRevisitedOne1.tex}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Complaints: demanding a visit}
+\begin{figure}
+	\input{../Empirical_analysis/Analysis/Output/DpedidoRevisitedOne2.tex}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Outcomes}
+\begin{itemize}
+	\item {\color{gray}Probability of having a ``non-requested'' visit after the 1st visit.}
+	\item {\color{gray}Probability of having a ``requested'' visit after the 1st visit.}
+	\item Self-reported food insecurity at the 2nd visit.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{No food because of lack of money in the previous 30 days}
+\begin{center}
+	\includegraphics[width=105mm]{sinalimentosTwo.pdf}
+	\label{sinalimentosTwo}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{No food for minors}
+\begin{center}
+\includegraphics[width=105mm]{menornocomioTwo.pdf}
+\label{menornocomioTwo}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{No food for adults}
+\begin{center}
+	\includegraphics[width=105mm]{adultonocomioTwo.pdf}
+	\label{adultonocomioTwo}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Concerns}
+\begin{itemize}
+	\item Are differences due to differential miss-reporting rates on either side of the threshold?
+	\item {\color{gray}Are differences due to differential selection on who gets revisited on either side of the threshold?}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Actual vs Reported CCT amount}
+\begin{center}
+	\includegraphics[width=105mm]{mienteHogAFAMTwo.pdf}
+	\label{mienteHogAFAMTwo}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Concerns}
+\begin{itemize}
+	\item {\color{gray}Are differences due to differential miss-reporting rates on either side of the threshold?}
+	\item Are differences due to differential selection on who gets revisited on either side of the threshold?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{No food because of lack of money in the previous 30 days}
+\begin{center}
+	\includegraphics[width=105mm]{sinalimentosOne.pdf}
+	\label{sinalimentosOne}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{No food for minors}
+\begin{center}
+\includegraphics[width=105mm]{menornocomioOne.pdf}
+\label{menornocomioOne}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{No food for adults}
+\begin{center}
+	\includegraphics[width=105mm]{adultonocomioOne.pdf}
+	\label{adultonocomioOne}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Food insecurity: gaining vs losing a transfer}
+\begin{figure}
+	\input{../Empirical_analysis/Analysis/Output/sinalimentosTwo1.tex}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Food insecurity for minors: gaining vs losing a transfer}
+\begin{figure}
+\input{../Empirical_analysis/Analysis/Output/menornocomioTwo1.tex}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Food insecurity for adults: gaining vs losing a transfer}
+\begin{figure}
+	\input{../Empirical_analysis/Analysis/Output/adultonocomioTwo1.tex}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Beneficiaries vs non-beneficiaries: how similar are these groups?}
+\begin{figure}
+	\caption{Mean values at the 1st visit (bandwith = 0.1)}
+	\input{../Empirical_analysis/Analysis/Output/balPptSinConTusPrimVisita010.tex}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Robustness: ``Two-stage'' RDD}
+\begin{itemize}
+	\item Those that were getting UCT at the 1st visit could have different unobservables than those that were not getting UCT. Are losses vs gains differences due to these unobservables or due to differences in how people respond to losses vs gains?
+	\item We perform a ``Two-stage'' RDD to control for unobservables differences between these two groups:
+	\begin{itemize}
+		\item Pick a bandwith and define the group of ``winners'' as those that were getting no UCT during their 1st visit and whose VI at the 1st visit was greater than the UCT threshold but within the bandwith. Analogous for ``losers''.
+		\item Losing: Impact of being ``slightly'' below threshold at their 2nd visit for group of ``winners''.
+		\item Gaining: Impact of being ``slightly'' above threshold at their 2nd visit for group of ``losers''.   
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusions and further steps}
+\begin{itemize}
+	\item ``Complaint'' responses are more elastic to losses than to gains, while the opposite seems to hold for consumption responses.
+\end{itemize}
+Further steps:
+\begin{itemize}
+	\item Conceptually: is there a role for forbearance in these settings? Ex-ante optimal allocations can be non-optimal ex-post miss-targeting? Is there an optimal level of leakage?
+	\item Empirically: robustness checks, estimate impact on higher frequency data (education, labor supply, participation in welfare and non-welfare governmental programs), peer effects and pro-social behavior (vandalism, garbage), intra-household allocations.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	{\Huge Questions?\par}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	{\Huge Thank you\par}
+\end{center}
+\end{frame}
+
+\end{document}	
