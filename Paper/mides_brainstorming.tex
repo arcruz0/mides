@@ -1,0 +1,127 @@
+\documentclass[12pt]{article}
+\usepackage{float}			% It allows [H]
+\usepackage{amstext}
+\usepackage{footnote}
+\usepackage[skip=0pt]{caption}
+\usepackage{lscape}		% Allows \begin{landscape} to rotate page
+\usepackage{longtable} 
+\usepackage{lscape}		% Allows \begin{landscape} to rotate page
+\usepackage{subfig}
+\usepackage{natbib}				% Allows citations to show as Author-year (instead of just a number)
+\usepackage{amsmath}			% Allows mathematical things such as \begin{equation}
+\usepackage{amsthm}				% Allows \theoremstyle{style} and \begin{proof}
+%\usepackage[dvips]{graphicx}	% Allows \includegraphics[key=value, . . . ]{file}. If this is active, Tikz package doesn't work!!!
+\usepackage{amssymb} 			% Allows command \mathbb
+%\usepackage{chicago}			% Needed for chicago-style of bibliography
+\usepackage{amsfonts} 			% I believe it allows \mathcal
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}	% Required to read tables generated in patex with pandas to_latex
+\usepackage[left=3cm,top=2cm,right=3cm,bottom=2cm]{geometry}
+\usepackage{graphicx}  % I think it allows \graphicspath
+\title{MIDES: tables and figures}
+\author{Alejandro Lagomarsino \& Lihuen Nocetto}
+\date{October 15, 2018}
+
+\linespread{1.3}										% This puts one and a half inter-line spacing (put 1.6 if I want double line spacing)
+\setlength{\parindent}{0pt}								% Sets no indentation of paragraphs
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}		% Sets space before and after paragraphs
+\addtolength{\textwidth}{4cm} 							% Permite x centrimetros más de texto hacia la derecha
+\addtolength{\hoffset}{-2cm}							% Mueve todo el texto x centrímetros hacia la derecha (hacia la izq si hay -x)
+
+%\usepackage[pdftex]{hyperref}	% It has to be last package in the preamble and it turns all internal references of your document into hyperlinks
+
+
+\graphicspath{ {../Empirical_analysis/Analysis/Output/} }	% Sets folder for \includegraphics
+
+\begin{document}
+	
+	\maketitle	
+	
+	\section{Summary statistics}
+
+De charla job talk de Winnie Van dijk saqué esto:
+
+labor supply and consumption responses to in-kind assistance 
+Some relevant literature Murray(1980), Dobbie and Fryer Jur (2015), Kirkeboen etal (2016), Chaisemartgin and Behaghel (2017)
+Program evaluation using randomization in rationing of publicly-provided goods
+Carneiro et al (2003), Cunha and Heckman (2008)
+Choice model
+Jacob and Ludwig (2012)
+Estimate parameters with transparent and policy-relevant inerpretation
+EM algorithm
+Besley and Coate (1991) for welfare and preferences of housing
+
+
+Quiza motivar charla asi: There's a lot of interest on how to reduce leakage in economics. I show here that reducing leakage is not necesarily an optimal policy. This research is important in particular becasue it shows which type of policy interventions we should discuss. There are two kinds: those that try to reduce leakage ex-ante and ex-post. My research shows we should pay more attention to redue leakage ex-ante and be careful about ex-post.
+
+XIV de la Introduction del libro de Atkinson y Stiglitz (Lectures in Public Economics) dicen que hay un problema de si consideramos deiciso utility or experienced utility y q debemos utilizar esta última para hacer welfare calculations de policies. Ver q en mi ocntexto puedo medir losses and gains en experienced utility asi q es el setup optimo para hacer welfare calculations, en vez de lo q los behavioral people do generally con preguntas hipotéticas.
+
+maybe my optimal retargeting policy is use an RD but if social weights vary smoothly along the vulenrability index distribution, then perhaps its optimal to do a donut hole when decidiing how to substract transfers. So optimal targeting policy is: use RD, but if there are frictins, use donut to take back a transfer. Armar un modelo con quassilinear utility (u=c+phi(housing) y como transfers solo afectan c porque son chicas, creo esta bien la assumption) y si partis de q policymaker quiere max suma de utilities con welfare weights lambda, debe dar transfers hasta que marginal utility multiplied by lambda son iguales creo. No tiene sentido q lambda varíe non continuosly at the threshold, asi q imponer esta assumption y llegar a q si welfare weights varian continumanete, y si hay differences in losses vs gains, te da q es optimo follow a threshold to give and a lowe threshold to take back y como este gap (donut) depende de varias cosas: 1) variacion del epsilon cuando sos visitado (cuando sos visitado, depende del dia si tenes un ICC mas alto o más bajo), 2) steepness de funcion de lambda(ICC) (podes pensar q lambda q es el social weight es una funcion increasing del ICC), 3) differencias en valor absoluto de losses vs gains. En esta linea de razonamiento quiza otra politica optima es hacer two stage means tested: hace un means tested general y como sabes q existe este epsilon, hacer un means tested adicional para aquella gente que queda a más menos cierto epsilon del threshold q te de mayor precisión.
+
+Stantcheva en 2019 Lecutrs 4 resume un paper de welfare across generations q puede ser util para mi paper MIDES: Dahl, Kostol, Mogstad QJE’2014
+
+Stantcheva en 2019 Lecture notes 2 and 3 dice: Provisions pile up overtime making tax/transfer system more and more complex until significant simplifying reform happens (such as US Tax Reform Act of 1986, or TCJA 2018)
+Motto: any vested interest you create will be impossible to remove. Esto esta relacionado con ratchet effect y mi idea de q es dificil sacar una vez q diste
+
+No es evidente cual es la probabilidad q la gente del le asigna a que el MIDES los re-visite. Cómo identificarla? una forma es tomar aquella gente que le dan o sacan UCT y calcular como cambia su labor supply. De acá se puede sacar de alguna manera la labor supply elasticty a cambios en tax rate (porq superar cierto umbral es como q te ponen un tax aunque hay q pensarlo bien) y asumiendo una elasticity de la literatura usual, el gap q haya es debido a que gente piensa q no la van a revisitar o exagera lo q piensa q la van a revisitar.
+
+Esta tipa hace un buen review de literatura q mira q pasa cuando porgramas terminan y quiza tiene un paper de qué sucede cuando un programa termina en Kenia: https://blogs.unicef.org/evidence-for-action/opening-the-black-box-cash-transfers-and-post-intervention-research/
+
+También se podría ver diferencia entre perder transferencia unannounced vs announced (i.e comprar aquellos q pierden parte de TUS cuando menor cumple 18 con aquellos con menores que tienen 17 y pierden la TUS)
+
+Welfare weights no asumir q son una funcion continua del income sino q partir de algo más primitivo: partir de q tu poblacion objetivo son el peor quintil de pobres. Esos tienen weigths de 1 y el resto weights de 0. Luego, como income no es observable, tenes un ICC y si tus welfare weights solo pueden ser una funcion de tu ICC, entonces mostrar como esto se traduce a que welfare weights son funcion continua y monotona creciente del ICC; incluso encontrar esta funcion real tomando q tan bueno es el ICC para detectar el nivel de pobreza por valor del ICC o cosas asi (para esto, mirar metodologia del ICC). Luego, idealmente si da algo medio lineal decir q puedo perfectamente tomar una taylor aproximation a la funcion y calcular threshold para dar y threshold para sacar y de que depende el gap. Luego calcular cual es el optimal positive level of leakage con esta metodologia como funcion del leakage incial y cuantas familias perdieron su transferencia q no debieron haberla perdido. Luego terminar q desde un punto de vista de political economy, el paper muestra como puede ser optimo tener positive levels of leakage ex-post y no caer leakage como se discute en otras literaturas.
+
+Shapiro papers de SNAP incluirlos: would be super interesting to have data on food spending for my population. Traditional way of measuring this is by asking people (consumer expenditure survey en US asks expenses for grocery last week or stuff like this). Concerns with this data is people have to tell you the truth and need a record of what they expended, and also survey s like 250 pages so probable low focus when answering this questions, so there's a lot of bias and noises and problems with these surveys.
+Shapiro causality dice q dominant strategy to estimate this was comparing people on SNAP vs on non-SNAP which is obviously a bad approach (i.e. OVB). See book that Shapiro put in slides on literature review of effects of SNAP. Decir q mi data de food insecrity adults vs minors no es tan mala, porq si bien es survey data, real data usada en SNAP literature es siempre a nivel de hogar, por lo q esta es survey pero permite separar adults de minors.
+
+Litrature is focuses on estimating Marignal propensity to consume but has it studied marginal propensity to help one child over another one? Literature encuentra MPC mucho mas alta q lo q dice el textbook y razon puede ser mental accounting. I say it's important to understand that people dont think of SNAP just as food money but actually as child money.
+
+See paper of Greg Bruich The effect of SNAP benefits on expenditures: New evidence from scanner data and the November 2013 benefit cuts (he uses store data on expenditures for several stores in the US). Shapiro uses data from a grocery retailer panel data
+
+Fui a charla de Ted Miguel (buscar su paper) y saqué los siguientes comentarios:
+1) él habla de que majority of social net spending are cash transfers
+2) cita que hay 165 high quality evaluations (OIT u OID 2016); de aca estaria bueno ver si puedo decir q ninguno de esos ve impactos de perder cash transfers
+3) welfare analysis son non trivial if: indirect effects on either non-recipietns or recipients themsleves. Esto es lo q dijo Ted Miguel y yo le diría: aun son más complex si consideras mi efecto addicitonal de gains vs losses
+4) cita literatura de GE effects of transfers: Angelucci and di Giorgi (2009), Cunha et al (2018), Filmer et al (2018)
+
+Mirar paper de Aleksey Tetanov sobre efficient welfare maximization https://onlinelibrary.wiley.com/doi/abs/10.3982/ECTA13288
+
+Culena dn Grueber 2000 (spillovers to other household via cowd-out of labor supply responses)
+
+Fadlon and Nielsen forthcoming
+
+Spillovers to other social safety net programs. Which is the sign of the fiscal externality?
+
+\section{Welfare implications?}
+First order of business is what is the government trying to achieve with this program? Let's consider that government wants to increase the number of years of schooling on its target population, where the target population are the 60,000 poorest households. Think of education as a proxy of a lot of other things (climate in the household, well-being of its children, etc.) So welfare weights of the target population are 1 and of everyone else are 0. Thus, if the government visits a number of households equal to 1, it will want to allocate TUS such as to:
+
+$max \int_{0}^{1}g_i e_i - \int_{0}^{1}c(TUS_i)$
+
+Where $g_i$ are welfare weights for household $i$ a $c(TUS_i)$ is the cost of providing a cash transfer to household $i$. Given that it's equally cost it to provide a TUS to any household, we can think of this cost as either $0$ (if $TUS_i =0$) or $K>0$ (if $TUS_i =1$). We are not considering 2 TUS for simplicity but the conclusions would remain unchanged.
+
+The government can take away transfers or give them away and for simplicity let's consider that individuals up to index $j$ don't initially have the transfer, while individuals from index $j$ to $i$ do have it. It's easy to see that the government decision for each individual does not depend on the rest of the individuals, so we can analyze separately what the government should do with each individual.
+
+I will show that it's optimal to have a positive level of ex-post leakage, and this could be even more easily be achieved if we give some weight to the non-target population, so I will show this is the case even in the extreme case of a government that only cares about the target population.
+
+The problem is that basically welfare weights are not observable in this setting. So how do we set policy when welfare weights are unobservable? Well, they are unobservable but are a function of ICC where $P(g_i=1)=f(ICC_i)$ with $f'>0,f(0)=0,f(1)=1$.
+
+ICC is essentially supposed to be a proxy for the probability that a given household is within the first (lowest) income quintile. Thus, $f(ICC)<ICC$ as the TUS sample is a subset of the first income quintile. For now, let's consider an upper-bound of $f$ and assume $f(ICC)=ICC$. We will later discuss the biases this creates.
+
+So we went from unobserved welfare weights as a function of income that look like in 
+
+When the government visits a household it has to decide whether to grant a cash transfer, take it away or leave everything as it is. It will change something if and only if the expected benefits outweighs the costs. Emphasis on expected benefits here as these will always be unobservable as the government can't accurately discern if it was able to target the correct population or not. So it will give a transfer to households $0$ to $j$ if: $\frac{\partial e_i}{\partial TUS_i}ICC>c(TUS)$
+
+The government acts as if there are only two possible states of $e_i$, those where household $i$ receives a transfer and those when it doesn't. Actually, there is another one: a household is not receiving a TUS but it previously received it. Call these: $e_i(-1), e_i(0), e_i(1)$.
+
+So the government will give transfers as long as $ICC>\frac{c(TUS)}{E(e_i(1)-e_i(0))}$ and we know there is a cutoff rule that the government follows so given this cutoff value $\bar{ICC}$ we can get back $c(TUS)$.
+
+Now, if there is no asymmetric impacts, the government should take out a transfer from individuals $j$ to $i$ if and only if $c(TUS)>E(e_i(1)-e_i(0))ICC$ if and only if $ICC<\frac{c(TUS)}{E(e_i(1)-e_i(0))}=\bar{ICC}$ if and only if $ICC<\bar{ICC}$. So we get the same rule for giving and taking.
+
+Nevertheless, given that there are asymmetric impacts, the government should take out a transfer if and only if: $c(TUS)>E(e_i(1)-e_i(-1))ICC$ if and only if $ICC<\frac{c(TUS)}{E(e_i(1)-e_i(1))}<\bar{ICC}$
+
+
+\bibliographystyle{plainnat}
+\bibliography{mides}
+
+\end{document}
+

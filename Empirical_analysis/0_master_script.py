@@ -1,13 +1,22 @@
 ''' 
-Script that explains flow of programs to perform empirical analysis over MIDES dataset
+Script that explains flow of programs to perform empirical analysis over MIDES datasets
 
 ********************************** BUILD **************************************
 
+0) Objective:  Armado de un archivo con flowcorrelativeid, latitud/longitud y departamento
+    Code:      0_geo_visitas.py
+    Input:     Input\pedido_lihuen\producto_1_enmascarado.csv
+    Output:    Temp\geo_visitas.csv
+
 1)  Objective: Limpiar bases de visitas y tener un archivo con todas las variables
-               de visitas a nivel de hogar y otro de personas
+               de visitas a nivel de hogar y otro de personas (agregando datos geo 
+               y equivalencias de anonimizadores)
     Code:      Code\1_cleaning_visitas.do
     Input:     Input\Visitas_Hogares_Muestra_enmascarado.csv
                Input\Visitas_Personas_Muestra_enmascarado.csv
+               Temp\geo_visitas.csv
+               Input\Anonimizadores_equivalencias\Parte1.csv
+               Input\Anonimizadores_equivalencias\Parte2.csv              
     Output:    Output\visitas_hogares_vars.csv
                Output\visitas_hogares_vars.dta
                Output\visitas_personas_vars.csv
@@ -58,7 +67,46 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Output:    Output\visitas_hogares_vars.csv
                Output\visitas_personas_vars.csv
 
-6)  Objective: Mover bases generadas de Output del Build al Input de Analysis
+6)  Objective: Checkear base CNV-SIIAS y generar dos archivos (hogares y personas) con datos 
+               mínimos de las visitas y datos CNV
+    Code:      Code\6_cnv_siias
+    Input:     Output\visitas_hogares_vars.csv
+               Output\visitas_personas_vars.csv
+               Input\SIIAS\CNV (todos los 11 archivos)
+    Output:    Output\visitas_hogares_cnv_siias.csv
+               Output\visitas_personas_cnv_siias.csv
+
+7)  Objective: Checkear base Educ-SIIAS y generar dos archivos (hogares y personas) 
+               con datos mínimos de las visitas y datos SIIAS-Educacion
+    Code:      Code\7_educ_siias
+    Input:     Output\visitas_hogares_vars.csv
+               Output\visitas_personas_vars.csv
+               Input\SIIAS\Educacion (todos los 33 archivos)
+    Output:    Output\visitas_hogares_educ_siias.csv
+               Output\visitas_personas_educ_siias.csv
+
+8)  Objective: Checkear base BPS-SIIAS y generar dos archivos (hogares y personas) con datos 
+               mínimos de las visitas y datos BPS del SIIAS
+    Code:      Code\8_bps_siias.do
+    Input:     Output\visitas_hogares_vars.csv
+               Output\visitas_personas_vars.csv     
+               Input\SIIAS\BPS (todos los 22 archivos)
+    Output:    Output\BPS_SIIAS_hogares.csv
+               Output\BPS_SIIAS_hogares.dta
+               Output\BPS_SIIAS_personas.csv
+               Output\BPS_SIIAS_personas.dta
+
+9)  Objective: Checkear base Programas Sociales-SIIAS y generar dos archivos 
+               (hogares y personas) con datos mínimos de las visitas y de Prog. Sociales SIIAS
+    Code:      Code\9_prog_soc_siias.do
+    Input:     Output\visitas_hogares_vars.csv
+               Output\visitas_personas_vars.csv
+               Input\SIIAS\Programas_Sociales (todos los 11 archivos)
+    Output:    Output\visitas_hogares_prog_soc_siias.csv
+               Output\visitas_personas_prog_soc_siias.csv
+
+
+10) Objective: Mover bases generadas de Output del Build al Input de Analysis
     Code:      Code\6_move_build_analysis.py
     Input:     Output\visitas_hogares_vars.csv
                Output\visitas_hogares_vars.dta
@@ -76,6 +124,10 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Output\visitas_hogares_AFAM.dta
                Output\visitas_personas_AFAM.csv
                Output\visitas_personas_AFAM.dta
+               Output\BPS_SIIAS_hogares.csv
+               Output\BPS_SIIAS_hogares.dta
+               Output\BPS_SIIAS_personas.csv
+               Output\BPS_SIIAS_personas.dta
     Output:    ..Analysis\Input\MIDES\visitas_hogares_vars.csv
                ..Analysis\Input\MIDES\visitas_hogares_vars.dta
                ..Analysis\Input\MIDES\visitas_personas_vars.csv
@@ -92,6 +144,10 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                ..Analysis\Input\MIDES\visitas_hogares_AFAM.dta
                ..Analysis\Input\MIDES\visitas_personas_AFAM.csv              
                ..Analysis\Input\MIDES\visitas_personas_AFAM.dta
+               ..Analysis\Input\MIDES\BPS_SIIAS_hogares.csv
+               ..Analysis\Input\MIDES\BPS_SIIAS_hogares.dta
+               ..Analysis\Input\MIDES\BPS_SIIAS_personas.csv
+               ..Analysis\Input\MIDES\BPS_SIIAS_personas.dta
 
 
 ****************************** ANALYSIS ***************************************
@@ -137,9 +193,9 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Output: 
 
             
-7)  Objective: Poner visitas en un mapa y poner colores con si luego de visita
+6)  Objective: Poner visitas en un mapa y poner colores con si luego de visita
                se perdió, ganó, duplicó, mantuvo 1 o mantuvo 2, etc transferencias
-               y si son censales o recorrido tipo
+               y si son censales o recorrido tipo, etc
     Code:      Code\6_mapa_visitas.py
     Input:     Input\MIDES\visitas_hogares_TUS.csv
                Input\MIDES\visitas_personas_TUS.csv
@@ -148,7 +204,7 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                
     Output: 
         
-8)  Objective: Generar variables de lo que "sucedió" en tu barrio.
+7)  Objective: Generar variables de lo que "sucedió" en tu barrio.
     Code:      Code\7_gen_variables_nbd.do
     Input:     Input\MIDES\visitas_hogares_TUS.csv
                Input\MIDES\visitas_personas_TUS.csv
@@ -174,5 +230,39 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
 
                
     Output:
+
+11) Objective: Mirar second stage de impacto TUS en BPS-SIIAS.
+    Code:      Code\11_bps_siias.py
+               Code\11_bps_siias.do
+    Input:     Input\MIDES\BPS_SIIAS_hogares.csv
+               Input\MIDES\BPS_SIIAS_personas.csv
+            
+    Output:
+      
+12) Objective: Mirar second stage de impacto TUS en Educ-SIIAS.
+    Code:      Code\12_educ_siias.py
+               Code\12_educ_siias.do
+    Input:     Input\MIDES\visitas_hogares_educ_siias.csv
+               Input\MIDES\visitas_personas_educ_siias.csv
+            
+    Output:
+        
+13) Objective: Mirar second stage de impacto TUS en CNV-SIIAS.
+    Code:      Code\13_cnv_siias.py
+               Code\13_cnv_siias.do
+    Input:     Input\MIDES\visitas_hogares_cnv_siias.csv
+               Input\MIDES\visitas_personas_cnv_siias.csv
+            
+    Output:
+        
+14) Objective: Mirar second stage de impacto TUS en CNV-SIIAS.
+    Code:      Code\14_prog_soc_siias.py
+               Code\14_prog_soc_siias.do
+    Input:     Input\MIDES\visitas_hogares_prog_soc_siias.csv
+               Input\MIDES\visitas_personas_prog_soc_siias.csv
+            
+    Output:
+        
+        
 '''
 

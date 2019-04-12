@@ -1,4 +1,4 @@
-import os, shutil
+import os, shutil, sys
 import pandas as pd
 import numpy as np
 import statsmodels.formula.api as sm
@@ -6,7 +6,22 @@ import matplotlib.pyplot as plt
 from scipy.io.idl import readsav
 from astropy.table import Table, Column
 from copy import deepcopy
-#from ggplot import *
+from imp import reload
+
+# Own modules with functions and classes
+sys.path.insert(0,'C:\\Alejandro\Research\\MIDES\\Empirical_analysis\\Analysis\\Code\\Functions_and_classes_Python')
+import graphsRDD
+reload(graphsRDD)
+
+
+graphsRDD.fBinscatterSymmetricRDD(df, xBounds=0.2, nBins=16, running='icc', 
+                 rg='int', ylabel='ylabel is', xlabel='Vulnerability Index', 
+                 title='Mean number of UCT by binned VI', 
+                 outcome='pp2016',
+                 initialTUS='all',
+                 threshold=0.70024848,
+                 savefig='../Output/algo.pdf')
+
 
 
 # Umbral AFAM:              .22488131 (Mdeo) y .25648701 (Interior)

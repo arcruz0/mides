@@ -95,7 +95,7 @@ foreach var in `r(varlist)' {
 
 * Colapso observaciones para que cada cédula de identidad solo tenga una fila
 ds nrodocumento visita1 visita2 visita3 visita4 visita5 visita6, not
-collapse (firstnm) `r(varlist)' (max) visita1 visita2 visita3 visita4 visita5 visita6, by(nrodocumento)
+gcollapse (firstnm) `r(varlist)' (max) visita1 visita2 visita3 visita4 visita5 visita6, by(nrodocumento)
 
 *** Generate variables
 
@@ -919,10 +919,9 @@ rdrobust visita2 iccNormPrimerTusOne if hogarZerocobraTusOne==1, c(0) p(2) fuzzy
 eststo m2
 
 
-revisitedPorGovOne DpedidoRevisitedOne sinalimentosTwo menornocomioTwo adultonocomio
 ** Vistas pedidas y revisitado por motus del gobierno
 eststo clear
-foreach var in adultonocomioTwo {
+foreach var in revisitedPorGovOne DpedidoRevisitedOne sinalimentosTwo menornocomioTwo adultonocomio {
 	* No controls	
 	forvalues i = 1/2 {
 		rdrobust `var' iccNormPrimerTusOne if hogarZerocobraTusOne==0, c(0) p(`i') fuzzy(hogarMascobraTus12One) vce(hc0)
@@ -1363,4 +1362,62 @@ foreach var in revisitedPorGovOne DpedidoRevisitedOne {
 	stats(N meanCtrl band poly demoControls allControls, fmt(0 3 3 3) labels(Observations "Mean for recipients" "Bandwith (CCT)" "RD polynomial" "Year and state FE" "Other controls")) ///
 	se(3) b(3) star(* 0.10 ** 0.05 *** 0.01) coeflabels(RD_Estimate "Gaining vs Losing") ///
 	mtitles("UCT = 0" "UCT = 1" "UCT = 0" "UCT = 1" "UCT = 0" "UCT = 1") width(\hsize 5pt) 	
+}
+
+
+* Tablas en español
+foreach var in revisitedPorGovOne {
+	esttab `var'01NC `var'11NC `var'01SC `var'11SC using ..\Output\\`var'1.tex, replace ///
+	mgroups("Revisitado en visita solicitada" "Revisited on a non-requested visit", pattern(1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+	stats(nobs meanCtrl band poly demoControls, fmt(0 3 3 3) labels("Observaciones" "Media beneficiarios" "Banda (CCT)" "Polinomio RDD" "EF: Año y departamento")) ///
+	se(3) b(3) star(* 0.10 ** 0.05 *** 0.01) coeflabels(RD_Estimate "TUS 1 año post 1er visita") ///
+	mtitles("TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1")
+	
+	esttab `var'02NC `var'12NC `var'02SC `var'12SC using ..\Output\\`var'2.tex, replace ///
+	mgroups("Revisitado en visita solicitada" "Revisited on a requested visit", pattern(1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+	stats(nobs meanCtrl band poly demoControls, fmt(0 3 3 3) labels("Observaciones" "Media beneficiarios" "Banda (CCT)" "Polinomio RDD" "EF: Año y departamento")) ///
+	se(3) b(3) star(* 0.10 ** 0.05 *** 0.01) coeflabels(RD_Estimate "TUS 1 año post 1er visita") ///
+	mtitles("TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1")	
+}
+
+foreach var in sinalimentosTwo {
+	esttab `var'01NC `var'11NC `var'01AC `var'11AC using ..\Output\\`var'1.tex, replace ///
+	mgroups("Inseguridad Alimentaria" "Revisited on a non-requested visit", pattern(1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+	stats(nobs meanCtrl band poly demoControls, fmt(0 3 3 3) labels("Observaciones" "Media beneficiarios" "Banda (CCT)" "Polinomio RDD" "EF: Año y departamento")) ///
+	se(3) b(3) star(* 0.10 ** 0.05 *** 0.01) coeflabels(RD_Estimate "TUS 1 año post 1er visita") ///
+	mtitles("TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1")
+	
+	esttab `var'02NC `var'12NC `var'02AC `var'12AC using ..\Output\\`var'2.tex, replace ///
+	mgroups("Inseguridad Alimentaria" "Revisited on a requested visit", pattern(1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+	stats(nobs meanCtrl band poly demoControls, fmt(0 3 3 3) labels("Observaciones" "Media beneficiarios" "Banda (CCT)" "Polinomio RDD" "EF: Año y departamento")) ///
+	se(3) b(3) star(* 0.10 ** 0.05 *** 0.01) coeflabels(RD_Estimate "TUS 1 año post 1er visita") ///
+	mtitles("TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1")	
+}
+
+foreach var in menornocomioTwo {
+	esttab `var'01NC `var'11NC `var'01AC `var'11AC using ..\Output\\`var'1.tex, replace ///
+	mgroups("Inseguridad Alimentaria para Menores" "Revisited on a non-requested visit", pattern(1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+	stats(nobs meanCtrl band poly demoControls, fmt(0 3 3 3) labels("Observaciones" "Media beneficiarios" "Banda (CCT)" "Polinomio RDD" "EF: Año y departamento")) ///
+	se(3) b(3) star(* 0.10 ** 0.05 *** 0.01) coeflabels(RD_Estimate "TUS 1 año post 1er visita") ///
+	mtitles("TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1")
+	
+	esttab `var'02NC `var'12NC `var'02AC `var'12AC using ..\Output\\`var'2.tex, replace ///
+	mgroups("Inseguridad Alimentaria para Menores" "Revisited on a requested visit", pattern(1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+	stats(nobs meanCtrl band poly demoControls, fmt(0 3 3 3) labels("Observaciones" "Media beneficiarios" "Banda (CCT)" "Polinomio RDD" "EF: Año y departamento")) ///
+	se(3) b(3) star(* 0.10 ** 0.05 *** 0.01) coeflabels(RD_Estimate "TUS 1 año post 1er visita") ///
+	mtitles("TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1")
+}
+
+foreach var in adultonocomioTwo {
+	esttab `var'01NC `var'11NC `var'01AC `var'11AC using ..\Output\\`var'1.tex, replace ///
+	mgroups("Inseguridad Alimentaria para Adultos" "Revisited on a non-requested visit", pattern(1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+	stats(nobs meanCtrl band poly demoControls, fmt(0 3 3 3) labels("Observaciones" "Media beneficiarios" "Banda (CCT)" "Polinomio RDD" "EF: Año y departamento")) ///
+	se(3) b(3) star(* 0.10 ** 0.05 *** 0.01) coeflabels(RD_Estimate "TUS 1 año post 1er visita") ///
+	mtitles("TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1")
+	
+	esttab `var'02NC `var'12NC `var'02AC `var'12AC using ..\Output\\`var'2.tex, replace ///
+	mgroups("Inseguridad Alimentaria para Adultos" "Revisited on a requested visit", pattern(1 0 0 0) prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+	stats(nobs meanCtrl band poly demoControls, fmt(0 3 3 3) labels("Observaciones" "Media beneficiarios" "Banda (CCT)" "Polinomio RDD" "EF: Año y departamento")) ///
+	se(3) b(3) star(* 0.10 ** 0.05 *** 0.01) coeflabels(RD_Estimate "TUS 1 año post 1er visita") ///
+	mtitles("TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1" "TUS = 0" "TUS = 1")
 }

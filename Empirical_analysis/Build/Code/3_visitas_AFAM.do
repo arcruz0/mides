@@ -5,6 +5,7 @@ cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
 
 * Macros
 global vars_afam categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar
+global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam departamento localidad template latitudGeo longitudGeo calidadGeo
 
 *** Primero voy a cargar, editar y guardar temporalmente en dta las bases de AFAM para posteriormente mergarlas con la base de personas
 
@@ -14,12 +15,13 @@ global vars_afam categoriape categoriaocupbps ingresototal ingresosnucleo integr
 
 ** 2012
 import delimited ..\Input\2012_AFAM_enmascarado\2012_AFAM_enmascarado.csv, clear case(preserve)
-keep nrodocumento year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
+rename nrodocumento nrodocumentoDAES
+keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
 replace cobro = 0 if cobro == 2
 
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
 
-ds nrodocumento month periodo, not
+ds nrodocumentoDAES month periodo, not
 
 forvalues i = 49/60 {
 	foreach var in `r(varlist)' {
@@ -29,12 +31,13 @@ forvalues i = 49/60 {
 }
 
 drop year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
-collapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* cobro* monto_sol* monto_hogar* indice_in*, by(nrodocumento)
+gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* cobro* monto_sol* monto_hogar* indice_in*, by(nrodocumentoDAES)
 save afam2012.dta, replace
 
 ** 2013_1
 import delimited ..\Input\2013_1_AFAM_enmascarado\2013_1_AFAM_enmascarado.csv, clear case(preserve)
-keep nrodocumento year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in_str01
+rename nrodocumento nrodocumentoDAES
+keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in_str01
 rename indice_in_str01 indice_in
 
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
@@ -59,7 +62,7 @@ drop integrodiscapacitados
 rename integrodiscapacitados2 integrodiscapacitados
 
 
-ds nrodocumento month periodo, not
+ds nrodocumentoDAES month periodo, not
 
 forvalues i = 61/66 {
 	foreach var in `r(varlist)' {
@@ -69,12 +72,13 @@ forvalues i = 61/66 {
 }
 
 drop year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
-collapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* monto_sol* monto_hogar* indice_in*, by(nrodocumento)
+gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* monto_sol* monto_hogar* indice_in*, by(nrodocumentoDAES)
 save afam2013_1.dta, replace
 
 ** 2013_2
 import delimited ..\Input\2013_2_AFAM_enmascarado\2013_2_AFAM_enmascarado.csv, clear case(preserve)
-keep nrodocumento year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
+rename nrodocumento nrodocumentoDAES
+keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
 
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
 
@@ -98,7 +102,7 @@ drop integrodiscapacitados
 rename integrodiscapacitados2 integrodiscapacitados
 
 
-ds nrodocumento month periodo, not
+ds nrodocumentoDAES month periodo, not
 
 forvalues i = 67/72 {
 	foreach var in `r(varlist)' {
@@ -108,12 +112,13 @@ forvalues i = 67/72 {
 }
 
 drop year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
-collapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* monto_sol* monto_hogar* indice_in*, by(nrodocumento)
+gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* monto_sol* monto_hogar* indice_in*, by(nrodocumentoDAES)
 save afam2013_2.dta, replace
 
 ** 2014
 import delimited ..\Input\2014_AFAM_enmascarado\2014_AFAM_enmascarado.csv, clear case(preserve)
-keep nrodocumento year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
+rename nrodocumento nrodocumentoDAES
+keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
 
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
 
@@ -137,7 +142,7 @@ drop integrodiscapacitados
 rename integrodiscapacitados2 integrodiscapacitados
 
 
-ds nrodocumento month periodo, not
+ds nrodocumentoDAES month periodo, not
 
 forvalues i = 73/84 {
 	foreach var in `r(varlist)' {
@@ -147,12 +152,13 @@ forvalues i = 73/84 {
 }
 
 drop year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
-collapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* monto_sol* monto_hogar* indice_in*, by(nrodocumento)
+gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* monto_sol* monto_hogar* indice_in*, by(nrodocumentoDAES)
 save afam2014.dta, replace
 
 ** 2015_1
 import delimited ..\Input\2015_1_AFAM_enmascarado\2015_1_AFAM_enmascarado.csv, clear case(preserve)
-keep nrodocumento year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
+rename nrodocumento nrodocumentoDAES
+keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
 
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
 
@@ -176,7 +182,7 @@ drop integrodiscapacitados
 rename integrodiscapacitados2 integrodiscapacitados
 
 
-ds nrodocumento month periodo, not
+ds nrodocumentoDAES month periodo, not
 
 forvalues i = 85/87 {
 	foreach var in `r(varlist)' {
@@ -186,17 +192,18 @@ forvalues i = 85/87 {
 }
 
 drop year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
-collapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* monto_sol* monto_hogar* indice_in*, by(nrodocumento)
+gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* monto_sol* monto_hogar* indice_in*, by(nrodocumentoDAES)
 save afam2015_1.dta, replace
 
 ** 2015_2
 import delimited ..\Input\2015_2_AFAM_enmascarado\2015_2_AFAM_enmascarado.csv, clear case(preserve)
-keep nrodocumento year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
+rename nrodocumento nrodocumentoDAES
+keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
 
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
 
 
-ds nrodocumento month periodo, not
+ds nrodocumentoDAES month periodo, not
 
 forvalues i = 88/96 {
 	foreach var in `r(varlist)' {
@@ -206,16 +213,17 @@ forvalues i = 88/96 {
 }
 
 drop year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
-collapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* monto_sol* monto_hogar* indice_in*, by(nrodocumento)
+gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* monto_sol* monto_hogar* indice_in*, by(nrodocumentoDAES)
 save afam2015_2.dta, replace
 
 ** 2016
 import delimited ..\Input\2016_AFAM_enmascarado\2016_AFAM_enmascarado.csv, clear case(preserve)
-keep nrodocumento year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
+rename nrodocumento nrodocumentoDAES
+keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
 
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
 
-ds nrodocumento month periodo, not
+ds nrodocumentoDAES month periodo, not
 
 forvalues i = 97/108 {
 	foreach var in `r(varlist)' {
@@ -225,16 +233,17 @@ forvalues i = 97/108 {
 }
 
 drop year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
-collapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* cobro* monto_sol* monto_hogar* indice_in*, by(nrodocumento)
+gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* cobro* monto_sol* monto_hogar* indice_in*, by(nrodocumentoDAES)
 save afam2016.dta, replace
 
 ** 2017
 import delimited ..\Input\2017_AFAM_enmascarado\2017_AFAM_enmascarado.csv, clear case(preserve)
-keep nrodocumento year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
+rename nrodocumento nrodocumentoDAES
+keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
 
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
 
-ds nrodocumento month periodo, not
+ds nrodocumentoDAES month periodo, not
 
 forvalues i = 109/120 {
 	foreach var in `r(varlist)' {
@@ -244,16 +253,17 @@ forvalues i = 109/120 {
 }
 
 drop year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
-collapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* cobro* monto_sol* monto_hogar* indice_in*, by(nrodocumento)
+gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* cobro* monto_sol* monto_hogar* indice_in*, by(nrodocumentoDAES)
 save afam2017.dta, replace
 
 ** 2018
 import delimited ..\Input\2018_AFAM_enmascarado\2018_AFAM_enmascarado.csv, clear case(preserve)
-keep nrodocumento year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
+rename nrodocumento nrodocumentoDAES
+keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
 
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
 
-ds nrodocumento month periodo, not
+ds nrodocumentoDAES month periodo, not
 
 forvalues i = 121/127 {
 	foreach var in `r(varlist)' {
@@ -263,45 +273,45 @@ forvalues i = 121/127 {
 }
 
 drop year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
-collapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* cobro* monto_sol* monto_hogar* indice_in*, by(nrodocumento)
+gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* integromenores* complementoliceales* integrodiscapacitados* cobro* monto_sol* monto_hogar* indice_in*, by(nrodocumentoDAES)
 save afam2018.dta, replace
 
 *** Load base visitas de personas y me quedo solamente con algunas variables
 import delimited ..\Output\visitas_personas_vars.csv, clear case(preserve)
-keep flowcorrelativeid nrodocumento fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam departamento localidad template
+keep flowcorrelativeid nrodocumentoDAES nrodocumentoSIIAS fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam departamento localidad template latitudGeo longitudGeo calidadGeo
 
 * Agrego variables de base 2012
-merge m:1 nrodocumento using afam2012.dta, keep(master matched)
+merge m:1 nrodocumentoDAES using afam2012.dta, keep(master matched)
 drop _merge
 
 * Agrego variables de base 2013
-merge m:1 nrodocumento using afam2013_1.dta, keep(master matched)
+merge m:1 nrodocumentoDAES using afam2013_1.dta, keep(master matched)
 drop _merge
 
-merge m:1 nrodocumento using afam2013_2.dta, keep(master matched)
+merge m:1 nrodocumentoDAES using afam2013_2.dta, keep(master matched)
 drop _merge
 
 * Agrego variables de base 2014
-merge m:1 nrodocumento using afam2014.dta, keep(master matched)
+merge m:1 nrodocumentoDAES using afam2014.dta, keep(master matched)
 drop _merge
 
 * Agrego variables de base 2015
-merge m:1 nrodocumento using afam2015_1.dta, keep(master matched)
+merge m:1 nrodocumentoDAES using afam2015_1.dta, keep(master matched)
 drop _merge
 
-merge m:1 nrodocumento using afam2015_2.dta, keep(master matched)
+merge m:1 nrodocumentoDAES using afam2015_2.dta, keep(master matched)
 drop _merge
 
 * Agrego variables de base 2016
-merge m:1 nrodocumento using afam2016.dta, keep(master matched)
+merge m:1 nrodocumentoDAES using afam2016.dta, keep(master matched)
 drop _merge
 
 * Agrego variables de base 2017
-merge m:1 nrodocumento using afam2017.dta, keep(master matched)
+merge m:1 nrodocumentoDAES using afam2017.dta, keep(master matched)
 drop _merge
 
 * Agrego variables de base 2018
-merge m:1 nrodocumento using afam2018.dta, keep(master matched)
+merge m:1 nrodocumentoDAES using afam2018.dta, keep(master matched)
 drop _merge
 
 * Genero variables de si individuo cobra AFAM en el mes
@@ -346,24 +356,24 @@ foreach var in $vars_afam cobraAFAM {
 
 * Genero variables a nivel de hogar medidas como +- fecha de visita
 foreach var in monto_sol monto_hogar ingresototal {
-		egen hogarZero`var' = total(zero`var'), by(flowcorrelativeid)
+		gegen hogarZero`var' = total(zero`var'), by(flowcorrelativeid)
 }
 
 forvalues i = 1/24 {
 	foreach var in monto_sol monto_hogar ingresototal {
-		egen hogarMenos`var'`i' = total(menos`var'`i'), by(flowcorrelativeid)
-		egen hogarMas`var'`i' = total(mas`var'`i'), by(flowcorrelativeid)
+		gegen hogarMenos`var'`i' = total(menos`var'`i'), by(flowcorrelativeid)
+		gegen hogarMas`var'`i' = total(mas`var'`i'), by(flowcorrelativeid)
 }
 }
 
 foreach var in cobraAFAM {
-		egen hogarZero`var' = max(zero`var'), by(flowcorrelativeid)
+		gegen hogarZero`var' = max(zero`var'), by(flowcorrelativeid)
 }
 
 forvalues i = 1/24 {
 	foreach var in cobraAFAM {
-		egen hogarMenos`var'`i' = max(menos`var'`i'), by(flowcorrelativeid)
-		egen hogarMas`var'`i' = max(mas`var'`i'), by(flowcorrelativeid)
+		gegen hogarMenos`var'`i' = max(menos`var'`i'), by(flowcorrelativeid)
+		gegen hogarMas`var'`i' = max(mas`var'`i'), by(flowcorrelativeid)
 }
 }
 
@@ -371,9 +381,19 @@ forvalues i = 1/24 {
 export delimited using ..\Output\visitas_personas_AFAM.csv, replace
 save ..\Output\visitas_personas_AFAM.dta, replace
 
-collapse (mean) hogar*, by(flowcorrelativeid)
+* Guardo base personas en dta para merge
+gcollapse (mean) hogar*, by(flowcorrelativeid)
+save pers_AFAM_para_merge.dta, replace
 
-* Guardo base a nivel de hogares (en csv y dta)
+*** Load base hogares
+import delimited ..\Output\visitas_hogares_vars.csv, clear case(preserve)
+keep $varsKeep
+
+* Paso datos de AFAM de base personas a Hogares
+merge 1:1 flowcorrelativeid using pers_AFAM_para_merge, keep(master matched) keepusing(hogar*)
+drop _merge
+
+* Guardo base hogares en csv y dta para exportar
 export delimited using ..\Output\visitas_hogares_AFAM.csv, replace
 save ..\Output\visitas_hogares_AFAM.dta, replace
 

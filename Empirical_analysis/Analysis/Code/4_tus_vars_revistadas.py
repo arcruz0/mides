@@ -1150,7 +1150,7 @@ xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['hogingtotsintransfOne'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['visita2']==1)].mean()
+    yBins[i]=df['hogingtotsintransfOne'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
@@ -1161,12 +1161,27 @@ plt.title('Household income excluding transfer (LCU) during 1st visit')
 plt.savefig('../Output/hogingtotsintransfOne.pdf')
 plt.show()
 
+xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+yBins=np.ones((bins,1))               # The share of household with TUS in every bin
+        
+for i in range(bins-1):
+    yBins[i]=df['hogingtotsintransfOne'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])].mean()
+        
+plt.figure()
+plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
+plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
+plt.ylabel('Ing. del hogar, excluye transf. (1er visita)')
+plt.xlabel('ICC - Umbral TUS Simple (1er visita)')
+#plt.title('Household income excluding transfer (LCU) during 1st visit')
+plt.savefig('../Output/hogingtotsintransfOne.pdf')
+plt.show()
+
 ### Asistencia a la escuela (asiste)
 xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['asisteEscuelaOne'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['edad_visitaOne']<18) & (df['visita2']==1)].mean()
+    yBins[i]=df['asisteEscuelaOne'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['edad_visitaOne']<18)].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
@@ -1177,6 +1192,20 @@ plt.title('Perc. of children (<18) attending school during 1st visit')
 plt.savefig('../Output/asisteEscuelaOne.pdf')
 plt.show()
 
+xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+yBins=np.ones((bins,1))               # The share of household with TUS in every bin
+        
+for i in range(bins-1):
+    yBins[i]=df['asisteEscuelaOne'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['edad_visitaOne']<18)].mean()
+        
+plt.figure()
+plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
+plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
+plt.ylabel('% Asiste escuela')
+plt.xlabel('ICC - Umbral TUS Simple (1er visita)')
+#plt.title('Perc. of children (<18) attending school during 1st visit')
+plt.savefig('../Output/asisteEscuelaOne.pdf')
+plt.show()
 
 ### Jefe sigue siendo jefe?
 xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
@@ -1304,14 +1333,14 @@ xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every
 yBins=np.ones((bins,1))               # The share of household with TUS in every bin
         
 for i in range(bins-1):
-    yBins[i]=df['tienecomputadorSiOne'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['visita2']==1)].mean()
+    yBins[i]=df['tienecomputadorSiOne'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1])].mean()
         
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
 plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
-plt.ylabel('% Computer')
-plt.xlabel('Vulnerability Index - First threshold (1st visit)')
-plt.title('Perc. with computer during 1st visit')
+plt.ylabel('% Computadora')
+plt.xlabel('ICC - Umbral TUS Simple (1er visita)')
+#plt.title('Perc. with computer during 1st visit')
 plt.savefig('../Output/tienecomputadorSiOne.pdf')
 plt.show()
 
@@ -1640,9 +1669,9 @@ for i in range(bins-1):
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
 plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
-plt.ylabel('% No Food')
-plt.xlabel('Vulnerability Index - First threshold (1st visit)')
-plt.title('Perc. of households with "No Food" during 1st visit')
+plt.ylabel('% Insuficiencia alimentaria')
+plt.xlabel('ICC - Umbral TUS Simple (1er visita)')
+#plt.title('Perc. of households with "No Food" during 1st visit')
 plt.savefig('../Output/sinalimentos1.pdf')
 plt.show()
 

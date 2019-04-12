@@ -4,7 +4,7 @@ import os, shutil
 ### Set the current folder
 os.chdir('C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Temp') # Set current directory
 
-### Preparo archivo de geocoding de addressess con variables adicionales que quiera para ilustrar cosas en el mapa (ej: si visita asociada a perdida de TUS, etc)
+### Preparo archivo de geocoding de addressess con variables adicionales que quiera para ilustrar cosas en el mapa (ej: si visita asociada a pérdida de TUS, etc)
 
 # Cargo geocoding, variables de visitas que precise y hago merge
 geodata = pd.read_csv('../../Build/Output/geocoding/geocoding.txt', sep='\t', encoding='latin1')

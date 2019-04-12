@@ -166,3 +166,44 @@ for rg in region:
     plt.title('Distribution of visits by Vulnerability Index')
     plt.savefig('../Output/' + rg + 'distrib.pdf')
     plt.show()
+    
+#### Para MIDES en Español
+### First stage para quienes no recibian TUS al momento de la visita   
+for rg in region:
+    for ms in mesesLags:
+        xLinspace=np.arange(xLinspaceStart[rg], xLinspaceEnd[rg], xLinspaceStep[rg])  # It will give me the first value of every bin
+        yBins=np.ones((binsRegion[rg],1))                    # The share of household with TUS in every bin
+        
+        for i in range(binsRegion[rg]-1):
+            yBins[i]=df['hogarCuantasTusMas' + ms][(df['icc']>=xLinspace[i]) & (df['icc']<xLinspace[i+1]) & (df['umbral_nuevo_tus']==tus1Threshold[rg])  & (df['hogarZerocobraTus']==0)].mean()
+        
+        plt.figure()
+        plt.axvline(x=afamThreshold[rg], color='orange', linestyle='dashed')   # AFAM threshold
+        plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
+        plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
+        plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color=colorsRegion[rg])
+        plt.ylabel('# TUS, ' + ms + ' meses después de visita')
+        plt.ylim(-0.05,2.05)           
+        plt.xlabel('ICC')
+        #plt.title('Cantidad de TUS según ICC, ' + ms + ' meses después de la visita')
+        plt.savefig('../Output/' + rg + '_noTus_tus' + ms + '.pdf')
+        plt.show()
+
+# Histograma de visitas
+for rg in region:
+    xLinspace=np.arange(xLinspaceStart[rg], xLinspaceEnd[rg], xLinspaceStep[rg])  # It will give me the first value of every bin
+    yBins=np.ones((binsRegion[rg],1))                    # The share of household with TUS in every bin
+        
+    for i in range(binsRegion[rg]-1):
+        yBins[i]=df[(df['icc']>=xLinspace[i]) & (df['icc']<xLinspace[i+1]) & (df['umbral_nuevo_tus']==tus1Threshold[rg])]['icc'].size
+        
+    plt.figure()
+    plt.axvline(x=afamThreshold[rg], color='orange', linestyle='dashed')   # AFAM threshold
+    plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
+    plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
+    plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2, np.log(yBins[:-1]+1), color=colorsRegion[rg])
+    plt.ylabel('Log # Visitas-Hogares (2011-2018)')
+    plt.xlabel('ICC')
+    #plt.title('Distribution of visits by Vulnerability Index')
+    plt.savefig('../Output/' + rg + 'distrib.pdf')
+    plt.show()
