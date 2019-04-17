@@ -275,10 +275,10 @@ forvalues i = 28/129 {
 }
 
 *** Genero 49 variables por variable: osea 49 variables del tipo enCEIP como +- fecha de visita
-* (para algunas fechas pongo dato del mes anterior si hay missing value para cierto mes-año)
+* (para algunas fechas pongo dato del mes anterior si hay missing value para cierto mes-año) (en realidad creo algunas más post visita; 5 años)
 
 ** CEIP
-	forvalues i = 1/24 {
+	forvalues i = 1/60 {
 		foreach var in $varsCEIPLags {
 			generate mas`var'`i'=.
 				forvalues j = 63/129 {
@@ -338,7 +338,7 @@ forvalues i = 28/129 {
 ** CES: Para 2011, 2012 y 2013 (solo datos en abr y dic) asumo que ene-mar siempre tienen valor de abril pasado;
 * may-nov siempre tienen valor de dic pasado. En 2014 y 2016 (abril, jun, set y dic) asumo ene-mar son iguales a abril, may es jun, jul-ago es set y oct-nov es dic; 
 * 2017 y 2018 estudiantes asumo ene-feb es igual a valor de marzo	
-	forvalues i = 1/24 {
+	forvalues i = 1/60 {
 		foreach var in  $varsCESLags {
 			generate mas`var'`i'=.
 				forvalues j = 40/129 {
@@ -608,7 +608,7 @@ forvalues i = 28/129 {
 ** Para 2011, 2012 y 2013 (solo datos en abr y dic) asumo que ene-mar siempre tienen valor de abril pasado;
 * may-nov siempre tienen valor de dic pasado. En 2014 y 2016 (abril, jun, set y dic) asumo ene-mar son iguales a abril, may es jun, jul-ago es set y oct-nov es dic; 
 * 2017 y 2018 estudiantes asumo ene-feb es igual a valor de marzo
-	forvalues i = 1/24 {
+	forvalues i = 1/60 {
 		foreach var in  $varsCETPLags {
 			generate mas`var'`i'=.
 				forvalues j = 28/129 {

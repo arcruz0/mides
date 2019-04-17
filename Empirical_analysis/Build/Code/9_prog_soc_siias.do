@@ -7,7 +7,7 @@ cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
 global years 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018
 global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam departamento localidad template latitudGeo longitudGeo calidadGeo
 global per 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
-global allVars bps_afam_ley_benef bps_afam_ley_atrib bps_pens_vejez bps_sol_habit_am mvotma_rubv inau_t_comp inau_disc_t_comp inau_caif inau_club_niños inau_ctros_juveniles mides_asistencia_vejez mides_canasta_serv mides_jer mides_cercanias mides_ucc mides_uy_trab mides_monotributo mides_inda_snc mides_inda_paec mides_inda_panrn
+global allVars bps_afam_ley_benef bps_afam_ley_atrib bps_pens_vejez bps_sol_habit_am mvotma_rubv inau_t_comp inau_disc_t_comp inau_caif inau_club_niños inau_ctros_juveniles mid_asist_vejez mides_canasta_serv mides_jer mides_cercanias mides_ucc mides_uy_trab mides_monotributo mides_inda_snc mides_inda_paec mides_inda_panrn
 
 global perbps_afam_ley_benef 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128
 global perbps_afam_ley_atrib 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128
@@ -19,7 +19,7 @@ global perinau_disc_t_comp 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42
 global perinau_caif 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
 global perinau_club_niños 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
 global perinau_ctros_juveniles 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
-global permides_asistencia_vejez 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
+global permid_asist_vejez 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
 global permides_canasta_serv 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
 global permides_jer 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
 global permides_cercanias 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
@@ -37,7 +37,8 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 	foreach yr in $years {
 		import delimited ..\Input\SIIAS\Programas_Sociales\\`yr'_PS_enmascarado.csv, clear case(preserve)
 		rename inau_club_niÃos inau_club_niños
-		drop if bps_afam_ley_benef + bps_afam_ley_atrib + bps_pens_vejez + bps_sol_habit_am + mvotma_rubv + inau_t_comp + inau_disc_t_comp + inau_caif + inau_club_niños + inau_ctros_juveniles + mides_asistencia_vejez + mides_canasta_serv + mides_jer + mides_cercanias + mides_ucc + mides_uy_trab + mides_monotributo + mides_inda_snc + mides_inda_paec + mides_inda_panrn == 0
+		rename mides_asistencia_vejez mid_asist_vejez
+		drop if bps_afam_ley_benef + bps_afam_ley_atrib + bps_pens_vejez + bps_sol_habit_am + mvotma_rubv + inau_t_comp + inau_disc_t_comp + inau_caif + inau_club_niños + inau_ctros_juveniles + mid_asist_vejez + mides_canasta_serv + mides_jer + mides_cercanias + mides_ucc + mides_uy_trab + mides_monotributo + mides_inda_snc + mides_inda_paec + mides_inda_panrn == 0
 		save PS_`yr'.dta, replace
 	}
 
@@ -79,20 +80,19 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 	save prog_soc_total.dta, replace
 
 *** Armo dos archivos del tipo visitas_hogares_PROGRAMA.csv y visitas_personas_PROGRAMA.csv 
-foreach var in bps_afam_ley_benef {
+foreach var in $allVars {
 
 	** Me quedo con variables y observaciones que me interesan
 	use prog_soc_total.dta, clear
 	keep `var' periodo nrodocumentoSIIAS
+	drop if `var'==0
 	
 	** Genero variables por período (hay datos desde el período 25 hasta el 129 en este caso aunque difieren segun variable)
-	global perbps_afam_ley_benef 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128
-
-	foreach j in $per`var' {
+	foreach j in ${per`var'} {
 		generate `var'`j'=.
 		replace `var'`j' = `var' if periodo == `j'
 	}
-	display "listo"
+	
 	** Colapso data para que haya una cédula por fila
 	drop `var' periodo
 	gcollapse (mean) `var'*, by(nrodocumentoSIIAS)
@@ -109,12 +109,12 @@ foreach var in bps_afam_ley_benef {
 	** VER SI ESTO ES NECESARIO SIQUIERA PORQUE CREO Q BASE DE PROGRAMAS SOCIALES TIENE A TODOS LOS INDIVIDUOS
 	** Cambio missing por zeros cuando corresponde
 	forvalues i=25/129 {
-		cap replace `var'`i' = 0 if `var'`i' == .	// 
+		cap replace `var'`i' = 0 if `var'`i' == .
 	}
 	
 	** Genero variables a nivel de personas meses antes o después o durante visita:
-	* Genero 49 variables por variable: osea 49 variables del tipo tipo_afiliacion según +- fecha visita
-	forvalues i = 1/24 {
+	* Genero 49 variables por variable: osea 49 variables del tipo tipo_afiliacion según +- fecha visita (en realidad creo algunas más post visita; 5 años)
+	forvalues i = 1/60 {
 		generate mas`var'`i'=.
 			forvalues j = 25/129 { 
 				cap replace mas`var'`i' = `var'`j' if periodo == `j' - `i'
@@ -140,6 +140,9 @@ foreach var in bps_afam_ley_benef {
 
 	forvalues i = 1/24 {
 		gegen hogarMenos`var'`i' = total(menos`var'`i'), by(flowcorrelativeid)
+	}
+	
+	forvalues i = 1/60 {
 		gegen hogarMas`var'`i' = total(mas`var'`i'), by(flowcorrelativeid)
 	}
 

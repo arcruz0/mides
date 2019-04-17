@@ -4,7 +4,7 @@ clear all
 cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Analysis\Temp"
 
 * Load dataset a nivel de personas con datos de voting PP
-import delimited ..\Input\MIDES\visitas_personas_PPySusp.csv, clear
+import delimited ..\Input\MIDES\visitas_personas_PPySusp.csv, clear case(preserve)
 
 * Agrego variables de personas de base completa
 merge 1:1 flowcorrelativeid nrodocumento using ..\Input\MIDES\visitas_personas_vars.dta, keep (master matched) keepusing(edad_visita sexo parentesco)

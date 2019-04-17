@@ -105,6 +105,14 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Output:    Output\visitas_hogares_prog_soc_siias.csv
                Output\visitas_personas_prog_soc_siias.csv
 
+10)  Objective: Armar archivo con solicitudes de visitas y datos mínimos de las 
+               personas en la visita
+    Code:      Code\10_sol_visitas.py
+    Input:     Input\pedido_lihuen\producto_3_enmascarado.csv
+               Output\visitas_personas_vars.csv
+               Output\visitas_hogares_vars.csv
+    Output:    Output\sol_visitas_personas.csv
+
 
 10) Objective: Mover bases generadas de Output del Build al Input de Analysis
     Code:      Code\6_move_build_analysis.py
@@ -232,8 +240,8 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Output:
 
 11) Objective: Mirar second stage de impacto TUS en BPS-SIIAS.
-    Code:      Code\11_bps_siias.py
-               Code\11_bps_siias.do
+    Code:      Code\11_1_bps_siias.do
+               Code\11_2_bps_siias.py
     Input:     Input\MIDES\BPS_SIIAS_hogares.csv
                Input\MIDES\BPS_SIIAS_personas.csv
             
@@ -262,7 +270,13 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Input\MIDES\visitas_personas_prog_soc_siias.csv
             
     Output:
-        
+ 
+15) Objective: Mirar second stage de impacto TUS en solicitudes de visitas
+    Code:      Code\15_sol_visitas.py
+    Input:     Input\MIDES\sol_visitas_personas.csv
+
+    Output:
+ 
         
 '''
 

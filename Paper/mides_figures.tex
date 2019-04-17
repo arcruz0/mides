@@ -20,7 +20,6 @@
 \usepackage{graphicx}  % I think it allows \graphicspath
 \title{MIDES: tables and figures}
 \author{Alejandro Lagomarsino \& Lihuen Nocetto}
-\date{October 15, 2018}
 
 \linespread{1.3}										% This puts one and a half inter-line spacing (put 1.6 if I want double line spacing)
 \setlength{\parindent}{0pt}								% Sets no indentation of paragraphs
@@ -29,6 +28,25 @@
 \addtolength{\hoffset}{-2cm}							% Mueve todo el texto x centrímetros hacia la derecha (hacia la izq si hay -x)
 
 %\usepackage[pdftex]{hyperref}	% It has to be last package in the preamble and it turns all internal references of your document into hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+	letterpaper,
+	bookmarksnumbered,
+	bookmarksopen,
+	bookmarksopenlevel=0,
+	colorlinks,
+	% for colors, check package xcolor
+	%   anchorcolor=anchorcolor,
+	citecolor=blue,
+	%   linkcolor=linkcolor,
+	pdfauthor={Alejandro Luis Lagomarsino \& Lihuen Nocetto},
+	pdftitle={Tables and figures: MIDES (draft)},
+	pdfsubject={},
+	pdfkeywords={},
+	%   plainpages=false,
+	%   urlcolor=urlcolor
+}	% It has to be last package in the preamble and it turns all internal references of your document into hyperlinks
+
 
 
 \graphicspath{ {../Empirical_analysis/Analysis/Output/} }	% Sets folder for \includegraphics
@@ -36,6 +54,11 @@
 \begin{document}
 
 \maketitle	
+
+Este documento es un simple compilado de tablas y gráficos. Es informal y no autocontenido. El objetivo es el de tener en un único documento todas las salidas generadas para poder ir visualizando los resultados que se van observando, reorientar el análisis y elegir aquellos resultados a incluir en el paper. 
+
+
+\tableofcontents
 
 \section{Summary statistics}
 \begin{figure}[H]
@@ -1588,6 +1611,17 @@ Cada subseción tiene: 1) gráfico para primer visita donde se debería ver disc
 \subsubsection{Balance de ``winners'' and ``losers'' iniciales}
 
 \subsubsection{Outcomes de perder/ganar UCT para among ``winners'' and among ``losers''}
+
+\section{Resultados sobre variables SIIAS}
+
+\subsection{BPS-SIIAS}
+
+\subsubsection{RDD}
+\input{../Empirical_analysis/Analysis/Output/bpsSIIASRDD.tex}
+
+\subsubsection{DID: Separate graphs for groups}
+\input{../Empirical_analysis/Analysis/Output/bpsSIIASDID.tex}
+
 
 \section{Ideas brainstorming}
 Ver en la frontera de Mdeo y notar que ICC es el mismo pero umbrales de corte distinto por lo que tenes gente con mismo ICC pero que de un lado de la frontera le corresponde TUS, y del otro no.

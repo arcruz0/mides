@@ -163,8 +163,8 @@ global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuev
 	
 	
 	** Genero variables a nivel de personas meses antes o después o durante visita:
-	* Genero 49 variables por variable: osea 49 variables del tipo tipo_afiliacion según +- fecha visita
-	forvalues i = 1/24 {
+	* Genero 49 variables por variable: osea 49 variables del tipo tipo_afiliacion según +- fecha visita (en realidad creo algunas más post visita; 5 años)
+	forvalues i = 1/60 {
 		foreach var in $varsBPSSIIAS  {
 			generate mas`var'`i'=.
 				forvalues j = 25/130 { 

@@ -117,8 +117,8 @@ forvalues i = 20/129 {
 }
 
 * Genero 49 variables por variable: osea 49 variables del tipo monto_carga como +- fecha de visita
-* (para algunas fechas pongo dato del mes anterior si hay missing value para cierto mes-año)
-forvalues i = 1/24 {
+* (para algunas fechas pongo dato del mes anterior si hay missing value para cierto mes-año) (con más datos para luego de visita)
+forvalues i = 1/60 {
 	foreach var in $vars_tus {
 		generate mas`var'`i'=.
 			forvalues j = 20/129 {
@@ -166,15 +166,20 @@ foreach var in $vars_tus {
 forvalues i = 1/24 {
 	foreach var in $vars_tus {
 		gegen hogarMenos`var'`i' = max(menos`var'`i'), by(flowcorrelativeid)
-		gegen hogarMas`var'`i' = max(mas`var'`i'), by(flowcorrelativeid)
 		}
 	gegen hogarMenoscuantTus`i' = total(menoscobraTus`i'), by(flowcorrelativeid)
-	gegen hogarMascuantTus`i' = total(mascobraTus`i'), by(flowcorrelativeid)
 	gegen hogarMenoscuantTusDob`i' = total(menostusDoble`i'), by(flowcorrelativeid)
-	gegen hogarMascuantTusDob`i' = total(mastusDoble`i'), by(flowcorrelativeid)
 	gegen hogarMenoscuantMinor`i' = total(menosmenores_carga`i'), by(flowcorrelativeid)
-	gegen hogarMascuantMinor`i' = total(masmenores_carga`i'), by(flowcorrelativeid)
 	gegen hogarMenoscuantMto`i' = total(menosmonto_carga`i'), by(flowcorrelativeid)
+}
+
+forvalues i = 1/60 {
+	foreach var in $vars_tus {
+		gegen hogarMas`var'`i' = max(mas`var'`i'), by(flowcorrelativeid)
+		}
+	gegen hogarMascuantTus`i' = total(mascobraTus`i'), by(flowcorrelativeid)
+	gegen hogarMascuantTusDob`i' = total(mastusDoble`i'), by(flowcorrelativeid)
+	gegen hogarMascuantMinor`i' = total(masmenores_carga`i'), by(flowcorrelativeid)
 	gegen hogarMascuantMto`i' = total(masmonto_carga`i'), by(flowcorrelativeid)
 }
 
@@ -201,7 +206,7 @@ forvalues i = 20/129 {
 }
 
 * Genero variables de si hogar perdió, ganó, mantuvo transferencia 12 y 6 meses luego de visita (para los mapas)
-foreach val in 6 12 {
+foreach val in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 {
 gen hogar0a0Mes`val' = .
 replace hogar0a0Mes`val' = 0 if hogarZerocobraTus!=. & hogarMascobraTus`val'!=.
 replace hogar0a0Mes`val' = 1 if hogarZerocobraTus==0 & hogarMascobraTus`val'==0

@@ -117,9 +117,26 @@ So the government will give transfers as long as $ICC>\frac{c(TUS)}{E(e_i(1)-e_i
 
 Now, if there is no asymmetric impacts, the government should take out a transfer from individuals $j$ to $i$ if and only if $c(TUS)>E(e_i(1)-e_i(0))ICC$ if and only if $ICC<\frac{c(TUS)}{E(e_i(1)-e_i(0))}=\bar{ICC}$ if and only if $ICC<\bar{ICC}$. So we get the same rule for giving and taking.
 
-Nevertheless, given that there are asymmetric impacts, the government should take out a transfer if and only if: $c(TUS)>E(e_i(1)-e_i(-1))ICC$ if and only if $ICC<\frac{c(TUS)}{E(e_i(1)-e_i(1))}<\bar{ICC}$
+Nevertheless, given that there are asymmetric impacts, the government should take out a transfer if and only if: $c(TUS)>E(e_i(1)-e_i(-1))ICC$ if and only if $ICC<\frac{c(TUS)}{E(e_i(1)-e_i(1))}<\bar{ICC}$.
+
+Let's call $\frac{c(TUS)}{E(e_i(1)-e_i(1))}=\hat{ICC}$ so we get that the threshold for taking away should be a fraction $\frac{\hat{ICC}}{\bar{ICC}}=\frac{e_i(1)-e_i(0)}{e_i(1)-e_i(-1)}$ Where we just took the expectations for simplicity.
 
 
+In many cases we may see that impacts of gaining and losing on informality or education are asymmetric and this could be because leaving school is easy and quick, but that's not the case with going back. Similarly for the informal economy, it's easy to go there but may be harder to go back to formality after a prolonged period in the informal sector.
+
+Otro modelo con consumption e informality:
+Hay dos períodos, en primer período el gobierno allocaed certain TUS y las personas deben elegir cuánto consumir y cuánto trabajar en el sector formal e informal (no hay savings de un período al otro). En el período 1 reciben $W_0$ si trabajan en el sector formal y $w$ por el informal. En el segundo período, si trabajaron en el sector formal reciben $W_1$, si trabajaron en el informal y ahora en el formal, reciben $W_0$. Si trabajan en el informal reciben $w$ siempre (no hay returns to skills en el informal).
+
+Gobierno debe decidir que hacer con transferencias en 2do período. Así que maximiza (over ${TUS_i}\in{0,1}$)
+
+
+$max \int_{0}^{1}g_i u(c_i,(l^F_i+l^I_i)) - \int_{0}^{1}c(TUS_i)$
+
+Decision de dar o scar es separable across individuals, asi que amog $i$ que no venian recibiendo, gobierno dará transfer si: $c(1)<g_i[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(0),(l^F_i(0)+l^I_i(0))]$ if and only if $ICC>\frac{c(1)}{[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(0),(l^F_i(0)+l^I_i(0))]}$
+
+Sabemos que gobierno da si ICC>$\bar{ICC}$ asi que debe ser el caso que $[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(0),(l^F_i(0)+l^I_i(0))]=\frac{c(1)}{\bar{ICC}}$
+
+Cuando es optimum to take away transfer? When the cost of giving it doesn't outweight its costs, i.e. when, $c(1)>g_i[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]$ if and only if $\frac{c(1)}{ICC}>[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]$. So cutoff for taking the transfer should be $\frac{c(1)}{[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]}$, call it $NICC$ and how it related to the other one? $\frac{NICC}{\bar{ICC}} = \frac{[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(0),(l^F_i(0)+l^I_i(0))]}{[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]}$
 \bibliographystyle{plainnat}
 \bibliography{mides}
 
