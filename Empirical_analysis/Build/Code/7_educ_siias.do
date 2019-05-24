@@ -335,88 +335,88 @@ forvalues i = 28/129 {
 			}
 
 
-** CES: Para 2011, 2012 y 2013 (solo datos en abr y dic) asumo que ene-mar siempre tienen valor de abril pasado;
-* may-nov siempre tienen valor de dic pasado. En 2014 y 2016 (abril, jun, set y dic) asumo ene-mar son iguales a abril, may es jun, jul-ago es set y oct-nov es dic; 
-* 2017 y 2018 estudiantes asumo ene-feb es igual a valor de marzo	
+** CES: Para 2011, 2012 y 2013 (solo datos en abr y dic) asumo que ene-mar siempre tienen valor de dic anterior;
+* may-nov siempre tienen valor de abr anterior. En 2014 y 2016 (abril, jun, set y dic) asumo ene-mar son iguales a dic anterior, may es abr anterior, jul-ago es jun anterior y oct-nov es set anterior; 
+* 2017 y 2018 estudiantes asumo ene-feb es igual a valor de dic anterior	
 	forvalues i = 1/60 {
 		foreach var in  $varsCESLags {
 			generate mas`var'`i'=.
 				forvalues j = 40/129 {
 					* may-nov 2011: 41-47
 					if (`j' >= 41 & `j' <= 47) {
-						replace mas`var'`i' = `var'48 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'40 if periodo == `j' - `i'
 						}
 					* ene-mar 2012: 49-51
 					else if (`j' == 49 | `j' == 50 | `j' == 51) {
-						replace mas`var'`i' = `var'52 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'48 if periodo == `j' - `i'
 						}
 					* may-nov 2012: 53-59
 					else if (`j' >= 53 & `j' <= 59) {
-						replace mas`var'`i' = `var'60 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'52 if periodo == `j' - `i'
 						}
 					* ene-mar 2013: 61-63
 					else if (`j' == 61 | `j' == 62 | `j' == 63) {
-						replace mas`var'`i' = `var'64 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'60 if periodo == `j' - `i'
 						}
 					* may-nov 2013: 65-71
 					else if (`j' >= 65 & `j' <= 71) {
-						replace mas`var'`i' = `var'72 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'64 if periodo == `j' - `i'
 						}
 					* ene-mar 2014: 73-75
 					else if (`j' >= 73 & `j' <= 75) {
-						replace mas`var'`i' = `var'76 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'72 if periodo == `j' - `i'
 						}
 					* may 2014: 77
 					else if (`j' == 77) {
-						replace mas`var'`i' = `var'78 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'76 if periodo == `j' - `i'
 						}
 					* jul-ago 2014: 79-80
 					else if (`j' >= 79 & `j' <= 80) {
-						replace mas`var'`i' = `var'81 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'78 if periodo == `j' - `i'
 						}
 					* oct-nov 2014: 82-83
 					else if (`j' >= 82 & `j' <= 83) {
-						replace mas`var'`i' = `var'84 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'81 if periodo == `j' - `i'
 						}
 					* ene-mar 2015: 85-87
 					else if (`j' >= 85 & `j' <= 87) {
-						replace mas`var'`i' = `var'88 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'84 if periodo == `j' - `i'
 						}
 					* may 2015: 89
 					else if (`j' == 89) {
-						replace mas`var'`i' = `var'90 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'88 if periodo == `j' - `i'
 						}
 					* jul-ago 2015: 91-92
 					else if (`j' >= 91 & `j' <= 92) {
-						replace mas`var'`i' = `var'93 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'90 if periodo == `j' - `i'
 						}
 					* oct-nov 2015: 94-95
 					else if (`j' >= 94 & `j' <= 95) {
-						replace mas`var'`i' = `var'96 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'93 if periodo == `j' - `i'
 						}
 					* ene-mar 2016: 97-99
 					else if (`j' >= 97 & `j' <= 99) {
-						replace mas`var'`i' = `var'100 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'96 if periodo == `j' - `i'
 						}
 					* may 2016: 101
 					else if (`j' == 101) {
-						replace mas`var'`i' = `var'102 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'100 if periodo == `j' - `i'
 						}
 					* jul-ago 2016: 103-104
 					else if (`j' >= 103 & `j' <= 104) {
-						replace mas`var'`i' = `var'105 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'102 if periodo == `j' - `i'
 						}
 					* oct-nov 2016: 106-107
 					else if (`j' >= 106 & `j' <= 107) {
-						replace mas`var'`i' = `var'108 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'105 if periodo == `j' - `i'
 						}
 					* ene-feb 2017: 109-110
 					else if (`j' >= 109 & `j' <= 110) {
-						replace mas`var'`i' = `var'111 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'108 if periodo == `j' - `i'
 						}
 					* ene-feb 2018: 121-122
 					else if (`j' >= 121 & `j' <= 122) {
-						replace mas`var'`i' = `var'123 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'120 if periodo == `j' - `i'
 						}
 					else {
 						cap replace mas`var'`i' = `var'`j' if periodo == `j' - `i'
@@ -431,79 +431,79 @@ forvalues i = 28/129 {
 				forvalues j = 40/129 {
 					* may-nov 2011: 41-47
 					if (`j' >= 41 & `j' <= 47) {
-						replace menos`var'`i' = `var'48 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'40 if periodo == `j' + `i'
 						}
 					* ene-mar 2012: 49-51
 					else if (`j' == 49 | `j' == 50 | `j' == 51) {
-						replace menos`var'`i' = `var'52 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'48 if periodo == `j' + `i'
 						}
 					* may-nov 2012: 53-59
 					else if (`j' >= 53 & `j' <= 59) {
-						replace menos`var'`i' = `var'60 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'52 if periodo == `j' + `i'
 						}
 					* ene-mar 2013: 61-63
 					else if (`j' == 61 | `j' == 62 | `j' == 63) {
-						replace menos`var'`i' = `var'64 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'60 if periodo == `j' + `i'
 						}
 					* may-nov 2013: 65-71
 					else if (`j' >= 65 & `j' <= 71) {
-						replace menos`var'`i' = `var'72 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'64 if periodo == `j' + `i'
 						}
 					* ene-mar 2014: 73-75
 					else if (`j' >= 73 & `j' <= 75) {
-						replace menos`var'`i' = `var'76 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'72 if periodo == `j' + `i'
 						}
 					* may 2014: 77
 					else if (`j' == 77) {
-						replace menos`var'`i' = `var'78 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'76 if periodo == `j' + `i'
 						}
 					* jul-ago 2014: 79-80
 					else if (`j' >= 79 & `j' <= 80) {
-						replace menos`var'`i' = `var'81 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'78 if periodo == `j' + `i'
 						}
 					* oct-nov 2014: 82-83
 					else if (`j' >= 82 & `j' <= 83) {
-						replace menos`var'`i' = `var'84 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'81 if periodo == `j' + `i'
 						}
 					* ene-mar 2015: 85-87
 					else if (`j' >= 85 & `j' <= 87) {
-						replace menos`var'`i' = `var'88 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'84 if periodo == `j' + `i'
 						}
 					* may 2015: 89
 					else if (`j' == 89) {
-						replace menos`var'`i' = `var'90 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'88 if periodo == `j' + `i'
 						}
 					* jul-ago 2015: 91-92
 					else if (`j' >= 91 & `j' <= 92) {
-						replace menos`var'`i' = `var'93 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'90 if periodo == `j' + `i'
 						}
 					* oct-nov 2015: 94-95
 					else if (`j' >= 94 & `j' <= 95) {
-						replace menos`var'`i' = `var'96 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'93 if periodo == `j' + `i'
 						}
 					* ene-mar 2016: 97-99
 					else if (`j' >= 97 & `j' <= 99) {
-						replace menos`var'`i' = `var'100 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'96 if periodo == `j' + `i'
 						}
 					* may 2016: 101
 					else if (`j' == 101) {
-						replace menos`var'`i' = `var'102 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'100 if periodo == `j' + `i'
 						}
 					* jul-ago 2016: 103-104
 					else if (`j' >= 103 & `j' <= 104) {
-						replace menos`var'`i' = `var'105 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'102 if periodo == `j' + `i'
 						}
 					* oct-nov 2016: 106-107
 					else if (`j' >= 106 & `j' <= 107) {
-						replace menos`var'`i' = `var'108 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'105 if periodo == `j' + `i'
 						}
 					* ene-feb 2017: 109-110
 					else if (`j' >= 109 & `j' <= 110) {
-						replace menos`var'`i' = `var'111 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'108 if periodo == `j' + `i'
 						}
 					* ene-feb 2018: 121-122
 					else if (`j' >= 121 & `j' <= 122) {
-						replace menos`var'`i' = `var'123 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'120 if periodo == `j' + `i'
 						}
 					else {
 						cap replace menos`var'`i' = `var'`j' if periodo == `j' + `i'
@@ -517,79 +517,79 @@ forvalues i = 28/129 {
 				forvalues j = 40/129 {
 					* may-nov 2011: 41-47
 					if (`j' >= 41 & `j' <= 47) {
-						replace zero`var' = `var'48 if periodo == `j'
+						replace zero`var' = `var'40 if periodo == `j'
 						}
 					* ene-mar 2012: 49-51
 					else if (`j' == 49 | `j' == 50 | `j' == 51) {
-						replace zero`var' = `var'52 if periodo == `j'
+						replace zero`var' = `var'48 if periodo == `j'
 						}
 					* may-nov 2012: 53-59
 					else if (`j' >= 53 & `j' <= 59) {
-						replace zero`var'`i' = `var'60 if periodo == `j'
+						replace zero`var'`i' = `var'52 if periodo == `j'
 						}
 					* ene-mar 2013: 61-63
 					else if (`j' == 61 | `j' == 62 | `j' == 63) {
-						replace zero`var' = `var'64 if periodo == `j'
+						replace zero`var' = `var'60 if periodo == `j'
 						}
 					* may-nov 2013: 65-71
 					else if (`j' >= 65 & `j' <= 71) {
-						replace zero`var' = `var'72 if periodo == `j'
+						replace zero`var' = `var'64 if periodo == `j'
 						}
 					* ene-mar 2014: 73-75
 					else if (`j' >= 73 & `j' <= 75) {
-						replace zero`var' = `var'76 if periodo == `j'
+						replace zero`var' = `var'72 if periodo == `j'
 						}
 					* may 2014: 77
 					else if (`j' == 77) {
-						replace zero`var' = `var'78 if periodo == `j'
+						replace zero`var' = `var'76 if periodo == `j'
 						}
 					* jul-ago 2014: 79-80
 					else if (`j' >= 79 & `j' <= 80) {
-						replace zero`var' = `var'81 if periodo == `j'
+						replace zero`var' = `var'78 if periodo == `j'
 						}
 					* oct-nov 2014: 82-83
 					else if (`j' >= 82 & `j' <= 83) {
-						replace zero`var' = `var'84 if periodo == `j'
+						replace zero`var' = `var'81 if periodo == `j'
 						}
 					* ene-mar 2015: 85-87
 					else if (`j' >= 85 & `j' <= 87) {
-						replace zero`var' = `var'88 if periodo == `j'
+						replace zero`var' = `var'84 if periodo == `j'
 						}
 					* may 2015: 89
 					else if (`j' == 89) {
-						replace zero`var' = `var'90 if periodo == `j'
+						replace zero`var' = `var'88 if periodo == `j'
 						}
 					* jul-ago 2015: 91-92
 					else if (`j' >= 91 & `j' <= 92) {
-						replace zero`var' = `var'93 if periodo == `j'
+						replace zero`var' = `var'90 if periodo == `j'
 						}
 					* oct-nov 2015: 94-95
 					else if (`j' >= 94 & `j' <= 95) {
-						replace zero`var' = `var'96 if periodo == `j'
+						replace zero`var' = `var'93 if periodo == `j'
 						}
 					* ene-mar 2016: 97-99
 					else if (`j' >= 97 & `j' <= 99) {
-						replace zero`var' = `var'100 if periodo == `j'
+						replace zero`var' = `var'96 if periodo == `j'
 						}
 					* may 2016: 101
 					else if (`j' == 101) {
-						replace zero`var' = `var'102 if periodo == `j'
+						replace zero`var' = `var'100 if periodo == `j'
 						}
 					* jul-ago 2016: 103-104
 					else if (`j' >= 103 & `j' <= 104) {
-						replace zero`var' = `var'105 if periodo == `j'
+						replace zero`var' = `var'102 if periodo == `j'
 						}
 					* oct-nov 2016: 106-107
 					else if (`j' >= 106 & `j' <= 107) {
-						replace zero`var' = `var'108 if periodo == `j'
+						replace zero`var' = `var'105 if periodo == `j'
 						}
 					* ene-feb 2017: 109-110
 					else if (`j' >= 109 & `j' <= 110) {
-						replace zero`var' = `var'111 if periodo == `j'
+						replace zero`var' = `var'108 if periodo == `j'
 						}
 					* ene-feb 2018: 121-122
 					else if (`j' >= 121 & `j' <= 122) {
-						replace zero`var' = `var'123 if periodo == `j'
+						replace zero`var' = `var'120 if periodo == `j'
 						}
 					else {
 						cap replace zero`var' = `var'`j' if periodo == `j'
@@ -605,96 +605,96 @@ forvalues i = 28/129 {
 
 *Periodos con datos: 28 33 40 45 48 52 57 60 64 69 72 76 81 84 88 93 96 100 105 108 111 112 113 114 115 116 117 118 119 120 123 124 125 126 127 128 129
 
-** Para 2011, 2012 y 2013 (solo datos en abr y dic) asumo que ene-mar siempre tienen valor de abril pasado;
-* may-nov siempre tienen valor de dic pasado. En 2014 y 2016 (abril, jun, set y dic) asumo ene-mar son iguales a abril, may es jun, jul-ago es set y oct-nov es dic; 
-* 2017 y 2018 estudiantes asumo ene-feb es igual a valor de marzo
+** Para 2011, 2012 y 2013 (solo datos en abr y dic) asumo que ene-mar siempre tienen valor de dic pasado;
+* may-nov siempre tienen valor de abr pasado. En 2014 y 2016 (abril, jun, set y dic) asumo ene-mar son iguales a dic pasado, may es abr, jul-ago es jun y oct-nov es set; 
+* 2017 y 2018 estudiantes asumo ene-feb es igual a valor de dic pasado
 	forvalues i = 1/60 {
 		foreach var in  $varsCETPLags {
 			generate mas`var'`i'=.
 				forvalues j = 28/129 {
 					* may-ago 2010: 29-32
 					if (`j' >= 29 & `j' <= 32) {
-						replace mas`var'`i' = `var'33 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'28 if periodo == `j' - `i'
 						}
 					* oct 2010-mar 2011: 34-39
 					else if (`j' >= 34 & `j' <= 39) {
-						replace mas`var'`i' = `var'40 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'33 if periodo == `j' - `i'
 						}
 					* may-ago 2011: 41-44
 					else if (`j' >= 41 & `j' <= 44) {
-						replace mas`var'`i' = `var'45 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'40 if periodo == `j' - `i'
 						}
 					* oct-nov 2011: 46-47
 					else if (`j' >= 46 & `j' <= 47) {
-						replace mas`var'`i' = `var'48 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'45 if periodo == `j' - `i'
 						}
 					* ene-mar 2012: 49-51
 					else if (`j' >= 49 & `j' <= 51) {
-						replace mas`var'`i' = `var'52 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'48 if periodo == `j' - `i'
 						}
 					* may-ago 2012: 53-56
 					else if (`j' >= 53 & `j' <= 56) {
-						replace mas`var'`i' = `var'57 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'52 if periodo == `j' - `i'
 						}
 					* oct-nov 2012: 58-59
 					else if (`j' >= 58 & `j' <= 59) {
-						replace mas`var'`i' = `var'60 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'57 if periodo == `j' - `i'
 						}
 					* ene-mar 2013: 61-63
 					else if (`j' == 61 | `j' == 62 | `j' == 63) {
-						replace mas`var'`i' = `var'64 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'60 if periodo == `j' - `i'
 						}
 					* may-ago 2013: 65-68
 					else if (`j' >= 65 & `j' <= 68) {
-						replace mas`var'`i' = `var'69 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'64 if periodo == `j' - `i'
 						}
 					* oct-nov 2013: 70-71
 					else if (`j' >= 70 & `j' <= 71) {
-						replace mas`var'`i' = `var'72 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'69 if periodo == `j' - `i'
 						}
 					* ene-mar 2014: 73-75
 					else if (`j' >= 73 & `j' <= 75) {
-						replace mas`var'`i' = `var'76 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'72 if periodo == `j' - `i'
 						}
 					* may-ago 2014: 77-80
 					else if (`j' >= 77 & `j'<=80) {
-						replace mas`var'`i' = `var'81 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'76 if periodo == `j' - `i'
 						}
 					* oct-nov 2014: 82-83
 					else if (`j' >= 82 & `j' <= 83) {
-						replace mas`var'`i' = `var'84 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'81 if periodo == `j' - `i'
 						}
 					* ene-mar 2015: 85-87
 					else if (`j' >= 85 & `j' <= 87) {
-						replace mas`var'`i' = `var'88 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'84 if periodo == `j' - `i'
 						}
 					* may-ago 2015: 89-92
 					else if (`j' >= 89 & `j'<=92) {
-						replace mas`var'`i' = `var'93 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'88 if periodo == `j' - `i'
 						}
 					* oct-nov 2015: 94-95
 					else if (`j' >= 94 & `j' <= 95) {
-						replace mas`var'`i' = `var'96 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'93 if periodo == `j' - `i'
 						}
 					* ene-mar 2016: 97-99
 					else if (`j' >= 97 & `j' <= 99) {
-						replace mas`var'`i' = `var'100 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'96 if periodo == `j' - `i'
 						}
 					* may-ago 2016: 101-104
 					else if (`j' >= 101 & `j' <= 104) {
-						replace mas`var'`i' = `var'105 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'100 if periodo == `j' - `i'
 						}
 					* oct-nov 2016: 106-107
 					else if (`j' >= 106 & `j' <= 107) {
-						replace mas`var'`i' = `var'108 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'105 if periodo == `j' - `i'
 						}
 					* ene-feb 2017: 109-110
 					else if (`j' >= 109 & `j' <= 110) {
-						replace mas`var'`i' = `var'111 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'108 if periodo == `j' - `i'
 						}
 					* ene-feb 2018: 121-122
 					else if (`j' >= 121 & `j' <= 122) {
-						replace mas`var'`i' = `var'123 if periodo == `j' - `i'
+						replace mas`var'`i' = `var'120 if periodo == `j' - `i'
 						}
 					else {
 						cap replace mas`var'`i' = `var'`j' if periodo == `j' - `i'
@@ -711,87 +711,87 @@ forvalues i = 28/129 {
 				forvalues j = 28/129 {
 					* may-ago 2010: 29-32
 					if (`j' >= 29 & `j' <= 32) {
-						replace menos`var'`i' = `var'33 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'28 if periodo == `j' + `i'
 						}
 					* oct 2010-mar 2011: 34-39
 					else if (`j' >= 34 & `j' <= 39) {
-						replace menos`var'`i' = `var'40 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'33 if periodo == `j' + `i'
 						}
 					* may-ago 2011: 41-44
 					else if (`j' >= 41 & `j' <= 44) {
-						replace menos`var'`i' = `var'45 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'40 if periodo == `j' + `i'
 						}
 					* oct-nov 2011: 46-47
 					else if (`j' >= 46 & `j' <= 47) {
-						replace menos`var'`i' = `var'48 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'45 if periodo == `j' + `i'
 						}
 					* ene-mar 2012: 49-51
 					else if (`j' >= 49 & `j' <= 51) {
-						replace menos`var'`i' = `var'52 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'48 if periodo == `j' + `i'
 						}
 					* may-ago 2012: 53-56
 					else if (`j' >= 53 & `j' <= 56) {
-						replace menos`var'`i' = `var'57 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'52 if periodo == `j' + `i'
 						}
 					* oct-nov 2012: 58-59
 					else if (`j' >= 58 & `j' <= 59) {
-						replace menos`var'`i' = `var'60 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'57 if periodo == `j' + `i'
 						}
 					* ene-mar 2013: 61-63
 					else if (`j' == 61 | `j' == 62 | `j' == 63) {
-						replace menos`var'`i' = `var'64 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'60 if periodo == `j' + `i'
 						}
 					* may-ago 2013: 65-68
 					else if (`j' >= 65 & `j' <= 68) {
-						replace menos`var'`i' = `var'69 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'64 if periodo == `j' + `i'
 						}
 					* oct-nov 2013: 70-71
 					else if (`j' >= 70 & `j' <= 71) {
-						replace menos`var'`i' = `var'72 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'69 if periodo == `j' + `i'
 						}
 					* ene-mar 2014: 73-75
 					else if (`j' >= 73 & `j' <= 75) {
-						replace menos`var'`i' = `var'76 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'72 if periodo == `j' + `i'
 						}
 					* may-ago 2014: 77-80
 					else if (`j' >= 77 & `j'<=80) {
-						replace menos`var'`i' = `var'81 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'76 if periodo == `j' + `i'
 						}
 					* oct-nov 2014: 82-83
 					else if (`j' >= 82 & `j' <= 83) {
-						replace menos`var'`i' = `var'84 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'81 if periodo == `j' + `i'
 						}
 					* ene-mar 2015: 85-87
 					else if (`j' >= 85 & `j' <= 87) {
-						replace menos`var'`i' = `var'88 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'84 if periodo == `j' + `i'
 						}
 					* may-ago 2015: 89-92
 					else if (`j' >= 89 & `j'<=92) {
-						replace menos`var'`i' = `var'93 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'88 if periodo == `j' + `i'
 						}
 					* oct-nov 2015: 94-95
 					else if (`j' >= 94 & `j' <= 95) {
-						replace menos`var'`i' = `var'96 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'93 if periodo == `j' + `i'
 						}
 					* ene-mar 2016: 97-99
 					else if (`j' >= 97 & `j' <= 99) {
-						replace menos`var'`i' = `var'100 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'96 if periodo == `j' + `i'
 						}
 					* may-ago 2016: 101-104
 					else if (`j' >= 101 & `j' <= 104) {
-						replace menos`var'`i' = `var'105 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'100 if periodo == `j' + `i'
 						}
 					* oct-nov 2016: 106-107
 					else if (`j' >= 106 & `j' <= 107) {
-						replace menos`var'`i' = `var'108 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'105 if periodo == `j' + `i'
 						}
 					* ene-feb 2017: 109-110
 					else if (`j' >= 109 & `j' <= 110) {
-						replace menos`var'`i' = `var'111 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'108 if periodo == `j' + `i'
 						}
 					* ene-feb 2018: 121-122
 					else if (`j' >= 121 & `j' <= 122) {
-						replace menos`var'`i' = `var'123 if periodo == `j' + `i'
+						replace menos`var'`i' = `var'120 if periodo == `j' + `i'
 						}
 					else {
 						cap replace menos`var'`i' = `var'`j' if periodo == `j' + `i'
@@ -805,87 +805,87 @@ forvalues i = 28/129 {
 				forvalues j = 28/129 {
 					* may-ago 2010: 29-32
 					if (`j' >= 29 & `j' <= 32) {
-						replace zero`var' = `var'33 if periodo == `j'
+						replace zero`var' = `var'28 if periodo == `j'
 						}
 					* oct 2010-mar 2011: 34-39
 					else if (`j' >= 34 & `j' <= 39) {
-						replace zero`var' = `var'40 if periodo == `j'
+						replace zero`var' = `var'33 if periodo == `j'
 						}
 					* may-ago 2011: 41-44
 					else if (`j' >= 41 & `j' <= 44) {
-						replace zero`var' = `var'45 if periodo == `j'
+						replace zero`var' = `var'40 if periodo == `j'
 						}
 					* oct-nov 2011: 46-47
 					else if (`j' >= 46 & `j' <= 47) {
-						replace zero`var' = `var'48 if periodo == `j'
+						replace zero`var' = `var'45 if periodo == `j'
 						}
 					* ene-mar 2012: 49-51
 					else if (`j' >= 49 & `j' <= 51) {
-						replace zero`var' = `var'52 if periodo == `j'
+						replace zero`var' = `var'48 if periodo == `j'
 						}
 					* may-ago 2012: 53-56
 					else if (`j' >= 53 & `j' <= 56) {
-						replace zero`var' = `var'57 if periodo == `j'
+						replace zero`var' = `var'52 if periodo == `j'
 						}
 					* oct-nov 2012: 58-59
 					else if (`j' >= 58 & `j' <= 59) {
-						replace zero`var' = `var'60 if periodo == `j'
+						replace zero`var' = `var'57 if periodo == `j'
 						}
 					* ene-mar 2013: 61-63
 					else if (`j' == 61 | `j' == 62 | `j' == 63) {
-						replace zero`var' = `var'64 if periodo == `j'
+						replace zero`var' = `var'60 if periodo == `j'
 						}
 					* may-ago 2013: 65-68
 					else if (`j' >= 65 & `j' <= 68) {
-						replace zero`var' = `var'69 if periodo == `j'
+						replace zero`var' = `var'64 if periodo == `j'
 						}
 					* oct-nov 2013: 70-71
 					else if (`j' >= 70 & `j' <= 71) {
-						replace zero`var' = `var'72 if periodo == `j'
+						replace zero`var' = `var'69 if periodo == `j'
 						}
 					* ene-mar 2014: 73-75
 					else if (`j' >= 73 & `j' <= 75) {
-						replace zero`var' = `var'76 if periodo == `j'
+						replace zero`var' = `var'72 if periodo == `j'
 						}
 					* may-ago 2014: 77-80
 					else if (`j' >= 77 & `j'<=80) {
-						replace zero`var' = `var'81 if periodo == `j'
+						replace zero`var' = `var'76 if periodo == `j'
 						}
 					* oct-nov 2014: 82-83
 					else if (`j' >= 82 & `j' <= 83) {
-						replace zero`var' = `var'84 if periodo == `j'
+						replace zero`var' = `var'81 if periodo == `j'
 						}
 					* ene-mar 2015: 85-87
 					else if (`j' >= 85 & `j' <= 87) {
-						replace zero`var' = `var'88 if periodo == `j'
+						replace zero`var' = `var'84 if periodo == `j'
 						}
 					* may-ago 2015: 89-92
 					else if (`j' >= 89 & `j'<=92) {
-						replace zero`var' = `var'93 if periodo == `j'
+						replace zero`var' = `var'88 if periodo == `j'
 						}
 					* oct-nov 2015: 94-95
 					else if (`j' >= 94 & `j' <= 95) {
-						replace zero`var' = `var'96 if periodo == `j'
+						replace zero`var' = `var'93 if periodo == `j'
 						}
 					* ene-mar 2016: 97-99
 					else if (`j' >= 97 & `j' <= 99) {
-						replace zero`var' = `var'100 if periodo == `j'
+						replace zero`var' = `var'96 if periodo == `j'
 						}
 					* may-ago 2016: 101-104
 					else if (`j' >= 101 & `j' <= 104) {
-						replace zero`var' = `var'105 if periodo == `j'
+						replace zero`var' = `var'100 if periodo == `j'
 						}
 					* oct-nov 2016: 106-107
 					else if (`j' >= 106 & `j' <= 107) {
-						replace zero`var' = `var'108 if periodo == `j'
+						replace zero`var' = `var'105 if periodo == `j'
 						}
 					* ene-feb 2017: 109-110
 					else if (`j' >= 109 & `j' <= 110) {
-						replace zero`var' = `var'111 if periodo == `j'
+						replace zero`var' = `var'108 if periodo == `j'
 						}
 					* ene-feb 2018: 121-122
 					else if (`j' >= 121 & `j' <= 122) {
-						replace zero`var' = `var'123 if periodo == `j'
+						replace zero`var' = `var'120 if periodo == `j'
 						}
 					else {
 						cap replace zero`var' = `var'`j' if periodo == `j'

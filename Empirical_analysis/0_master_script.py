@@ -105,13 +105,22 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Output:    Output\visitas_hogares_prog_soc_siias.csv
                Output\visitas_personas_prog_soc_siias.csv
 
-10)  Objective: Armar archivo con solicitudes de visitas y datos mínimos de las 
+10) Objective: Armar archivo con solicitudes de visitas y datos mínimos de las 
                personas en la visita
     Code:      Code\10_sol_visitas.py
     Input:     Input\pedido_lihuen\producto_3_enmascarado.csv
                Output\visitas_personas_vars.csv
                Output\visitas_hogares_vars.csv
     Output:    Output\sol_visitas_personas.csv
+
+11) Objective: Preparar base para estimar peer effects.
+    Code:      Code\11_peer_effects.py
+    Input:     Output\visitas_hogares_vars.csv
+               Output\visitas_personas_vars.csv
+               Output\visitas_hogares_TUS.csv
+               Output\visitas_personas_TUS.csv
+    Output:    Output\peer_personas.csv: base con una persona por fila donde a las variables de Output\visitas_personas_vars.csv se le suman variables de cantidad de TUS perdidas/ganandas/duplicadas en el "barrio" en distintos momentos del tiempo y agregados del barrio para distintos momentos del tiempo en base a visitas a hogares del barrio
+               Output\peer_hogares.csv: base con una visita-hogar por fila donde a las variables de Output\visitas_personas_vars.csv se le suman variables de cantidad de TUS perdidas/ganandas/duplicadas en el "barrio" en distintos momentos del tiempo y agregados del barrio para distintos momentos del tiempo en base a visitas a hogares del barrio
 
 
 10) Objective: Mover bases generadas de Output del Build al Input de Analysis
@@ -276,6 +285,19 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Input:     Input\MIDES\sol_visitas_personas.csv
 
     Output:
+        
+16) Objective: Mirar second stage de impacto TUS en variables recogidas al momento de
+               la visita considerando peer effects
+    Code:      Code\16_peer_effects_visita.
+    Input:     Input\MIDES\.csv
+               Input\MIDES\.csv
+    Output:    Output\
+    
+17) Objective: Mirar second stage de impacto TUS en PP considerando peer effects.
+    Code:      Code\16_peer_effects_PP.
+    Input:     Input\MIDES\.csv
+               Input\MIDES\.csv
+    Output:    Output\
  
         
 '''

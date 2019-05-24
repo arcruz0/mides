@@ -154,16 +154,17 @@ for rg in region:
     yBins=np.ones((binsRegion[rg],1))                    # The share of household with TUS in every bin
         
     for i in range(binsRegion[rg]-1):
-        yBins[i]=df[(df['icc']>=xLinspace[i]) & (df['icc']<xLinspace[i+1]) & (df['umbral_nuevo_tus']==tus1Threshold[rg])]['icc'].size
+        yBins[i]=df[(df['icc']>=xLinspace[i]) & (df['icc']<xLinspace[i+1]) & (df['umbral_nuevo_tus']==tus1Threshold[rg])]['icc'].size /df[(df['umbral_nuevo_tus']==tus1Threshold[rg])]['icc'].size 
         
     plt.figure()
     plt.axvline(x=afamThreshold[rg], color='orange', linestyle='dashed')   # AFAM threshold
     plt.axvline(x=tus1Threshold[rg], color='orange', linestyle='dashed')   # First TUS threshold
     plt.axvline(x=tus2Threshold[rg], color='orange', linestyle='dashed')       # Second TUS threshold
-    plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2, np.log(yBins[:-1]+1), color=colorsRegion[rg])
-    plt.ylabel('Log # Household-visits (2011-2018)')
+    plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2, yBins[:-1], color=colorsRegion[rg])
+    plt.ylabel('Density of household-visits (2011-2018)')
     plt.xlabel('Vulnerability Index')
-    plt.title('Distribution of visits by Vulnerability Index')
+    plt.ylim(0,0.02) 
+    plt.title('Density of visits by Vulnerability Index')
     plt.savefig('../Output/' + rg + 'distrib.pdf')
     plt.show()
     

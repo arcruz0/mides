@@ -43,6 +43,11 @@ df['personasEducSIIAS']['iccMenosThresholdAll'] = np.NaN
 df['personasEducSIIAS']['iccMenosThresholdAll'] = df['personasEducSIIAS']['iccMenosThresholdAll'].mask((abs(df['personasEducSIIAS']['iccMenosThreshold0'])<abs(df['personasEducSIIAS']['iccMenosThreshold1'])) & (abs(df['personasEducSIIAS']['iccMenosThreshold0'])<abs(df['personasEducSIIAS']['iccMenosThreshold2'])), df['personasEducSIIAS']['iccMenosThreshold0'])
 df['personasEducSIIAS']['iccMenosThresholdAll'] = df['personasEducSIIAS']['iccMenosThresholdAll'].mask((abs(df['personasEducSIIAS']['iccMenosThreshold1'])<abs(df['personasEducSIIAS']['iccMenosThreshold2'])) & (abs(df['personasEducSIIAS']['iccMenosThreshold1'])<abs(df['personasEducSIIAS']['iccMenosThreshold0'])), df['personasEducSIIAS']['iccMenosThreshold1'])
 df['personasEducSIIAS']['iccMenosThresholdAll'] = df['personasEducSIIAS']['iccMenosThresholdAll'].mask((abs(df['personasEducSIIAS']['iccMenosThreshold2'])<abs(df['personasEducSIIAS']['iccMenosThreshold1'])) & (abs(df['personasEducSIIAS']['iccMenosThreshold2'])<abs(df['personasEducSIIAS']['iccMenosThreshold0'])), df['personasEducSIIAS']['iccMenosThreshold2'])
+df['personasEducSIIAS']['lessICC1'] = df['personasEducSIIAS']['zero'].mask(df['personasEducSIIAS']['iccMenosThreshold1']<0, 1)
+df['personasEducSIIAS']['moreICC1'] = df['personasEducSIIAS']['zero'].mask(df['personasEducSIIAS']['iccMenosThreshold1']>0, 1)
+df['personasEducSIIAS']['lessICC2'] = df['personasEducSIIAS']['zero'].mask(df['personasEducSIIAS']['iccMenosThreshold2']<0, 1)
+df['personasEducSIIAS']['moreICC2'] = df['personasEducSIIAS']['zero'].mask(df['personasEducSIIAS']['iccMenosThreshold2']>0, 1)
+
 
 ## Edad y sexo
 df['personasEducSIIAS']['menores'] = df['personasEducSIIAS']['zero'].mask(df['personasEducSIIAS']['edad_visita']<=17, other=1)
@@ -52,12 +57,12 @@ df['personasEducSIIAS']['menores15'] = df['personasEducSIIAS']['zero'].mask(df['
 df['personasEducSIIAS']['menores1215'] = df['personasEducSIIAS']['zero'].mask((df['personasEducSIIAS']['edad_visita']<=15) & (df['personasEducSIIAS']['edad_visita']>=12) , other=1)
 df['personasEducSIIAS']['menores1317'] = df['personasEducSIIAS']['zero'].mask((df['personasEducSIIAS']['edad_visita']<=17) & (df['personasEducSIIAS']['edad_visita']>=13) , other=1)
 df['personasEducSIIAS']['menores1115'] = df['personasEducSIIAS']['zero'].mask((df['personasEducSIIAS']['edad_visita']<=15) & (df['personasEducSIIAS']['edad_visita']>=11) , other=1)
-df['personasEducSIIAS']['menores12zeroEstudiaCEIPCES'] = df['personasEducSIIAS']['menores12'] * df['personasEducSIIAS']['zeroEstudiaCEIPCES']
-df['personasEducSIIAS']['menores15zeroEstudiaCEIPCES'] = df['personasEducSIIAS']['menores15'] * df['personasEducSIIAS']['zeroEstudiaCEIPCES']
 
 # Relativas al TUS
 df['personasEducSIIAS']['hogarZeroCuantasTus'] = df['personasEducSIIAS']['hogarZerocobraTus'] + df['personasEducSIIAS']['hogarZerotusDoble'].fillna(value=0)
-
+df['personasEducSIIAS']['hogarNoCobraTUSEn0'] = df['personasEducSIIAS']['zero'].mask(df['personasEducSIIAS']['hogarZeroCuantasTus']==0, 1)
+df['personasEducSIIAS']['hogarCobra1TUSEn0'] = df['personasEducSIIAS']['zero'].mask(df['personasEducSIIAS']['hogarZeroCuantasTus']==1, 1)
+df['personasEducSIIAS']['hogarCobra2TUSEn0'] = df['personasEducSIIAS']['zero'].mask(df['personasEducSIIAS']['hogarZeroCuantasTus']==2, 1)
 
 ## Asistencia a la educacion
 
@@ -177,6 +182,16 @@ for j in range (1,25):
     df['personasEducSIIAS']['menos' + 'EstudiaCEIPCES' + str(j)] = 0
     df['personasEducSIIAS']['menos' + 'EstudiaCEIPCES' + str(j)] = df['personasEducSIIAS']['menos' + 'EstudiaCEIPCES' + str(j)].mask(((df['personasEducSIIAS']['menos' + 'enCEIP' + str(j)]==1) |  (df['personasEducSIIAS']['menos' + 'enCES' + str(j)]==1)), 1) 
 
+
+df['personasEducSIIAS']['menores12zeroEstudiaCEIPCES'] = df['personasEducSIIAS']['menores12'] * df['personasEducSIIAS']['zeroEstudiaCEIPCES']
+df['personasEducSIIAS']['menores15zeroEstudiaCEIPCES'] = df['personasEducSIIAS']['menores15'] * df['personasEducSIIAS']['zeroEstudiaCEIPCES']
+df['personasEducSIIAS']['menores12LessICC1'] = df['personasEducSIIAS']['menores12'] * df['personasEducSIIAS']['zeroEstudiaCEIPCES']
+
+
+# 4 grupos
+df['personasEducSIIAS']['menores12LessICC1NoCobraEn0'] = df['personasEducSIIAS']['menores12'] * df['personasEducSIIAS']['lessICC1'] * df['personasEducSIIAS']['hogarNoCobraTUSEn0'] 
+df['personasEducSIIAS']['menores12MoreICC2NoCobraEn0'] = df['personasEducSIIAS']['menores12'] * df['personasEducSIIAS']['moreICC2'] * df['personasEducSIIAS']['hogarNoCobraTUSEn0'] 
+
 ### Binscatters to see impact on schooling
 graphsRDD.fBinscatterSymmetricRDD(df['personasEducSIIAS'], xBounds=0.2, nBins=30, running='iccMenosThreshold1', 
                  rg='all', ylabel='masEstudiaCEIPCES24', xlabel='Vulnerability Index-TUS1', 
@@ -186,3 +201,9 @@ graphsRDD.fBinscatterSymmetricRDD(df['personasEducSIIAS'], xBounds=0.2, nBins=30
                  threshold=0, size=10,
                  savefig='../Output/algo.pdf',
                  otherConditions='menores')
+
+graphsDID.fBinscatterEvent2Groups(df['personasEducSIIAS'], menosPeriods=12, masPeriods=30, 
+                 group1='menores12LessICC1NoCobraEn0', group2='menores12MoreICC2NoCobraEn0', ylabel='ylabel is', xlabel='Months before/after the visit', 
+                 title='Mean Y before/after visit', 
+                 outcome='EstudiaCEIPCES',
+                 savefig='../Output/EstudiaCEIPCES.pdf')

@@ -27,7 +27,7 @@ drop if n==4290921 & nrodocumentoDAES=="9D591B7E1A5ADAADEBFF6E5191CC5D5F"
 drop if n==4293616 & nrodocumentoDAES=="DAAF7011E336402FB93858A6DA09DCC3"
 drop if n==4306946 & nrodocumentoDAES=="DB017C936898A04AE0D91CF4E36ED392"
 
-* 2014: Hay dos personas repetidas dos veces (y en uno de esos casos por persona, con monot_carga 0 por lo que se elimina esa obs).
+* 2014: Hay dos personas repetidas dos veces (y en uno de esos casos por persona, con monto_carga 0 por lo que se elimina esa obs).
 * A su vez, hay una persona repetida 6 veces en 3 meses (y tambien tiene monto_carga=0 en 3 de esas veces por lo que se eliminan esas obs)
 drop if n==2909728 & nrodocumentoDAES=="14336D5776F6AE19B1C642CB9A8F72E6"
 drop if n==3244730 & nrodocumentoDAES=="2DAC130982C77CD0457104C535452BA8"

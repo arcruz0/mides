@@ -41,6 +41,7 @@ df['personasSIIAS']['iccMenosThresholdAll'] = np.NaN
 df['personasSIIAS']['iccMenosThresholdAll'] = df['personasSIIAS']['iccMenosThresholdAll'].mask((abs(df['personasSIIAS']['iccMenosThreshold0'])<abs(df['personasSIIAS']['iccMenosThreshold1'])) & (abs(df['personasSIIAS']['iccMenosThreshold0'])<abs(df['personasSIIAS']['iccMenosThreshold2'])), df['personasSIIAS']['iccMenosThreshold0'])
 df['personasSIIAS']['iccMenosThresholdAll'] = df['personasSIIAS']['iccMenosThresholdAll'].mask((abs(df['personasSIIAS']['iccMenosThreshold1'])<abs(df['personasSIIAS']['iccMenosThreshold2'])) & (abs(df['personasSIIAS']['iccMenosThreshold1'])<abs(df['personasSIIAS']['iccMenosThreshold0'])), df['personasSIIAS']['iccMenosThreshold1'])
 df['personasSIIAS']['iccMenosThresholdAll'] = df['personasSIIAS']['iccMenosThresholdAll'].mask((abs(df['personasSIIAS']['iccMenosThreshold2'])<abs(df['personasSIIAS']['iccMenosThreshold1'])) & (abs(df['personasSIIAS']['iccMenosThreshold2'])<abs(df['personasSIIAS']['iccMenosThreshold0'])), df['personasSIIAS']['iccMenosThreshold2'])
+df['personasSIIAS']['hogarZeroCuantasTus'] = df['personasSIIAS']['hogarZerocobraTus'] + df['personasSIIAS']['hogarZerotusDoble'].fillna(value=0)
 
 
 df['personasSIIAS']['adultos'] = 1
@@ -74,12 +75,23 @@ df['personasSIIAS']['adultosMujeresICCTUS1LessInitial1'] = df['personasSIIAS']['
 df['personasSIIAS']['adultosMujeresICCTUS1MoreInitial1'] = 0
 df['personasSIIAS']['adultosMujeresICCTUS1MoreInitial1'] = df['personasSIIAS']['adultosICCTUS1LessInitial1'].mask((df['personasSIIAS']['edad_visita']>18) & (df['personasSIIAS']['iccMenosThreshold1']>=0) & (df['personasSIIAS']['hogarZeroCuantasTus']==0) & (df['personasSIIAS']['sexo']==2),1)
 
+df['personasSIIAS']['adultos2164NoOcupados0'] = df['personasSIIAS']['all0'].mask((df['personasSIIAS']['zeroocupadoSIIAS']==0) & (df['personasSIIAS']['edad_visita']>=21) & (df['personasSIIAS']['edad_visita']<=64) , other=1)
+df['personasSIIAS']['adultos2164SiOcupados0'] = df['personasSIIAS']['all0'].mask((df['personasSIIAS']['zeroocupadoSIIAS']==1) & (df['personasSIIAS']['edad_visita']>=21) & (df['personasSIIAS']['edad_visita']<=64) , other=1)
+
+## Variables pooling data on ocupados
+for start in [12,24]:
+    for end in [24, 36, 48, 60]:
+        df['personasSIIAS']['masocupadoSIIAS' + str(start) + 'a' + str(end)] = 0
+        for val in range(start,end+1):
+            df['personasSIIAS']['masocupadoSIIAS' + str(start) + 'a' + str(end)] = df['personasSIIAS']['masocupadoSIIAS' + str(start) + 'a' + str(end)] + df['personasSIIAS']['masocupadoSIIAS' + str(val)]
+        df['personasSIIAS']['masocupadoSIIAS' + str(start) + 'a' + str(end)] = df['personasSIIAS']['masocupadoSIIAS' + str(start) + 'a' + str(end)]/len(range(start,end+1))
+        df['personasSIIAS']['siempremasocupadoSIIAS' + str(start) + 'a' + str(end)] = df['personasSIIAS']['all0'].mask(df['personasSIIAS']['masocupadoSIIAS' + str(start) + 'a' + str(end)]==1, 1)
+
 
 # Create number of TUS by household
 for ms in mesesLags:
     df['personasSIIAS']['hogarCuantasTusMas' + ms] = df['personasSIIAS']['hogarMascobraTus'+ ms] + df['personasSIIAS']['hogarMastusDoble'+ ms].fillna(value=0)
 
-df['personasSIIAS']['hogarZeroCuantasTus'] = df['personasSIIAS']['hogarZerocobraTus'] + df['personasSIIAS']['hogarZerotusDoble'].fillna(value=0)
 
 ### Parameters for figures
 varsRDD = ['zeroocupadoSIIAS', 'menosocupadoSIIAS3','masocupadoSIIAS12','masocupadoSIIAS18', 'masocupadoSIIAS24', 'masocupadoSIIAS36', 'masocupadoSIIAS48', 'masocupadoSIIAS60']
@@ -169,6 +181,29 @@ plt.legend()
 plt.show() 
    
 ### Plots con resultados de Stata de DID estimates
+graphsRDD.fBinscatterSymmetricRDD(df['personasSIIAS'], xBounds=0.2, nBins=30, running='iccMenosThreshold1', 
+                                     rg='int', ylabel='Perc. employed', xlabel='Vulnerability Index - First threshold', 
+                                     title='Perc. formally employed 24 months after visit', 
+                                     outcome='masocupadoSIIAS24a48',
+                                     initialTUS=1,
+                                     threshold=0, size=14,
+                                     savefig='../Output/grafPaperOcupadosRDD.pdf',
+                                     otherConditions='adultos')
 
 
+## Hago plot de robustness de resultados del RDD
+robustness = pd.read_csv('../Output/robustness.csv')
 
+plt.figure()
+#plt.scatter(indexX, stataRD[10].iloc[0], color='cadetblue', s=10)
+plt.plot(robustness['band'], robustness['coeff'], color='red')
+plt.plot(robustness['band'], robustness['lci'], linestyle='dashed', color='grey')
+plt.plot(robustness['band'], robustness['uci'], linestyle='dashed', color='grey')
+plt.axvline(x=0.145, color='green', linestyle='dashed')
+plt.axvline(x=0.135, color='brown', linestyle='dashed')
+plt.axhline(y=0, color='black')
+plt.title('FRDD Estimate: Perc. formally employed after 3 yrs')
+plt.ylabel('FRDD Estimate')
+plt.xlabel('Bandwith')
+plt.savefig('../Output/RDDrobustness.pdf')
+plt.show() 

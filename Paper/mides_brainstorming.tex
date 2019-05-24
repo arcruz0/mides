@@ -92,6 +92,27 @@ Fadlon and Nielsen forthcoming
 
 Spillovers to other social safety net programs. Which is the sign of the fiscal externality?
 
+Comentarios que saqué de presentar el paper en el PE Lunch el 16 de abril de 2019 o que me dijo Alesina en reunión posterior:
+-How is the TUS assigned? given to women, mean, how?
+-Alesina dijo inta-husehold allocations could be something interesting to explore
+-Important to understand if my labor supply results are due to formal or informal labor supply responses
+-Put numbers perhaps to disentangle whether impacts on labor suppy are just due to formality or not (what's the elasticity I find and what's a  normal elasticty?). If my effects are all labor supply responses then I shouldn't find an asymmetric impact perhaps but yes if it's formality or something like that.
+-Alesina says I should relate my paper to the universal income literature. Do i want to have multiple programs or only one? flipside of complicated welfare systems (this could be my topic in a way)
+-Tzachi told me that I should try to think on timing as: visit date, announcment to the individuals when they lose the card, actually losing the transfer.
+-Tzachi suggested me do DID graphs with transfer losing dates instead of visit dates
+-Tzachi also told me he disliked the slope down of one of the DID; show more periods to see results stabilize
+-Tzachi suggestd me use CCT for estimation not only for bandwiths (similar comment than Clemence, I have to look at the rdrobust package in more detail and pick the robust SE I believe, not the conventional ones)
+-Explain more why outcomes are interesting in the first slides
+-Nathan Nunn told me whether I can see if this program makes firms lose money (le dije q era un programa chco sin general equilibrium effects y me dijo q eso era algo malo)
+-Banerjee has a meta analysis that shows no impacts on labor supply, is tat true? (Nathan Nunn cree q es asi) En dicho caso, porq yo encuentro algo distinto o que tan surprisigin es mi result para la literatura?
+-Nathan Nunn also told me that in the RDD I'm looking at people that potentially they think they deserve the transfer, while in the DID you are comparing people that know they don't deserve it and people that know they deserve the transfer
+-Try to estimate some elasticity of food insecurity (Nathan said this)
+-Hysteresis was a term Enrico used that told me was a greek term related to unemployment that I should look into (https://en.wikipedia.org/wiki/Hysteresis_(economics))
+-Somebody told me to exploit geographic variation to see voting for example
+-Take a stand on whether my effects are on labor supply or formality
+
+
+
 \section{Welfare implications?}
 First order of business is what is the government trying to achieve with this program? Let's consider that government wants to increase the number of years of schooling on its target population, where the target population are the 60,000 poorest households. Think of education as a proxy of a lot of other things (climate in the household, well-being of its children, etc.) So welfare weights of the target population are 1 and of everyone else are 0. Thus, if the government visits a number of households equal to 1, it will want to allocate TUS such as to:
 
@@ -137,8 +158,9 @@ Decision de dar o scar es separable across individuals, asi que amog $i$ que no 
 Sabemos que gobierno da si ICC>$\bar{ICC}$ asi que debe ser el caso que $[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(0),(l^F_i(0)+l^I_i(0))]=\frac{c(1)}{\bar{ICC}}$
 
 Cuando es optimum to take away transfer? When the cost of giving it doesn't outweight its costs, i.e. when, $c(1)>g_i[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]$ if and only if $\frac{c(1)}{ICC}>[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]$. So cutoff for taking the transfer should be $\frac{c(1)}{[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]}$, call it $NICC$ and how it related to the other one? $\frac{NICC}{\bar{ICC}} = \frac{[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(0),(l^F_i(0)+l^I_i(0))]}{[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]}$
+
+
 \bibliographystyle{plainnat}
 \bibliography{mides}
 
 \end{document}
-

@@ -273,6 +273,26 @@ for i in [1, 0.2, 0.1, 0.05]:
         tf.write(dictBalances[i].to_latex(bold_rows=True, longtable=True))
 
 
+### Grafs para presentacion del 18 de Abril 2019 en PE Lunch
+        
+df['zero'] = 0       
+df['employedTwo'] = df['zero'].mask(df['situacionlaboralTwo']<=5, 1)
+
+xLinspace=np.arange(-0.2, 0.2, 0.02)  # It will give me the first value of every bin
+yBins=np.ones((bins,1))               # The share of household with TUS in every bin
+        
+for i in range(bins-1):
+    yBins[i]=df['employedTwo'][(df['iccNormPrimerTusOne']>=xLinspace[i]) & (df['iccNormPrimerTusOne']<xLinspace[i+1]) & (df['edad_visitaTwo']>=21)].mean()
+        
+plt.figure()
+plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
+plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='cadetblue')
+plt.ylabel('Perc. employed (2nd visit)')
+plt.xlabel('Vulnerability Index - First threshold (1st visit)')
+plt.title('Perc. employed during 2nd visit')
+plt.savefig('../Output/employedTwo.pdf')
+plt.show()
+
 ### Tzachi falsifictaion test
 xLinspace=np.arange(-0.3, 0.3, 0.02)  # It will give me the first value of every bin
 yBins=np.ones((30,1))               # The share of household with TUS in every bin
@@ -1669,9 +1689,9 @@ for i in range(bins-1):
 plt.figure()
 plt.axvline(x=0, color='orange', linestyle='dashed')       # Threshold
 plt.scatter(xLinspace[:-1]+(xLinspace[1]-xLinspace[0])/2,  yBins[:-1], color='red')
-plt.ylabel('% Insuficiencia alimentaria')
-plt.xlabel('ICC - Umbral TUS Simple (1er visita)')
-#plt.title('Perc. of households with "No Food" during 1st visit')
+plt.ylabel('% No food')
+plt.xlabel('Vulnerability Index - First threshold (1st visit)')
+plt.title('Perc. of households with "No Food" during 1st visit')
 plt.savefig('../Output/sinalimentos1.pdf')
 plt.show()
 

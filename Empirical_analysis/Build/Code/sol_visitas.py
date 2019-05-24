@@ -23,6 +23,9 @@ df=dict()
 df['personas']=pd.read_csv('../Output/visitas_personas_vars.csv')
 df['hogares']=pd.read_csv('../Output/visitas_hogares_vars.csv')
 df['sol_visitas'] = pd.read_csv('../Input/pedido_lihuen/producto_3_enmascarado.csv', encoding='latin_1', sep=';')
+df['sol_terminadas_visitas'] = pd.read_csv('../Input/pedido_lihuen/producto_2_enmascarado.csv', encoding='latin_1', sep=';')
+
+
 
 ## Genero variables en base de solicitud de visitas
 df['sol_visitas']['solicito']=1

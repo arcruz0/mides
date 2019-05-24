@@ -26,7 +26,7 @@ allVarsCargar = ['bps_afam_ley_benef', 'bps_afam_ley_atrib', 'bps_pens_vejez', '
                  'mid_asist_vejez', 'mides_canasta_serv', 'mides_jer', 'mides_cercanias', 'mides_ucc',
                  'mides_uy_trab', 'mides_monotributo', 'mides_inda_snc', 'mides_inda_paec', 'mides_inda_panrn']
 
-varsCargar = allVarsCargar
+varsCargar = ['bps_afam_ley_benef', 'bps_afam_ley_atrib']
 
 for var in varsCargar:
     df['personas' + var]=pd.read_csv('../Input/MIDES/visitas_personas_' + var + '.csv')
@@ -75,6 +75,7 @@ for var in varsCargar:
     df['personas' + var]['jefeMujer'] = df['personas' + var]['zero'].mask((df['personas' + var]['parentesco']==1) & (df['personas' + var]['sexo']==2), other=1)
     df['personas' + var]['jefeHombre'] = df['personas' + var]['zero'].mask((df['personas' + var]['parentesco']==1) & (df['personas' + var]['sexo']==1), other=1)   
     df['personas' + var]['menores12'] = df['personas' + var]['zero'].mask(df['personas' + var]['edad_visita']<=12, other=1)
+    df['personas' + var]['menores14'] = df['personas' + var]['zero'].mask(df['personas' + var]['edad_visita']<=14, other=1)
     df['personas' + var]['menores15'] = df['personas' + var]['zero'].mask(df['personas' + var]['edad_visita']<=15, other=1)
     df['personas' + var]['menores1215'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=15) & (df['personas' + var]['edad_visita']>=12) , other=1)
     df['personas' + var]['menores1317'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['edad_visita']>=13) , other=1)
@@ -93,8 +94,34 @@ for var in varsCargar:
     df['personas' + var]['menoresMoreTUS1'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold1']>0), other=1)
     df['personas' + var]['adultosLessTUS1'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold1']<0), other=1)
     df['personas' + var]['adultosMoreTUS1'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold1']>0), other=1)
-          
+    
+    df['personas' + var]['adultosMoreTUS1Initial0'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold1']>0) & (df['personas' + var]['hogarZeroCuantasTus']==0), other=1)
+    df['personas' + var]['adultosLessTUS1Initial0'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold1']<0) & (df['personas' + var]['hogarZeroCuantasTus']==0), other=1)
+    
+    df['personas' + var]['adultosMoreTUS1Initial1'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold1']>0) & (df['personas' + var]['hogarZeroCuantasTus']==1), other=1)
+    df['personas' + var]['adultosLessTUS1Initial1'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold1']<0) & (df['personas' + var]['hogarZeroCuantasTus']==1), other=1)
+    
+    df['personas' + var]['adultosLessTUS1Initial2'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold1']<0) & (df['personas' + var]['hogarZeroCuantasTus']==2), other=1)
+    df['personas' + var]['adultosMoreTUS2Initial0'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold2']>0) & (df['personas' + var]['hogarZeroCuantasTus']==0), other=1)
+    
+    df['personas' + var]['adultosLessTUS1Initial2'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold1']<0) & (df['personas' + var]['hogarZeroCuantasTus']==2), other=1)
+    df['personas' + var]['adultosMoreTUS2Initial2'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold2']>0) & (df['personas' + var]['hogarZeroCuantasTus']==2), other=1)
+    
+    
+    df['personas' + var]['menoresMoreTUS1Initial0'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold1']>0) & (df['personas' + var]['hogarZeroCuantasTus']==0), other=1)
+    df['personas' + var]['menoresLessTUS1Initial0'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold1']<0) & (df['personas' + var]['hogarZeroCuantasTus']==0), other=1)
+    
+    df['personas' + var]['menoresMoreTUS1Initial1'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold1']>0) & (df['personas' + var]['hogarZeroCuantasTus']==1), other=1)
+    df['personas' + var]['menoresLessTUS1Initial1'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold1']<0) & (df['personas' + var]['hogarZeroCuantasTus']==1), other=1)
+    
+    df['personas' + var]['menoresLessTUS1Initial2'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold1']<0) & (df['personas' + var]['hogarZeroCuantasTus']==2), other=1)
+    df['personas' + var]['menoresMoreTUS2Initial2'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold2']>0) & (df['personas' + var]['hogarZeroCuantasTus']==2), other=1)
+    
+    df['personas' + var]['menoresMoreTUS2Initial0'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold2']>0) & (df['personas' + var]['hogarZeroCuantasTus']==0), other=1)
 
+    df['personas' + var]['menores025LessTUS1Initial2'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold1']<0) & (df['personas' + var]['hogarZeroCuantasTus']==2) & (df['personas' + var]['iccMenosThreshold1']>-0.25), other=1)
+    df['personas' + var]['menores025MoreTUS2Initial2'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold2']>0) & (df['personas' + var]['hogarZeroCuantasTus']==2) & (df['personas' + var]['iccMenosThreshold1']>-0.25), other=1)
+    
 ### Tener una idea de población en cada programa
 numeroEnZero=dict()
 for var in varsCargar:
@@ -102,19 +129,20 @@ for var in varsCargar:
     
 ### Binscatters to see impact on programas sociales
 for var in varsCargar:
-for var in ['mides_inda_panrn']:
+for var in ['bps_afam_ley_benef']:
     graphsRDD.fBinscatterSymmetricRDD(df['personas' + var], xBounds=0.2, nBins=30, running='iccMenosThreshold1', 
-                     rg='mdeo', ylabel=var, xlabel='Vulnerability Index-TUS1', 
-                     title='mas' + var + '24', 
+                     rg='all', ylabel='Perc. with benefit 24 months after the visit', xlabel='Vulnerability Index - First threshold', 
+                     title='Perc. children receiving "workers" transfer', 
                      outcome='mas' + var + '24',
                      initialTUS='all',
-                     threshold=0, size=10,
-                     savefig='../Output/' + var + '.pdf',
-                     otherConditions='adultos')
+                     threshold=0, size=('N', 0.006),
+                     savefig='../Output/RDD' + var + '.pdf',
+                     otherConditions='menores14')
 ### DID
 for var in varsCargar:
-    graphsDID.fBinscatterEvent2Groups(df['personas' + var], menosPeriods=12, masPeriods=24, 
-                     group1='menoresMoreTUS1', group2='menoresLessTUS1', ylabel='ylabel is', xlabel='Months before/after the visit', 
+for var in ['bps_afam_ley_benef']:
+    graphsDID.fBinscatterEvent2Groups(df['personas' + var], menosPeriods=12, masPeriods=30, 
+                     group1='menoresLessTUS1Initial2', group2='menoresMoreTUS2Initial2', ylabel='ylabel is', xlabel='Months before/after the visit', 
                      title='Mean Y before/after visit', 
                      outcome=var,
                      savefig='../Output/DID' + var + '.pdf')

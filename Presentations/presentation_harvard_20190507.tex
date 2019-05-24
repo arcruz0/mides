@@ -61,8 +61,8 @@
 	Pontifical Catholic University of Chile
 }
 
-\date[PE Lunch - April 2019] % (optional)
-{PE Lunch. April 18, 2019}
+\date[PF/Labor Lunch - May 2019] % (optional)
+{PF/Labor Lunch. May 7, 2019}
  
 \graphicspath{ {../Empirical_analysis/Analysis/Output/} }	% Sets folder for \includegraphics
 
@@ -83,20 +83,20 @@
 \begin{frame}
 \frametitle{Research topic}
 \begin{itemize}
-	\item Why could it be hard to scale back welfare programs? We study how welfare recipients respond when they lose a government cash transfer.
-	\item How? Quasi-experiment in Uruguay in which several households quasi-randomly lost a government cash transfer. We follow these people with detailed administrative data from several sources after the event happened.
+	\item Why could it be hard to scale back welfare programs and reduce social spending? We study the behavioral responses of welfare recipients when they lose a government cash transfer.
+	\item How? Uruguayan government started in 2012 to use an algorithm to define eligibility to a food card program that had pre-existing (and ``not so poor'') beneficiaries. We follow beneficiaries that quasi-randomly lost (gained) the food card with detailed administrative data from several sources after the event happened.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{What this paper is about in a nutshell}
 \begin{itemize}
-\item DID and FRDD in which individuals that were receiving one (zero) cash transfer, quasi-randomly lost (gained) it, and how that differentially impacts:
+\item DID and FRDD in which individuals that were receiving one (zero) cash transfer, quasi-randomly lost (gained) it, and how that impacts:
 \begin{itemize}
-	\item Food insecurity
 	\item Formal labor supply
 	\item Enrollment in other welfare programs
 	\item Complaints to the government
+	\item Food insecurity
 \end{itemize}
 \item First paper to look at losses of UCTs or CCTs.
 \end{itemize}
@@ -118,7 +118,7 @@
 \frametitle{Uruguay}
 \begin{itemize}
 \item \textbf{Population}: 3.5 MM
-\item \textbf{GDP Per Capita USD}: 16,000 (2017)
+\item \textbf{GDP Per Capita USD}: 16,000 (2017), 2nd in LAC (PPP).
 \item \textbf{Avg. annual real GDP growth 2011-2017}: 3.0 \%
 \item \textbf{Poverty, less than \$5.5 (2011 PPP)}: 2011: 6\%; 2016: 3.7\%	
 \end{itemize}
@@ -133,7 +133,7 @@
 \begin{itemize}
 \item \textbf{Managed by}: Ministry of Social Development.
 \item \textbf{Amount}: Depends in a non-linear way in number of children. 47 USD (monthly) in 2019 for household with two kids. Double amount for poorest 30,000 households.
-\item \textbf{Beginnings}: PANES households with children or pregnant women administratively enrolled in 2008 + 20,000 INDA households in 2009.
+\item \textbf{Beginnings}: PANES households (target poorest 20\%) with children or pregnant women administratively enrolled in 2008 + 20,000 INDA households in 2009.
 \item \textbf{Target}: Initially ``all households with children in extreme poverty''.		
 \end{itemize}
 \end{frame}
@@ -144,20 +144,18 @@
 \item \textbf{Recognized}: On October 2011 a report by the Ministry identified severe targeting issues.
 \begin{itemize}
 \item Households in extreme poverty were 10,000 in 2009 and beneficiaries were 85,000.
-\item Not clear which is the target population: 5 scenarios considered for UCT.
-\item Type I error for UCT: 37\%, 39\%, 63\%, 42\%, 43\%.
-\item Type II error for UCT: 92\%, 82\%, 29\%, 64\%, 34\%.
+\item Not clear which is the target population.
 \end{itemize}
-\item \textbf{Steps taken}:
+\item \textbf{Steps taken in 2012}:
 \begin{itemize}
-\item Set target population to 60,000 poorest households.
+\item Set target population to 60,000 poorest households ($\approx$ poorest 5\%).
 \item Proxy means-tested approach to decide whether to grant or withdraw UCT benefits.
 \item Increase household visits to (re) assess their status in the program.
 \end{itemize}	
 \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[label=nHouse]
 \frametitle{Household visits}
 \begin{center}
 \includegraphics[width=80mm]{nHouse.pdf}
@@ -166,7 +164,7 @@
 {\small Who and how decided to visit which households?}
 \begin{itemize}
 	\item {\small``Requested'' visits: By phone or in one of the 38 regional offices.}
-	\item {\small``Non-requested'' visits: 2011 Census, administrative records from other programs, other ad-hoc criteria.}
+	\item {\small``Non-requested'' visits: 2011 Census, administrative records from other programs, other ad-hoc criteria. \hyperlink{MIDESCenso}{\beamergotobutton{Census map}}}
 \end{itemize}
 \end{frame}
 
@@ -216,7 +214,7 @@
 \begin{frame}
 \frametitle{Empirical strategy}
 \begin{itemize}
-	\item Two FRDD (for beneficiaries and non-beneficiaries at $t=0$) with the Vulnerability Index as running variable and beneficiary status 1yr after the visit as the endogenous regressor.
+	\item FRDD with the Vulnerability Index as running variable and beneficiary status 1yr after the visit as the endogenous regressor.
 	\begin{itemize}
 		\item First stage:	
 		\begin{align*}
@@ -336,21 +334,150 @@
 
 \begin{frame}
 \frametitle{Outcomes}
-\begin{itemize}
-	\item Food insecurity
+\begin{itemize}	
 	\item Formal labor supply
 	\item Enrollment in another welfare program
 	\item Complaints to the government
+	\item Food insecurity
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Outcomes}
 \begin{itemize}
-	\item Food insecurity
+	\item Formal labor supply
+	\item {\color{gray}Enrollment in another welfare program}
+	\item {\color{gray}Complaints to the government}
+	\item {\color{gray}Food insecurity}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[shrink=5, label=masocupadoSIIAS36AllWC]
+\frametitle{Formal labor supply}
+\begin{center}
+	\includegraphics[width=105mm]{masocupadoSIIAS36AllWC.pdf}
+	\label{masocupadoSIIAS36AllWC}
+\end{center}
+\hyperlink{masocupadoSIIAS36AllSC}{\beamergotobutton{No controls}}
+\hyperlink{masocupadoSIIAS36AllPlaSC}{\beamergotobutton{At t=0, no controls}}
+\hyperlink{masocupadoSIIAS36AllPlaWC}{\beamergotobutton{At t=0, with controls}}
+\end{frame}
+
+\begin{frame}[shrink=20, label=FRDDLabor]
+\frametitle{FRDD: Formal labor supply}
+\medskip
+\medskip
+\medskip
+\medskip
+\begin{figure}
+	\input{../Empirical_analysis/Analysis/Output/masocupadoSIIAS36.tex}
+\end{figure}
+\begin{itemize}
+	\item Sample: Montevideo, ages (at the time of the visit) 18-60, visit took place in 2011 - 2015. Controls: $age, age^2$, female, year FE, formally employed at $t=0$.
+\end{itemize}
+\hyperlink{RDDrobustness}{\beamergotobutton{Robustness column 2}}
+\end{frame}
+
+
+\begin{frame}[label=flabor02]
+\frametitle{Formal labor supply: from 0 to 2}
+\begin{center}
+	\includegraphics[width=105mm]{DID0ocupadosSIIASSuperGanar.pdf}
+	\label{DID0ocupadosSIIASSuperGanar}
+\end{center}
+
+{\tiny Sample: Uruguay, ages (at the time of the visit) 18-60, visit took place in 2011 - 2015, not formally employed at $t=0$.} 
+\hyperlink{flabor01}{\beamergotobutton{0 to 1}}
+\end{frame}
+
+\begin{frame}[label=flabor20]
+\frametitle{Formal labor supply: from 2 to 0}
+\begin{center}
+	\includegraphics[width=105mm]{DID0ocupadosSIIASSuperPerder.pdf}
+	\label{DID0ocupadosSIIASSuperPerder}
+\end{center}
+\hyperlink{flabor10}{\beamergotobutton{1 to 0}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Outcomes}
+\begin{itemize}	
+	\item {\color{gray}Formal labor supply}
+	\item Enrollment in another welfare program
+	\item {\color{gray}Complaints to the government}
+	\item {\color{gray}Food insecurity}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Welfare program for workers}
+\begin{itemize}
+	\item Family allowance for workers: approximately 180,000 children.
+	\item Amount: USD 12-24 per child per month (distributed twice per year).
+	\item \textbf{High take-up costs}: needs signature of the principal of the school, proof of marriage, child's ID and the ID of all members of the household, proof of birth, health records, agreement signed at a judicial center if child lives with only one parent.
+	\item Beneficiaries:
+	\begin{itemize}
+		\item Aged $<$ 18 and in school.
+		\item Guardian has to either (i) work in the (formal) private sector in one of these sectors: rural, industry and commerce, domestic service, construction; (ii) retired (same sectors); (iii) small rural producer.
+		\item Household's formal wage income has to be lower than USD 1,493 per month.
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Welfare program for workers}
+\begin{figure}
+	\includegraphics[width=105mm]{RDDbps_afam_ley_benef.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label=welfare02]
+\frametitle{Welfare program for workers: from 0 to 2}
+\begin{figure}
+	\includegraphics[width=105mm]{DIDbpsGanar.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label=welfare20]
+\frametitle{Welfare program for workers: from 2 to 0}
+\begin{figure}
+	\includegraphics[width=105mm]{DIDbpsPerder.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Outcomes}
+\begin{itemize}
+	\item {\color{gray}Formal labor supply}
+	\item {\color{gray}Enrollment in another welfare program}
+	\item Complaints to the government
+	\item {\color{gray}Food insecurity}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Complaints: demanding another visit}
+\begin{center}
+	\includegraphics[width=105mm]{DpedidoRevisitedOne.pdf}
+	\label{DpedidoRevisitedOne}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Complaints: demanding another visit}
+\begin{figure}
+	\input{../Empirical_analysis/Analysis/Output/DpedidoRevisitedOne1.tex}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Outcomes}
+\begin{itemize}
 	\item {\color{gray}Formal labor supply}
 	\item {\color{gray}Enrollment in another welfare program}
 	\item {\color{gray}Complaints to the government}
+	\item Food insecurity
 \end{itemize}
 \end{frame}
 
@@ -448,132 +575,6 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Outcomes}
-\begin{itemize}
-	\item {\color{gray}Food insecurity}
-	\item Formal labor supply
-	\item {\color{gray}Enrollment in another welfare program}
-	\item {\color{gray}Complaints to the government}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Formal labor supply}
-\begin{center}
-	\includegraphics[width=105mm]{grafPaperOcupadosRDD.pdf}
-	\label{masocupadoSIIAS24_mdeo_iccMenosThreshold1_adultosZeroOcupadosall}
-\end{center}
-\end{frame}
-
-\begin{frame}[label=FRDDLabor]
-\frametitle{FRDD: Formal labor supply}
-\begin{figure}
-	\input{../Empirical_analysis/Analysis/Output/masocupadoSIIAS241.tex}
-\end{figure}
-\hyperlink{RDDDynamicAll}{\beamergotobutton{Dyanmics: All}}
-\hyperlink{RDDDynamicGanar}{\beamergotobutton{Dynamics: UCT=0}}
-\hyperlink{RDDDynamicPerder}{\beamergotobutton{Dynamics: UCT=1}}
-\end{frame}
-
-\begin{frame}[label=flabor02]
-\frametitle{Formal labor supply: from 0 to 2}
-\begin{center}
-	\includegraphics[width=105mm]{DID0ocupadosSIIASSuperGanar.pdf}
-	\label{DID0ocupadosSIIASSuperGanar}
-\end{center}
-\hyperlink{flabor01}{\beamergotobutton{0 to 1}}
-\end{frame}
-
-\begin{frame}[label=flabor20]
-\frametitle{Formal labor supply: from 2 to 0}
-\begin{center}
-	\includegraphics[width=105mm]{DID0ocupadosSIIASSuperPerder.pdf}
-	\label{DID0ocupadosSIIASSuperPerder}
-\end{center}
-\hyperlink{flabor10}{\beamergotobutton{1 to 0}}
-\end{frame}
-
-\begin{frame}
-\frametitle{Outcomes}
-\begin{itemize}
-	\item {\color{gray}Food insecurity}
-	\item {\color{gray}Formal labor supply}
-	\item Enrollment in another welfare program
-	\item {\color{gray}Complaints to the government}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Welfare program for workers}
-\begin{itemize}
-	\item Family allowance for workers: approximately 180,000 children.
-	\item Amount: USD 12-24 per child per month (distributed twice per year).
-	\item Paperwork required: signature of the principal of the school, proof of marriage, child's ID and the ID of all members of the household, proof of birth, health records, agreement signed at a judicial center if child lives with only one parent.
-	\item Beneficiaries:
-	\begin{itemize}
-		\item Aged $<$ 18 and in school.
-		\item Guardian has to either (i) work in the (formal) private sector in one of these sectors: rural, industry and commerce, domestic service, construction; (ii) retired (same sectors); (iii) small rural producer.
-		\item Household's formal wage income has to be lower than USD 1,493 per month.
-	\end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Welfare program for workers}
-\begin{figure}
-	\includegraphics[width=105mm]{RDDbps_afam_ley_benef.pdf}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label=welfare02]
-\frametitle{Welfare program for workers: from 0 to 2}
-\begin{figure}
-	\includegraphics[width=105mm]{DIDbpsGanar.pdf}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label=welfare20]
-\frametitle{Welfare program for workers: from 2 to 0}
-\begin{figure}
-	\includegraphics[width=105mm]{DIDbpsPerder.pdf}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Outcomes}
-\begin{itemize}
-	\item {\color{gray}Food insecurity}
-	\item {\color{gray}Formal labor supply}
-	\item {\color{gray}Enrollment in another welfare program}
-	\item Complaints to the government
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Complaints: demanding another visit}
-\begin{center}
-	\includegraphics[width=105mm]{DpedidoRevisitedOne.pdf}
-	\label{DpedidoRevisitedOne}
-\end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Complaints: demanding another visit}
-\begin{figure}
-	\input{../Empirical_analysis/Analysis/Output/DpedidoRevisitedOne1.tex}
-\end{figure}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Beneficiaries vs non-beneficiaries: how similar are these groups?}
-\begin{figure}
-	\caption{Mean values at the 1st visit (bandwith = 0.1)}
-	\input{../Empirical_analysis/Analysis/Output/balPptSinConTusPrimVisita010.tex}
-\end{figure}
-\end{frame}
-
-\begin{frame}
 \frametitle{Robustness: ``Two-stage'' RDD}
 \begin{itemize}
 	\item Those that were getting UCT at the 1st visit could have different unobservables than those that were not getting UCT. Are losses vs gains differences due to these unobservables or due to differences in how people respond to losses vs gains?
@@ -587,15 +588,26 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Summary}
-\begin{center}
-	\begin{itemize}
-		\item \textbf{Imaginary policymaker}: ``We should scale back this welfare program, it causes informality, it increases our social expenditures, and beneficiaries do not seem to care that much about the program''
-		\item \textbf{Economist}: ``Be careful, informality may not decrease as much as you expect, your overall social expenditures may not decrease that much, and you will face more resistance than you anticipate''
-		\item \textbf{Imaginary policymaker}: ``Hmm then perhaps lets not scale back this program''
-	\end{itemize}	
-\end{center}
+\frametitle{Conclusions/Summary of results}
+\begin{itemize}
+	\item \textbf{Labor supply}: Gaining the UCT has a negative impact on formal labor supply (-4pp, $\epsilon \approx -0.6$). Impact of losing is less robust.
+	\item \textbf{Spillovers}: When the benefit is cut, total social spending does not decrease 1:1 as individuals sort themselves on other welfare programs (losing the UCT has a positive +2pp impact on enrolling in the ``welfare for workers'' program).
+	\item \textbf{Complaints}: Losing the UCT increases the prob. of having a ``requested'' visit by 26pp. These ``complaints'' to the government are twice more elastic to losses than to gains.
+	\item \textbf{Food insecurity}: Losing the UCT increases the prob. of being food insecure (self-reported) by 22pp. Elasticity of gains is slightly higher (in absolute value).
+\end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Next steps}
+\begin{itemize}
+	\item \textbf{Other outcomes}: education, birth weight, spillovers to other welfare programs, {\color{gray}voting}.
+	\item More robustness, peer effects.
+	\item {\color{gray}Small experiment to study the mechanisms.}
+	\item {\color{gray}Model the ``upper maximization problem'': what type of welfare systems/targeting mechanisms would different politicians design/use considering the behavioral responses seen here?}
+	\item {\color{gray}Model the ``lower maximization problem''?}	
+\end{itemize}
+\end{frame}
+
 
 
 \begin{frame}
@@ -628,33 +640,49 @@
 \hyperlink{flabor20}{\beamergotobutton{2 to 0}}
 \end{frame}
 
-\begin{frame}[label=RDDDynamicAll]
-\frametitle{Rolling FRDD Estimates}
+\begin{frame}[shrink=5, label=masocupadoSIIAS36AllSC]
+\frametitle{Formal labor supply (no controls)}
 \begin{center}
-	\includegraphics[width=105mm]{RDDDynamicAll.pdf}
-	\label{RDDDynamicAll}
+	\includegraphics[width=105mm]{masocupadoSIIAS36AllSC.pdf}
+	\label{masocupadoSIIAS36AllSC}
 \end{center}
+\hyperlink{masocupadoSIIAS36AllWC}{\beamergotobutton{Go back}}
+\end{frame}
+
+\begin{frame}[shrink=5, label=masocupadoSIIAS36AllPlaSC]
+\frametitle{Formal labor supply at t=0 (no controls)}
+\begin{center}
+\includegraphics[width=105mm]{masocupadoSIIAS36AllPlaSC.pdf}
+\label{masocupadoSIIAS36AllPlaSC}
+\end{center}
+\hyperlink{masocupadoSIIAS36AllWC}{\beamergotobutton{Go back}}
+\end{frame}
+
+\begin{frame}[shrink=5, label=masocupadoSIIAS36AllPlaWC]
+\frametitle{Formal labor supply at t=0 (with controls)}
+\begin{center}
+\includegraphics[width=105mm]{masocupadoSIIAS36AllPlaWC.pdf}
+\label{masocupadoSIIAS36AllPlaWC}
+\end{center}
+\hyperlink{masocupadoSIIAS36AllWC}{\beamergotobutton{Go back}}
+\end{frame}
+
+\begin{frame}[label=RDDrobustness]
+\frametitle{Robustness}
+\begin{figure}
+	\includegraphics[width=105mm]{RDDrobustness.pdf}
+	\label{RDDrobustness}
+\end{figure}
 \hyperlink{FRDDLabor}{\beamergotobutton{Go back}}
 \end{frame}
 
-\begin{frame}[label=RDDDynamicGanar]
-\frametitle{Rolling FRDD Estimates}
+\begin{frame}[label=MIDESCenso]
+\frametitle{Using the 2011 Census to define visits}
 \begin{center}
-	\includegraphics[width=105mm]{RDDDynamicGanar.pdf}
-	\label{RDDDynamicGanar}
+	\includegraphics[width=100mm]{C:/Alejandro/Research/MIDES/Empirical_analysis/Other/Pictures/MIDESCenso.png}
+	\label{MIDESCenso}
 \end{center}
-\hyperlink{FRDDLabor}{\beamergotobutton{Go back}}
+\hyperlink{nHouse}{\beamergotobutton{Go back}}
 \end{frame}
-
-
-\begin{frame}[label=RDDDynamicPerder]
-\frametitle{Rolling FRDD Estimates}
-\begin{center}
-	\includegraphics[width=105mm]{RDDDynamicPerder.pdf}
-	\label{RDDDynamicPerder}
-\end{center}
-\hyperlink{FRDDLabor}{\beamergotobutton{Go back}}
-\end{frame}
-
 
 \end{document}	

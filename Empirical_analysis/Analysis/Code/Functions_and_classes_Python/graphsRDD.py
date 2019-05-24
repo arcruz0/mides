@@ -35,7 +35,7 @@ def fBinscatterSymmetricRDD(data, xBounds=0.2, nBins=30, running='icc',
         yBins=np.ones((nBins,1))               # The mean of outcome variable in every bin 
         qBins=np.ones((nBins,1))
         colors=dict()
-        colors['all']='green'
+        colors['all']='cadetblue'
         colors['mdeo']='blue'
         colors['int']='red'
         if initialTUS==0 or initialTUS==1 or initialTUS==2:
