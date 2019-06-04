@@ -169,6 +169,14 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
 
 ****************************** ANALYSIS ***************************************
 
+0)  Objective: Chequeo de cómo altas y bajas al TUS y AFAM se dieron como función
+               del ICC u otros motivos como ser edad, participación en programas MIDES
+    Code:      Code\0_check_first_stage.py
+    Input:     Input\MIDES\visitas_hogares_TUS.csv
+               Input\MIDES\visitas_hogares_vars.csv
+    Output:    Output\0_check_first_stage.tex
+
+
 1)  Objective: Mirar first stage en TUS tanto para perder, ganar y 
                duplicar beneficio.
     Code:      Code\1_tus_first_stage.py
@@ -272,7 +280,7 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
             
     Output:
         
-14) Objective: Mirar second stage de impacto TUS en CNV-SIIAS.
+14) Objective: Mirar second stage de impacto TUS en Programas Sociales-SIIAS.
     Code:      Code\14_prog_soc_siias.py
                Code\14_prog_soc_siias.do
     Input:     Input\MIDES\visitas_hogares_prog_soc_siias.csv
