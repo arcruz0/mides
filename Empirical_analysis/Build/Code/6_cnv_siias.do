@@ -2,7 +2,9 @@
 *            mínimos de las visitas y datos CNV
 
 clear all
-cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
+cap cd "C:/Alejandro/Research/MIDES/Empirical_analysis/Build/Temp"
+cap cd "/home/andres/gdrive/mides/Empirical_analysis/Build/Temp"
+cap cd "/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Build/Temp"
 
 * Macros
 global years 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018
@@ -12,7 +14,7 @@ global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuev
 
 ** Armo un archivo por base de CNV
 foreach yr in $years {
-	import delimited ..\Input\SIIAS\CNV\\`yr'_CNV_enmascarado.csv, clear case(preserve)
+	import delimited ../Input/SIIAS/CNV/`yr'_CNV_enmascarado.csv, clear case(preserve)
 	save CNV_`yr'.dta, replace
 }
 
@@ -47,9 +49,9 @@ drop fecha_dato id_nino
 save CNV_merged.dta, replace
 clear all
 
-use ..\Output\visitas_personas_vars.dta, clear
+use ../Output/visitas_personas_vars.dta, clear
 keep $varsKeep nrodocumentoDAES nrodocumentoSIIAS
 merge m:1 nrodocumentoSIIAS using CNV_merged.dta, keep (master match)
 drop _merge
 
-export delimited using ..\Output\visitas_personas_cnv_siias.csv, replace
+export delimited using ../Output/visitas_personas_cnv_siias.csv, replace

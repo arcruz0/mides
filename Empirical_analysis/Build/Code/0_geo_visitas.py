@@ -1,9 +1,14 @@
 import pandas as pd
-import os, shutil, subprocess
+import os, shutil, subprocess, sys
 import numpy as np
 import math
 
-os.chdir(r'C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp')
+## Set path
+try: os.chdir(r'C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp')
+except: pass
+try: os.chdir(r'/home/andres/google-drive/mides/Empirical_analysis/Build/Temp')
+except: pass
+
 
 ## Cargo base de datos visitas y de datos geos enviados por Guillermo del MIDES
 datosGeo = pd.read_csv('..\Input\pedido_lihuen\producto_1_enmascarado.csv', sep=';')    

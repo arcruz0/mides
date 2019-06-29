@@ -2,7 +2,9 @@
 *            de visitas a nivel de hogar y otro de personas
 
 clear all
-cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
+cap cd "C:/Alejandro/Research/MIDES/Empirical_analysis/Build/Temp"
+cap cd "/home/andres/gdrive/mides/Empirical_analysis/Build/Temp"
+cap cd "/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Build/Temp"
 
 ** Load base Geo para merge
 import delimited geo_visitas.csv, clear case(preserve)
@@ -10,19 +12,19 @@ save geo_visitas.dta, replace
 clear all
 
 ** Armo base de anonimizadores equivalencias para merge
-import delimited ..\Input\Anonimizadores_equivalencias\Parte1.csv, delimiter(";") varnames(1) case(preserve) clear
+import delimited ../Input/Anonimizadores_equivalencias/Parte1.csv, delimiter(";") varnames(1) case(preserve) clear
 rename nro_documentoSIIAS nrodocumentoSIIAS
 save part1_anonim.dta, replace
 clear all
 
-import delimited ..\Input\Anonimizadores_equivalencias\Parte2.csv, delimiter(";") varnames(1) case(preserve) clear
+import delimited ../Input/Anonimizadores_equivalencias/Parte2.csv, delimiter(";") varnames(1) case(preserve) clear
 rename nro_documentoSIIAS nrodocumentoSIIAS
 append using part1_anonim.dta
 save anonim_equivalencias.dta, replace
 clear all
 
 ** Load base hogares
-import delimited ..\Input\Visitas_Hogares_Muestra_enmascarado.csv, clear case(preserve)
+import delimited ../Input/Visitas_Hogares_Muestra_enmascarado.csv, clear case(preserve)
 
 ** Merge base hogares con datos Geo
 merge 1:1 flowcorrelativeid using geo_visitas.dta, keep (master match)
@@ -41,7 +43,7 @@ generate periodo = (year-2008)*12 + month	// Genero variable que se llama perío
 save visitas_hogares_vars.dta, replace
 
 ** Load base personas
-import delimited ..\Input\Visitas_Personas_Muestra_enmascarado.csv, clear case(preserve)
+import delimited ../Input/Visitas_Personas_Muestra_enmascarado.csv, clear case(preserve)
 
 ** Merge con anonimizadores equivalentes
 rename nrodocumento nrodocumentoDAES
@@ -137,8 +139,8 @@ merge m:1 flowcorrelativeid using visitas_hogares_vars, keep (master matched) ke
 drop _merge
 
 * Saving base personas final
-export delimited using ..\Output\visitas_personas_vars.csv, replace
-save ..\Output\visitas_personas_vars.dta, replace
+export delimited using ../Output/visitas_personas_vars.csv, replace
+save ../Output/visitas_personas_vars.dta, replace
 
 gcollapse (mean) hogingtotalessintransferencias hogingafam hogingafamotro hogingjubypendiscapacidad hogingjubypeninvalidez hogingjubypenasistenciavejez hogingjubypencajabancaria hogingjubypencajaprofesional hogingjubypencajanotarial hogingjubypencajamilitar hogingjubypencajapolicial hogingotrosbeneficios hogingtarjetaalimentaria hogAnosEduc hogAnosEducAdults hogAnosEducAdults25 hogAnosEducMinors hogmiembros hogmiembrosMenores10 hogmiembrosMenores5 hogmiembrosMenores3 hogmiembrosMenores2 hogmiembrosMenores1 hogmiembrosMenores, by(flowcorrelativeid)
 save visitas_personas_vars.dta, replace
@@ -149,5 +151,5 @@ merge 1:1 flowcorrelativeid using visitas_personas_vars.dta, keep (master matche
 drop _merge
 
 * Saving base de hogares final
-export delimited using ..\Output\visitas_hogares_vars.csv, replace
-save ..\Output\visitas_hogares_vars.dta, replace
+export delimited using ../Output/visitas_hogares_vars.csv, replace
+save ../Output/visitas_hogares_vars.dta, replace

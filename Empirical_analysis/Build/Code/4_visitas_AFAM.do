@@ -1,7 +1,10 @@
 * Objective: Generar dos archivos (hogares y personas) con datos mínimos de las
 *            visitas y datos completos de AFAM
+
 clear all
-cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
+cap cd "C:/Alejandro/Research/MIDES/Empirical_analysis/Build/Temp"
+cap cd "/home/andres/gdrive/mides/Empirical_analysis/Build/Temp"
+cap cd "/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Build/Temp"
 
 * Macros
 global vars_afam categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar
@@ -14,7 +17,7 @@ global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuev
 * dicha variable). Son casi idénticas igual salvo contados casos.
 
 ** 2012
-import delimited ..\Input\2012_AFAM_enmascarado\2012_AFAM_enmascarado.csv, clear case(preserve)
+import delimited ../Input/2012_AFAM_enmascarado/2012_AFAM_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
 replace cobro = 0 if cobro == 2
@@ -35,7 +38,7 @@ gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* in
 save afam2012.dta, replace
 
 ** 2013_1
-import delimited ..\Input\2013_1_AFAM_enmascarado\2013_1_AFAM_enmascarado.csv, clear case(preserve)
+import delimited ../Input/2013_1_AFAM_enmascarado/2013_1_AFAM_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in_str01
 rename indice_in_str01 indice_in
@@ -76,7 +79,7 @@ gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* in
 save afam2013_1.dta, replace
 
 ** 2013_2
-import delimited ..\Input\2013_2_AFAM_enmascarado\2013_2_AFAM_enmascarado.csv, clear case(preserve)
+import delimited ../Input/2013_2_AFAM_enmascarado/2013_2_AFAM_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
 
@@ -116,7 +119,7 @@ gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* in
 save afam2013_2.dta, replace
 
 ** 2014
-import delimited ..\Input\2014_AFAM_enmascarado\2014_AFAM_enmascarado.csv, clear case(preserve)
+import delimited ../Input/2014_AFAM_enmascarado/2014_AFAM_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
 
@@ -156,7 +159,7 @@ gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* in
 save afam2014.dta, replace
 
 ** 2015_1
-import delimited ..\Input\2015_1_AFAM_enmascarado\2015_1_AFAM_enmascarado.csv, clear case(preserve)
+import delimited ../Input/2015_1_AFAM_enmascarado/2015_1_AFAM_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
 
@@ -196,7 +199,7 @@ gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* in
 save afam2015_1.dta, replace
 
 ** 2015_2
-import delimited ..\Input\2015_2_AFAM_enmascarado\2015_2_AFAM_enmascarado.csv, clear case(preserve)
+import delimited ../Input/2015_2_AFAM_enmascarado/2015_2_AFAM_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados monto_sol monto_hogar indice_in
 
@@ -217,7 +220,7 @@ gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* in
 save afam2015_2.dta, replace
 
 ** 2016
-import delimited ..\Input\2016_AFAM_enmascarado\2016_AFAM_enmascarado.csv, clear case(preserve)
+import delimited ../Input/2016_AFAM_enmascarado/2016_AFAM_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
 
@@ -237,7 +240,7 @@ gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* in
 save afam2016.dta, replace
 
 ** 2017
-import delimited ..\Input\2017_AFAM_enmascarado\2017_AFAM_enmascarado.csv, clear case(preserve)
+import delimited ../Input/2017_AFAM_enmascarado/2017_AFAM_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
 
@@ -257,7 +260,7 @@ gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* in
 save afam2017.dta, replace
 
 ** 2018
-import delimited ..\Input\2018_AFAM_enmascarado\2018_AFAM_enmascarado.csv, clear case(preserve)
+import delimited ../Input/2018_AFAM_enmascarado/2018_AFAM_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 keep nrodocumentoDAES year month categoriape categoriaocupbps ingresototal ingresosnucleo integromenores complementoliceales integrodiscapacitados cobro monto_sol monto_hogar indice_in
 
@@ -277,7 +280,7 @@ gcollapse (mean) categoriape* categoriaocupbps* ingresototal* ingresosnucleo* in
 save afam2018.dta, replace
 
 *** Load base visitas de personas y me quedo solamente con algunas variables
-import delimited ..\Output\visitas_personas_vars.csv, clear case(preserve)
+import delimited ../Output/visitas_personas_vars.csv, clear case(preserve)
 keep flowcorrelativeid nrodocumentoDAES nrodocumentoSIIAS fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam departamento localidad template latitudGeo longitudGeo calidadGeo
 
 * Agrego variables de base 2012
@@ -378,15 +381,15 @@ forvalues i = 1/24 {
 }
 
 * Guardo base a nivel de personas (en csv y dta)
-export delimited using ..\Output\visitas_personas_AFAM.csv, replace
-save ..\Output\visitas_personas_AFAM.dta, replace
+export delimited using ../Output/visitas_personas_AFAM.csv, replace
+save ../Output/visitas_personas_AFAM.dta, replace
 
 * Guardo base personas en dta para merge
 gcollapse (mean) hogar*, by(flowcorrelativeid)
 save pers_AFAM_para_merge.dta, replace
 
 *** Load base hogares
-import delimited ..\Output\visitas_hogares_vars.csv, clear case(preserve)
+import delimited ../Output/visitas_hogares_vars.csv, clear case(preserve)
 keep $varsKeep
 
 * Paso datos de AFAM de base personas a Hogares
@@ -394,7 +397,7 @@ merge 1:1 flowcorrelativeid using pers_AFAM_para_merge, keep(master matched) kee
 drop _merge
 
 * Guardo base hogares en csv y dta para exportar
-export delimited using ..\Output\visitas_hogares_AFAM.csv, replace
-save ..\Output\visitas_hogares_AFAM.dta, replace
+export delimited using ../Output/visitas_hogares_AFAM.csv, replace
+save ../Output/visitas_hogares_AFAM.dta, replace
 
 

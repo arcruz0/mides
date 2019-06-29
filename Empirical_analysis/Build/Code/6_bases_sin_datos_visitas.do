@@ -1,6 +1,13 @@
 * Objective: Merge variables AFAM, TUS, PP y suspendidos educativos en una misma base.
 clear all
-cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
+local dir `c(pwd)'
+cd `c(pwd)'
+cd ..
+cd ..
+cd Build
+cd Temp
+
+*cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
 
 * Base hogares
 import delimited ..\Output\visitas_hogares_TUS.csv, clear

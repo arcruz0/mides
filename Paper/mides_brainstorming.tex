@@ -159,6 +159,23 @@ Sabemos que gobierno da si ICC>$\bar{ICC}$ asi que debe ser el caso que $[u(c_i(
 
 Cuando es optimum to take away transfer? When the cost of giving it doesn't outweight its costs, i.e. when, $c(1)>g_i[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]$ if and only if $\frac{c(1)}{ICC}>[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]$. So cutoff for taking the transfer should be $\frac{c(1)}{[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]}$, call it $NICC$ and how it related to the other one? $\frac{NICC}{\bar{ICC}} = \frac{[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(0),(l^F_i(0)+l^I_i(0))]}{[u(c_i(1),(l^F_i(1)+l^I_i(1))-u(c_i(-1),(l^F_i(-1)+l^I_i(-1))]}$
 
+\section{Two stages Fuzzy Regression Discontinuity Design}
+We want to understand how people respond differentially to losses than to gains. In order to do so, we need to measure the impact of losses/gains over comparable populations. Losses could have a different impact than gains for several reasons. First, there could be loss aversion. Habit formation could also lead people to respond to losses in a way much different than how they responded to the gain in the first place. Ultimately, what we want to understand is the cost of re-adjusting transfers. Is it costless in some sense to re-adjust transfers?
+
+Let's consider the sample of people that were initially not receiving TUS during their first visit and let's split this sample in two parts. Part W consists of those individuals with VI during their first visit slightly above the TUS cutoff, and L is analogous but below the TUS cutoff.
+
+Then, consider the subsample $W_1$ that consists of the individuals in $W$ that were visited at least one more time. Analogoous for $L$ and we get $L_1$.
+
+Now, run a FRDD on the $W_1$ sample considering their second visit, and do the same for those individuals in $L_1$ and we'll get an impact of losing and winning a transfer. By comparing these two estimates, will we be measuring how people differentially respond to losses and gains? Let's model this to see under which assumptions, this would be the case.
+
+Let's consider that an individual decides to work in the formal labor market 3 yers after a visit as a function of several covariates (age, gender, state, etc), or to put it differently, he decides to work if working gives him more utility than non working (normalized to a utility of 0). So the binary choice model is as follow:
+
+Utility from working:
+$UWorking_{i,t+36} = \beta_0 + \beta_1_{i,t} GainedTUS_t + \beta_2_{i,t} LostTUS_t + \beta_3X_{i,t} + \gamma_t + \epsilon_{i,t+36} $
+
+And individual works 3yrs after the visit if and only if $UWorking_{i,t+36}>0$
+
+Another take on this: what we want to know is: if someone goes from 0 transfers to 1, maybe his labor supply is impacted by x. If he then goes back to 0, does his labor supply go down by an amount equal to x? There could be three motives why it's not the same: loss aversion (so a gain and loss that happens at the same time doesn't get you to the initial place), habit formation (if you get the transfer for a long time, your utility function changes or something like that), time fixed effects. Lets start with the assumption that loses and gains are just asymmetric opposites. In that case, the time fixed effects should be the same
 
 \bibliographystyle{plainnat}
 \bibliography{mides}

@@ -1,7 +1,9 @@
 * Objective: Generar dos archivos (hogares y personas) con datos mínimos de las
 *            visitas y datos completos de TUS
 clear all
-cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
+cap cd "C:/Alejandro/Research/MIDES/Empirical_analysis/Build/Temp"
+cap cd "/home/andres/gdrive/mides/Empirical_analysis/Build/Temp"
+cap cd "/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Build/Temp"
 
 *** Macros
 global vars_tus menores_carga monto_carga carga_mides carga_inda tusDoble cobraTus
@@ -9,7 +11,7 @@ global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuev
 
 
 *** Load base TUS
-import delimited ..\Input\TUS_Muestra_enmascarado.csv, clear case(preserve)
+import delimited ../Input/TUS_Muestra_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 
 *** Me fijo si hay cédulas de identidad con más de una carga en mismo año y mes
@@ -102,7 +104,7 @@ gcollapse (mean) menores_carga* monto_carga* carga_mides* carga_inda* tusDoble* 
 save tus_para_merge.dta, replace
 
 *** Load base personas
-import delimited ..\Output\visitas_personas_vars.csv, clear case(preserve)
+import delimited ../Output/visitas_personas_vars.csv, clear case(preserve)
 keep $varsKeep nrodocumentoDAES nrodocumentoSIIAS
 
 * Merge base personas con datos de TUS
@@ -274,15 +276,15 @@ replace hogarIndexCambios`val' = 3 if hogarGanoMes`val'==1
 }
 
 * Guardo base personas en csv y dta para exportar
-export delimited using ..\Output\visitas_personas_TUS.csv, replace
-save ..\Output\visitas_personas_TUS.dta, replace
+export delimited using ../Output/visitas_personas_TUS.csv, replace
+save ../Output/visitas_personas_TUS.dta, replace
 
 * Guardo base personas en dta para merge
 gcollapse (mean) hogar*, by(flowcorrelativeid)
 save personas_para_merge.dta, replace
 
 *** Load base hogares
-import delimited ..\Output\visitas_hogares_vars.csv, clear case(preserve)
+import delimited ../Output/visitas_hogares_vars.csv, clear case(preserve)
 keep $varsKeep
 
 * Paso datos de TUS de base personas a Hogares
@@ -290,5 +292,5 @@ merge 1:1 flowcorrelativeid using personas_para_merge, keep(master matched) keep
 drop _merge
 
 * Guardo base hogares en csv para exportar
-export delimited using ..\Output\visitas_hogares_TUS.csv, replace
-save ..\Output\visitas_hogares_TUS.dta, replace
+export delimited using ../Output/visitas_hogares_TUS.csv, replace
+save ../Output/visitas_hogares_TUS.dta, replace

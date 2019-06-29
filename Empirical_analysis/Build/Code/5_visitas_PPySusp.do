@@ -1,18 +1,21 @@
 * Objective: Generar dos archivos (hogares y personas) con datos mínimos de las
 *            visitas y datos PP y suspendidos educativos
+
 clear all
-cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
+cap cd "C:/Alejandro/Research/MIDES/Empirical_analysis/Build/Temp"
+cap cd "/home/andres/gdrive/mides/Empirical_analysis/Build/Temp"
+cap cd "/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Build/Temp"
 
 * Macros
 global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam departamento localidad template latitudGeo longitudGeo calidadGeo
 
 *** Preparo archivo PP para merge
-import delimited ..\Input\PP_Muestra_enmascarado.csv, clear case(preserve)
+import delimited ../Input/PP_Muestra_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 save pp_para_merge.dta, replace
 
 *** Preparo archivo Suspendidos educativos para merge
-import delimited ..\Input\Suspendidos_Muestra_enmascarado.csv, clear case(preserve)
+import delimited ../Input/Suspendidos_Muestra_enmascarado.csv, clear case(preserve)
 rename nrodocumento nrodocumentoDAES
 foreach yr in 2013 2014 2015 2016 2017 2018 {
 	gen susp`yr' = 1 if year == `yr'
@@ -21,7 +24,7 @@ gcollapse (mean) susp*, by(nrodocumentoDAES)
 save suspendidos_para_merge.dta, replace
 
 *** Merge datos PP y Suspendidos con base personas
-import delimited ..\Output\visitas_personas_vars.csv, clear case(preserve)
+import delimited ../Output/visitas_personas_vars.csv, clear case(preserve)
 keep flowcorrelativeid nrodocumentoDAES fechanacimiento $varsKeep
 
 merge m:1 nrodocumentoDAES using pp_para_merge, keep (master matched)
@@ -113,20 +116,20 @@ foreach yr in 2013 2014 2015 2016 2017 2018 {
 }
 
 * Guardo base personas en csv y dta para exportar y para merge
-export delimited using ..\Output\visitas_personas_PPySusp.csv, replace
-save ..\Output\visitas_personas_PPySusp.dta, replace
+export delimited using ../Output/visitas_personas_PPySusp.csv, replace
+save ../Output/visitas_personas_PPySusp.dta, replace
 
 * Guardo base personas para merge con base hogares
 gcollapse (mean) hogar*, by (flowcorrelativeid)
 save personas_pp_susp_merge.dta, replace
 
 *** Armo base hogares
-import delimited ..\Output\visitas_hogares_vars.csv, clear case(preserve)
+import delimited ../Output/visitas_hogares_vars.csv, clear case(preserve)
 keep $varsKeep
 
 merge 1:1 flowcorrelativeid using personas_pp_susp_merge, keep (master matched)
 drop _merge
 
 * Guardo base hogares en csv y dta para exportar y para merge
-export delimited using ..\Output\visitas_hogares_PPySusp.csv, replace
-save ..\Output\visitas_hogares_PPySusp.dta, replace
+export delimited using ../Output/visitas_hogares_PPySusp.csv, replace
+save ../Output/visitas_hogares_PPySusp.dta, replace

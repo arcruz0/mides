@@ -1,7 +1,14 @@
 * Objective: Mirar second stage de impacto TUS en PP.
 
 clear all
-cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Analysis\Temp"
+local dir `c(pwd)'
+cd `c(pwd)'
+cd ..
+cd ..
+cd Analysis
+cd Temp
+
+*cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Analysis\Temp"
 
 * Load dataset a nivel de personas con datos de voting PP
 import delimited ..\Input\MIDES\visitas_personas_PPySusp.csv, clear case(preserve)

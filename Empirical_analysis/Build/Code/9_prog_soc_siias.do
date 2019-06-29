@@ -2,7 +2,10 @@
 *            (hogares y personas) con datos mínimos de las visitas y de Prog. Sociales SIIAS
 
 clear all
-cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
+cap cd "C:/Alejandro/Research/MIDES/Empirical_analysis/Build/Temp"
+cap cd "/home/andres/gdrive/mides/Empirical_analysis/Build/Temp"
+cap cd "/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Build/Temp"
+
 
 global years 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018
 global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuevo_tus umbral_nuevo_tus_dup umbral_afam departamento localidad template latitudGeo longitudGeo calidadGeo
@@ -35,7 +38,7 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 
 	** Armo un archivo por base de BPS-SNIS
 	foreach yr in $years {
-		import delimited ..\Input\SIIAS\Programas_Sociales\\`yr'_PS_enmascarado.csv, clear case(preserve)
+		import delimited ../Input/SIIAS/Programas_Sociales/`yr'_PS_enmascarado.csv, clear case(preserve)
 		rename inau_club_niÃos inau_club_niños
 		rename mides_asistencia_vejez mid_asist_vejez
 		drop if bps_afam_ley_benef + bps_afam_ley_atrib + bps_pens_vejez + bps_sol_habit_am + mvotma_rubv + inau_t_comp + inau_disc_t_comp + inau_caif + inau_club_niños + inau_ctros_juveniles + mid_asist_vejez + mides_canasta_serv + mides_jer + mides_cercanias + mides_ucc + mides_uy_trab + mides_monotributo + mides_inda_snc + mides_inda_paec + mides_inda_panrn == 0
@@ -101,7 +104,7 @@ foreach var in $allVars {
 	clear all
 	
 	*** Creo archivo de empalme datos Programa social-SIIAS y datos de visita personas
-	use ..\Output\visitas_personas_vars.dta, clear
+	use ../Output/visitas_personas_vars.dta, clear
 	keep $varsKeep nrodocumentoDAES nrodocumentoSIIAS
 	merge m:1 nrodocumentoSIIAS using `var'_merged.dta, keep (master match)
 	drop _merge
@@ -147,19 +150,19 @@ foreach var in $allVars {
 	}
 
 	
-	export delimited using ..\Output\visitas_personas_`var'.csv, replace
+	export delimited using ../Output/visitas_personas_`var'.csv, replace
 	
 	* Guardo base personas en dta para merge
 	gcollapse (mean) hogar*, by(flowcorrelativeid)
 	save `var'_para_merge.dta, replace
 	
 	*** Creo archivo de empalme datos BPS-SIIAS y datos de visita hogares
-	use ..\Output\visitas_hogares_vars.dta, clear
+	use ../Output/visitas_hogares_vars.dta, clear
 	keep $varsKeep
 	merge 1:1 flowcorrelativeid using `var'_para_merge.dta, keep(master match) keepusing(hogar*)
 	drop _merge
 
-	export delimited using ..\Output\visitas_hogares_`var'.csv, replace
+	export delimited using ../Output/visitas_hogares_`var'.csv, replace
 	
 }
 	

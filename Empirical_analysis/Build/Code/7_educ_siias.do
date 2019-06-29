@@ -2,7 +2,9 @@
 *            con datos mínimos de las visitas y datos SIIAS-Educacion
 
 clear all
-cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Build\Temp"
+cap cd "C:/Alejandro/Research/MIDES/Empirical_analysis/Build/Temp"
+cap cd "/home/andres/gdrive/mides/Empirical_analysis/Build/Temp"
+cap cd "/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Build/Temp"
 
 * Macros
 global years 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018
@@ -21,7 +23,7 @@ global periodosCETP 28 33 40 45 48 52 57 60 64 69 72 76 81 84 88 93 96 100 105 1
 
 ** Armo un archivo por base de CEIP-SIIAS
 foreach yr in $years {
-	import delimited ..\Input\SIIAS\Educacion\\`yr'_CEIP_enmascarado.csv, clear case(preserve)
+	import delimited ../Input/SIIAS/Educacion/`yr'_CEIP_enmascarado.csv, clear case(preserve)
 	save CEIP_SIIAS_`yr'.dta, replace
 }
 
@@ -118,7 +120,7 @@ save CEIP_SIIAS_merged.dta, replace
 
 ** Armo un archivo por base de CES-SIIAS
 foreach yr in $years {
-	import delimited ..\Input\SIIAS\Educacion\\`yr'_CES_enmascarado.csv, clear case(preserve)
+	import delimited ../Input/SIIAS\Educacion/`yr'_CES_enmascarado.csv, clear case(preserve)
 	save CES_SIIAS_`yr'.dta, replace
 }
 
@@ -159,7 +161,7 @@ save CES_SIIAS_merged.dta, replace
 
 ** Armo un archivo por base de CETP-SIIAS
 foreach yr in $years {
-	import delimited ..\Input\SIIAS\Educacion\\`yr'_CETP_enmascarado.csv, clear case(preserve)
+	import delimited ../Input/SIIAS/Educacion/`yr'_CETP_enmascarado.csv, clear case(preserve)
 	save CETP_SIIAS_`yr'.dta, replace
 }
 
@@ -251,7 +253,7 @@ gcollapse (mean) codGradoEscolar* enCEIP* enCES* enCETP* cod_departamento_escuel
 save educSIIAS_para_merge.dta, replace
 
 *** Load base personas
-import delimited ..\Output\visitas_personas_vars.csv, clear case(preserve)
+import delimited ../Output/visitas_personas_vars.csv, clear case(preserve)
 keep $varsKeep nrodocumentoDAES nrodocumentoSIIAS
 
 * Merge base personas con datos de Educ-SIIAS
@@ -909,14 +911,14 @@ foreach var in enCEIP enCES enCETP {
 
 
 * Guardo base personas en csv y dta para exportar
-export delimited using ..\Output\visitas_personas_educ_siias.csv, replace
+export delimited using ../Output/visitas_personas_educ_siias.csv, replace
 
 * Guardo base personas en dta para merge
 gcollapse (mean) hogar*, by(flowcorrelativeid)
 save educ_siias_para_merge.dta, replace
 
 *** Load base hogares
-import delimited ..\Output\visitas_hogares_vars.csv, clear case(preserve)
+import delimited ../Output/visitas_hogares_vars.csv, clear case(preserve)
 keep $varsKeep
 
 * Paso datos de Educ-SIIAS de base personas a Hogares
@@ -924,4 +926,4 @@ merge 1:1 flowcorrelativeid using educ_siias_para_merge, keep(master matched) ke
 drop _merge
 
 * Guardo base hogares en csv para exportar
-export delimited using ..\Output\visitas_hogares_educ_siias.csv, replace
+export delimited using ../Output/visitas_hogares_educ_siias.csv, replace
