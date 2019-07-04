@@ -81,7 +81,7 @@ def fBinscatterSymmetricRDD(data, xBounds=0.2, nBins=30, running='icc',
             elif isinstance(size,tuple)==True and size[0]=='N':
                 size = qBins * size[1]
             else:
-                print('size has to either be an integer or a tuple of the sort (N,int)')
+                print('size has to either be an integer or a tuple of the sort ("N",int)')
             plt.figure()
             plt.axvline(x=threshold, color='orange', linestyle='dashed')   # Threshold
             plt.scatter([xLinspace[i]+(xLinspace[1]-xLinspace[0])/2 for i in list(range(nBins))],  yBins, color=colors[rg], s=size)

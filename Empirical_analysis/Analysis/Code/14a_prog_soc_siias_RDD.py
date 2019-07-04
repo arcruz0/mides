@@ -9,14 +9,30 @@ from copy import deepcopy
 from imp import reload
 
 # Own modules with functions and classes
-sys.path.insert(0,'C:\\Alejandro\Research\\MIDES\\Empirical_analysis\\Analysis\\Code\\Functions_and_classes_Python')
+sys.path.insert(0,'C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Code/Functions_and_classes_Python')
+sys.path.insert(0,'/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Analysis/Code/Functions_and_classes_Python')
+sys.path.insert(0,'/home/andres/gdrive/mides/Empirical_analysis/Analysis/Code/Functions_and_classes_Python')
 import graphsRDD
-import graphsDID
-reload(graphsRDD)
-reload(graphsDID)
+#reload(graphsRDD)
+
+### Set working directory
+try:
+    directory = 'C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Temp'
+    os.chdir(directory) # Set current directory
+    print('Script corrido en computadora de Alejandro')
+except: pass
+try:
+    directory = '/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Analysis/Temp'
+    os.chdir(directory) # Set current directory
+    print('Script corrido en computadora de Lihuen')
+except: pass
+try:
+    directory = '/home/andres/gdrive/mides/Empirical_analysis/Analysis/Temp'
+    os.chdir(directory) # Set current directory
+    print('Script corrido en computadora de Andres')
+except: pass
 
 ### Load data
-os.chdir('C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Temp') # Set current directory
 df=dict()
 df['personas']=pd.read_csv('../Input/MIDES/visitas_personas_vars.csv')
 df['hogaresTUS']=pd.read_csv('../Input/MIDES/visitas_hogares_TUS.csv')
@@ -26,17 +42,20 @@ allVarsCargar = ['bps_afam_ley_benef', 'bps_afam_ley_atrib', 'bps_pens_vejez', '
                  'mid_asist_vejez', 'mides_canasta_serv', 'mides_jer', 'mides_cercanias', 'mides_ucc',
                  'mides_uy_trab', 'mides_monotributo', 'mides_inda_snc', 'mides_inda_paec', 'mides_inda_panrn']
 
-varsCargar = ['bps_afam_ley_benef', 'bps_afam_ley_atrib']
+varsCargar = allVarsCargar
 
 for var in varsCargar:
     df['personas' + var]=pd.read_csv('../Input/MIDES/visitas_personas_' + var + '.csv')
     df['personas' + var]=df['personas' + var].merge(df['hogaresTUS'].filter(items=['flowcorrelativeid', 'hogarZerocobraTus', 'hogarZerotusDoble','hogarMascobraTus3', 'hogarMastusDoble3', 'hogarMascobraTus6', 'hogarMastusDoble6', 'hogarMascobraTus9', 'hogarMastusDoble9', 'hogarMascobraTus12', 'hogarMastusDoble12', 'hogarMascobraTus18', 'hogarMastusDoble18', 'hogarMascobraTus24', 'hogarMastusDoble24']), left_on='flowcorrelativeid', right_on='flowcorrelativeid')
     df['personas' + var]=df['personas' + var].merge(df['personas'].filter(items=['flowcorrelativeid', 'nrodocumentoSIIAS', 'edad_visita', 'sexo', 'parentesco', 'situacionlaboral', 'nivelmasaltoalcanzado', 'asiste', 'fechanacimiento']), left_on=['flowcorrelativeid', 'nrodocumentoSIIAS'], right_on=['flowcorrelativeid', 'nrodocumentoSIIAS'])
-    
 
-### Genero variables
-# Relativas al ICC
-for var in varsCargar:
+    ### Variables over which to loop when creating binscatters
+    initialTUS = ['all', 0, 1, 2]
+    outcomes = ['zero' + var, 'mas' + var + '18', 'mas' + var + '24', 'mas' + var + '36', 'mas' + var + '48']
+    vOtherConditions = ['menores','hombresAdultos62','mujeresAdultos62','adultos70', 'jefe', 'menores1215', 'adultos1864']
+    
+    ### Genero variables
+    # Relativas al ICC
     df['personas' + var]['iccMenosThreshold0'] = df['personas' + var]['icc'] - df['personas' + var]['umbral_afam']
     df['personas' + var]['iccMenosThreshold1'] = df['personas' + var]['icc'] - df['personas' + var]['umbral_nuevo_tus']
     df['personas' + var]['iccMenosThreshold2'] = df['personas' + var]['icc'] - df['personas' + var]['umbral_nuevo_tus_dup']
@@ -45,8 +64,7 @@ for var in varsCargar:
     df['personas' + var]['iccMenosThresholdAll'] = df['personas' + var]['iccMenosThresholdAll'].mask((abs(df['personas' + var]['iccMenosThreshold1'])<abs(df['personas' + var]['iccMenosThreshold2'])) & (abs(df['personas' + var]['iccMenosThreshold1'])<abs(df['personas' + var]['iccMenosThreshold0'])), df['personas' + var]['iccMenosThreshold1'])
     df['personas' + var]['iccMenosThresholdAll'] = df['personas' + var]['iccMenosThresholdAll'].mask((abs(df['personas' + var]['iccMenosThreshold2'])<abs(df['personas' + var]['iccMenosThreshold1'])) & (abs(df['personas' + var]['iccMenosThreshold2'])<abs(df['personas' + var]['iccMenosThreshold0'])), df['personas' + var]['iccMenosThreshold2'])
 
-# Edad y sexo
-for var in varsCargar:
+    # Edad y sexo
     df['personas' + var]['zero']=0
     df['personas' + var]['menores'] = df['personas' + var]['zero'].mask(df['personas' + var]['edad_visita']<=17, other=1)
     df['personas' + var]['mujeres'] = df['personas' + var]['zero'].mask(df['personas' + var]['sexo']==2, other=1)
@@ -81,15 +99,13 @@ for var in varsCargar:
     df['personas' + var]['menores1317'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['edad_visita']>=13) , other=1)
     df['personas' + var]['menores1115'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=15) & (df['personas' + var]['edad_visita']>=11) , other=1)
 
-## Trabajo
-for var in varsCargar:
+    ## Trabajo
     df['personas' + var]['cuentaPropistaOPatron'] = df['personas' + var]['zero'].mask((df['personas' + var]['situacionlaboral']==4) | (df['personas' + var]['situacionlaboral']==5), other=1)
 
-# Relativas al TUS
+    # Relativas al TUS
     df['personas' + var]['hogarZeroCuantasTus'] = df['personas' + var]['hogarZerocobraTus'] + df['personas' + var]['hogarZerotusDoble'].fillna(value=0)
 
-# Relativas a TUS y otras cosas
-for var in varsCargar:
+    # Relativas a TUS y otras cosas
     df['personas' + var]['menoresLessTUS1'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold1']<0), other=1)
     df['personas' + var]['menoresMoreTUS1'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold1']>0), other=1)
     df['personas' + var]['adultosLessTUS1'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']>17) & (df['personas' + var]['iccMenosThreshold1']<0), other=1)
@@ -122,27 +138,25 @@ for var in varsCargar:
     df['personas' + var]['menores025LessTUS1Initial2'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold1']<0) & (df['personas' + var]['hogarZeroCuantasTus']==2) & (df['personas' + var]['iccMenosThreshold1']>-0.25), other=1)
     df['personas' + var]['menores025MoreTUS2Initial2'] = df['personas' + var]['zero'].mask((df['personas' + var]['edad_visita']<=17) & (df['personas' + var]['iccMenosThreshold2']>0) & (df['personas' + var]['hogarZeroCuantasTus']==2) & (df['personas' + var]['iccMenosThreshold1']>-0.25), other=1)
     
-### Tener una idea de población en cada programa
-numeroEnZero=dict()
-for var in varsCargar:
-    numeroEnZero[var]=df['personas' + var]['zero' + var].value_counts()
+    ### Tener una idea de población en cada programa
+    # numeroEnZero=dict()
+    # numeroEnZero[var]=df['personas' + var]['zero' + var].value_counts()
     
-### Binscatters to see impact on programas sociales
-for var in varsCargar:
-for var in ['bps_afam_ley_benef']:
-    graphsRDD.fBinscatterSymmetricRDD(df['personas' + var], xBounds=0.2, nBins=30, running='iccMenosThreshold1', 
-                     rg='all', ylabel='Perc. with benefit 24 months after the visit', xlabel='Vulnerability Index - First threshold', 
-                     title='Perc. children receiving "workers" transfer', 
-                     outcome='mas' + var + '24',
-                     initialTUS='all',
-                     threshold=0, size=('N', 0.006),
-                     savefig='../Output/RDD' + var + '.pdf',
-                     otherConditions='menores14')
-### DID
-for var in varsCargar:
-for var in ['bps_afam_ley_benef']:
-    graphsDID.fBinscatterEvent2Groups(df['personas' + var], menosPeriods=12, masPeriods=30, 
-                     group1='menoresLessTUS1Initial2', group2='menoresMoreTUS2Initial2', ylabel='ylabel is', xlabel='Months before/after the visit', 
-                     title='Mean Y before/after visit', 
-                     outcome=var,
-                     savefig='../Output/DID' + var + '.pdf')
+    ### Binscatters to see impact on programas sociales
+    for initTUS in initialTUS:
+        for out in outcomes:
+            for region in ['all', 'mdeo', 'int']:
+                for iccMenosThres in ['1', '2', 'All']:
+                    for otherConds in vOtherConditions:
+                        graphsRDD.fBinscatterSymmetricRDD(df['personas' + var], xBounds=0.2, nBins=30, running='iccMenosThreshold' + iccMenosThres, 
+                                         rg=region, ylabel=out, xlabel='Vulnerability Index-Threshold', 
+                                         title=out, 
+                                         outcome=out,
+                                         initialTUS=initTUS,
+                                         threshold=0, size=20,
+                                         savefig= str(initTUS) + out + region + iccMenosThres + otherConds + '.pdf',
+                                         otherConditions=otherConds)
+        
+    # Limpio memoria
+    df['personas' + var] = 0
+

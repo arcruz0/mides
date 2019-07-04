@@ -9,14 +9,30 @@ from copy import deepcopy
 from imp import reload
 
 # Own modules with functions and classes
-sys.path.insert(0,'C:\\Alejandro\Research\\MIDES\\Empirical_analysis\\Analysis\\Code\\Functions_and_classes_Python')
+sys.path.insert(0,'C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Code/Functions_and_classes_Python')
+sys.path.insert(0,'/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Analysis/Code/Functions_and_classes_Python')
+sys.path.insert(0,'/home/andres/gdrive/mides/Empirical_analysis/Analysis/Code/Functions_and_classes_Python')
 import graphsRDD
-import graphsDID
-reload(graphsRDD)
-reload(graphsDID)
+#reload(graphsRDD)
 
 ### Load data
-os.chdir('C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Temp') # Set current directory
+try:
+    directory = 'C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Temp'
+    os.chdir(directory) # Set current directory
+    print('Script corrido en computadora de Alejandro')
+except: pass
+try:
+    directory = '/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Analysis/Temp'
+    os.chdir(directory) # Set current directory
+    print('Script corrido en computadora de Lihuen')
+except: pass
+try:
+    directory = '/home/andres/gdrive/mides/Empirical_analysis/Analysis/Temp'
+    os.chdir(directory) # Set current directory
+    print('Script corrido en computadora de Andres')
+except: pass
+
+### Load data
 df=dict()
 df['hogaresSIIAS']=pd.read_csv('../Input/MIDES/BPS_SIIAS_hogares.csv')
 df['personasSIIAS']=pd.read_csv('../Input/MIDES/BPS_SIIAS_personas.csv')

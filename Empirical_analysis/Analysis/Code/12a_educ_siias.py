@@ -9,14 +9,29 @@ from copy import deepcopy
 from imp import reload
 
 # Own modules with functions and classes
-sys.path.insert(0,'C:\\Alejandro\Research\\MIDES\\Empirical_analysis\\Analysis\\Code\\Functions_and_classes_Python')
+sys.path.insert(0,'C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Code/Functions_and_classes_Python')
+sys.path.insert(0,'/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Analysis/Code/Functions_and_classes_Python')
+sys.path.insert(0,'/home/andres/gdrive/mides/Empirical_analysis/Analysis/Code/Functions_and_classes_Python')
 import graphsRDD
-import graphsDID
-reload(graphsRDD)
-reload(graphsDID)
+#reload(graphsRDD)
 
 ### Load data
-os.chdir('C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Temp') # Set current directory
+try:
+    directory = 'C:/Alejandro/Research/MIDES/Empirical_analysis/Analysis/Temp'
+    os.chdir(directory) # Set current directory
+    print('Script corrido en computadora de Alejandro')
+except: pass
+try:
+    directory = '/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Analysis/Temp'
+    os.chdir(directory) # Set current directory
+    print('Script corrido en computadora de Lihuen')
+except: pass
+try:
+    directory = '/home/andres/gdrive/mides/Empirical_analysis/Analysis/Temp'
+    os.chdir(directory) # Set current directory
+    print('Script corrido en computadora de Andres')
+except: pass
+
 df=dict()
 df['hogaresEducSIIAS']=pd.read_csv('../Input/MIDES/visitas_hogares_educ_siias.csv')
 df['personasEducSIIAS']=pd.read_csv('../Input/MIDES/visitas_personas_educ_siias.csv')
@@ -31,6 +46,12 @@ afamThreshold={'mdeo': 0.22488131, 'int': 0.25648701}
 tus1Threshold={'mdeo': 0.62260002, 'int': 0.70024848}
 tus2Threshold={'mdeo': 0.7568, 'int': 0.81}
 mesesLags=['3','6','9','12','18','24']
+
+### Variables over which to loop when creating binscatters
+initialTUS = ['all', 0, 1, 2]
+outcomes = ['zeroEstudiaCEIPCES', 'masEstudiaCEIPCES18','masEstudiaCEIPCES24', 'masEstudiaCEIPCES36', 'masEstudiaCEIPCES48', 'masEnAnosEducCorrectos18', 'masEnAnosEducCorrectos24', 'masEnAnosEducCorrectos36', 'masEnAnosEducCorrectos48']
+vOtherConditions = ['menores','menores12','menores1215','menores12zeroEstudiaCEIPCES', 'menores15zeroEstudiaCEIPCES']
+
 
 ### Generate variables
 
@@ -72,7 +93,7 @@ df['personasEducSIIAS']['hogarCobra2TUSEn0'] = df['personasEducSIIAS']['zero'].m
 # Secundaria Bachillerato: 4to - 15/16, 5to - 16/17, 6to - 17/18
 
 ## Genero variable que indica el year en el momento +1 de la visita, +2, etc
-for i in range(1,61):
+for i in range(1,49):
     df['personasEducSIIAS']['periodoChanged'] = df['personasEducSIIAS']['periodo'] + i
     df['personasEducSIIAS']['mas' + 'year' + str(i)] = df['personasEducSIIAS'].filter(items=['periodoChanged', 'mes']).merge(periodoMesYear.filter(items=['periodo', 'year']), left_on='periodoChanged', right_on='periodo', how='left')['year'].astype('Int64')
 
@@ -90,7 +111,7 @@ df['personasEducSIIAS']['zeroEdad30Abril']=df['personasEducSIIAS']['zeroEdad30Ab
 df['personasEducSIIAS']['zeroEdad30Abril']=df['personasEducSIIAS']['zeroEdad30Abril'].mask((df['personasEducSIIAS']['mesNacimiento']<5) & (df['personasEducSIIAS']['mesNacimiento'].isna()==False), df['personasEducSIIAS']['year'] - df['personasEducSIIAS']['yearNacimiento'])
 
 # MAS
-for i in range(1,61):
+for i in range(1,49):
     df['personasEducSIIAS']['mas' + 'Edad30Abril' + str(i)] = np.NaN
     df['personasEducSIIAS']['mas' + 'Edad30Abril' + str(i)]=df['personasEducSIIAS']['mas' + 'Edad30Abril' + str(i)].mask((df['personasEducSIIAS']['mesNacimiento']>=5) & (df['personasEducSIIAS']['mesNacimiento'].isna()==False), df['personasEducSIIAS']['mas' + 'year' + str(i)] - df['personasEducSIIAS']['yearNacimiento'] - 1)
     df['personasEducSIIAS']['mas' + 'Edad30Abril' + str(i)]=df['personasEducSIIAS']['mas' + 'Edad30Abril' + str(i)].mask((df['personasEducSIIAS']['mesNacimiento']<5) & (df['personasEducSIIAS']['mesNacimiento'].isna()==False), df['personasEducSIIAS']['mas' + 'year' + str(i)] - df['personasEducSIIAS']['yearNacimiento'])
@@ -130,7 +151,7 @@ df['personasEducSIIAS']['zeroEstudiaCEIPCES'] = 0
 df['personasEducSIIAS']['zeroEstudiaCEIPCES'] = df['personasEducSIIAS']['zeroEstudiaCEIPCES'].mask(((df['personasEducSIIAS']['zeroenCEIP']==1) |  (df['personasEducSIIAS']['zeroenCES']==1)), 1) 
 
 ## Periodo MÁS
-for j in range (1,36):
+for j in range (1,49):
     df['personasEducSIIAS']['mas' + 'EnAnosEducDeberia' + str(j)] = np.NaN
     for i in [1,2,3,4,5,6,7,8,9,10,11,12]:
         df['personasEducSIIAS']['mas' + 'EnAnosEducDeberia' + str(j)] = df['personasEducSIIAS']['mas' + 'EnAnosEducDeberia' + str(j)].mask(df['personasEducSIIAS']['mas' + 'Edad30Abril' + str(j)]==5+i, i)  # Debe estar en 1ro de primaria en el momento de la visita si en el año de la visita tiene 6 años al 30 de abril
@@ -192,18 +213,27 @@ df['personasEducSIIAS']['menores12LessICC1'] = df['personasEducSIIAS']['menores1
 df['personasEducSIIAS']['menores12LessICC1NoCobraEn0'] = df['personasEducSIIAS']['menores12'] * df['personasEducSIIAS']['lessICC1'] * df['personasEducSIIAS']['hogarNoCobraTUSEn0'] 
 df['personasEducSIIAS']['menores12MoreICC2NoCobraEn0'] = df['personasEducSIIAS']['menores12'] * df['personasEducSIIAS']['moreICC2'] * df['personasEducSIIAS']['hogarNoCobraTUSEn0'] 
 
+
+### Clean data before generatting binscatters
+
 ### Binscatters to see impact on schooling
-graphsRDD.fBinscatterSymmetricRDD(df['personasEducSIIAS'], xBounds=0.2, nBins=30, running='iccMenosThreshold1', 
-                 rg='all', ylabel='masEstudiaCEIPCES24', xlabel='Vulnerability Index-TUS1', 
-                 title='masEstudiaCEIPCES24', 
-                 outcome='masEstudiaCEIPCES24',
-                 initialTUS='all',
-                 threshold=0, size=10,
-                 savefig='../Output/algo.pdf',
-                 otherConditions='menores')
+for initTUS in initialTUS:
+    for out in outcomes:
+        for region in ['all', 'mdeo', 'int']:
+            for iccMenosThres in ['1', '2', 'All']:
+                for otherConds in vOtherConditions:
+                    graphsRDD.fBinscatterSymmetricRDD(df['personasEducSIIAS'], xBounds=0.2, nBins=30, running='iccMenosThreshold' + iccMenosThres, 
+                                     rg=region, ylabel=out, xlabel='Vulnerability Index-Threshold', 
+                                     title=out, 
+                                     outcome=out,
+                                     initialTUS=initTUS,
+                                     threshold=0, size=20,
+                                     savefig= str(initTUS) + out + region + iccMenosThres + otherConds + '.pdf',
+                                     otherConditions=otherConds)
 
 graphsDID.fBinscatterEvent2Groups(df['personasEducSIIAS'], menosPeriods=12, masPeriods=30, 
                  group1='menores12LessICC1NoCobraEn0', group2='menores12MoreICC2NoCobraEn0', ylabel='ylabel is', xlabel='Months before/after the visit', 
                  title='Mean Y before/after visit', 
                  outcome='EstudiaCEIPCES',
                  savefig='../Output/EstudiaCEIPCES.pdf')
+

@@ -120,7 +120,7 @@ save CEIP_SIIAS_merged.dta, replace
 
 ** Armo un archivo por base de CES-SIIAS
 foreach yr in $years {
-	import delimited ../Input/SIIAS\Educacion/`yr'_CES_enmascarado.csv, clear case(preserve)
+	import delimited ../Input/SIIAS/Educacion/`yr'_CES_enmascarado.csv, clear case(preserve)
 	save CES_SIIAS_`yr'.dta, replace
 }
 

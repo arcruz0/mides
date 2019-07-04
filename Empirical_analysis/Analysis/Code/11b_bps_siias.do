@@ -1,4 +1,4 @@
-* Objective: Mirar second stage de impacto TUS en BPS-SIIAS.
+* Objective: Mirar second stage de impacto TUS en BPS-SIIAS. Primero hago RDD y luego DID
 
 clear all
 cd "C:\Alejandro\Research\MIDES\Empirical_analysis\Analysis\Temp"

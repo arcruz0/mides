@@ -148,7 +148,7 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
 
 13) Objective: Armar .tex agregando todos los chequeos hechos en la sección
                del build
-    Code:      Code\12_checks_build.py
+    Code:      Code\13_checks_build.py
     Input:     Temp\check_TUS.tex
                Temp\check_AFAM.tex
                Temp\check_PP.tex
@@ -163,7 +163,7 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
 
 14) Objective: Mover bases (.csv y .dta) generadas de Output del Build al 
                Input de Analysis
-    Code:      Code\13_move_build_analysis.py
+    Code:      Code\14_move_build_analysis.py
     Input:     Output\visitas_hogares_vars.csv
                Output\visitas_hogares_vars.dta
                Output\visitas_personas_vars.csv
@@ -246,7 +246,8 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Input\MIDES\visitas_personas_vars.csv
     Output:  
             
-5)  Objective: Armar basic summary statstics.
+5)  Objective: Armar basic summary statstics de las bases de visitas, TUS, AFAM,
+               BPS-SIIAS, Educ-CIIAS, CNV-SIIAS, Prog-Sociales-SIIAS.
     Code:      Code\5_summary_stats.py
     Input:     Input\MIDES\visitas_hogares_TUS.csv
                Input\MIDES\visitas_personas_TUS.csv
@@ -296,20 +297,26 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Output:
 
 11) Objective: Mirar second stage de impacto TUS en BPS-SIIAS.
-    Code:      Code\11_1_bps_siias.do
-               Code\11_2_bps_siias.py
+    Code:      Code\11a_bps_siias_RDD.py
+               Code\11b_bps_siias_RDD.do
+               Code\11c_bps_siias_DID.do
+               Code\11d_bps_siias_stata_graphs.py
+               Code\11e_bps_siias_latex.py
     Input:     Input\MIDES\BPS_SIIAS_hogares.csv
                Input\MIDES\BPS_SIIAS_personas.csv
             
-    Output:
+    Output:    Output\11_bps_siias.tex
       
 12) Objective: Mirar second stage de impacto TUS en Educ-SIIAS.
-    Code:      Code\12_educ_siias.py
-               Code\12_educ_siias.do
+    Code:      Code\12a_educ_siias_RDD.py
+               Code\12b_educ_siias_RDD.do
+               Code\12c_educ_siias_DID.do
+               Code\12d_educ_siias_stata_graphs.py
+               Code\12e_educ_siias_latex.py
     Input:     Input\MIDES\visitas_hogares_educ_siias.csv
                Input\MIDES\visitas_personas_educ_siias.csv
             
-    Output:
+    Output:    Output\12_educ_siias.tex
         
 13) Objective: Mirar second stage de impacto TUS en CNV-SIIAS.
     Code:      Code\13_cnv_siias.py
@@ -317,15 +324,18 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Input:     Input\MIDES\visitas_hogares_cnv_siias.csv
                Input\MIDES\visitas_personas_cnv_siias.csv
             
-    Output:
+    Output:    Output\13_cnv_siias.tex
         
 14) Objective: Mirar second stage de impacto TUS en Programas Sociales-SIIAS.
-    Code:      Code\14_prog_soc_siias.py
-               Code\14_prog_soc_siias.do
+    Code:      Code\14a_prog_soc_siias_RDD.py
+               Code\14b_prog_soc_siias_RDD.do
+               Code\14c_prog_soc_siias_DID.do
+               Code\14d_prog_soc_siias_stata_graphs.py
+               Code\14e_prog_soc_siias_latex.py
     Input:     Input\MIDES\visitas_hogares_prog_soc_siias.csv
                Input\MIDES\visitas_personas_prog_soc_siias.csv
             
-    Output:
+    Output:    Output\14_prog_soc_siias.tex
  
 15) Objective: Mirar second stage de impacto TUS en solicitudes de visitas
     Code:      Code\15_sol_visitas.py
