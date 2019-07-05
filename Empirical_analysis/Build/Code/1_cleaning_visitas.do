@@ -7,7 +7,7 @@ cap cd "/home/andres/gdrive/mides/Empirical_analysis/Build/Temp"
 cap cd "/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Build/Temp"
 
 ** Load base Geo para merge
-import delimited geo_visitas.csv, clear case(preserve)
+import delimited 0d_geo_visitas.csv, clear case(preserve)
 save geo_visitas.dta, replace
 clear all
 
