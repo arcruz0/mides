@@ -138,13 +138,11 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Temp/check_sol_visitas.tex
                
 11) Objective: Armar base para estimar peer effects.
-    Code:      Code/11_peer_effects.py
+    Code:      Code/11a_identificar_barrios.R
+               Code/11b_cambios_en_peers.R
     Input:     Output/visitas_hogares_vars.csv
-               Output/visitas_personas_vars.csv
                Output/visitas_hogares_TUS.csv
-               Output/visitas_personas_TUS.csv
-    Output:    Output/peer_personas.csv: base con una persona por fila donde a las variables de Output/visitas_personas_vars.csv se le suman variables de cantidad de TUS perdidas/ganandas/duplicadas en el "barrio" en distintos momentos del tiempo y agregados del barrio para distintos momentos del tiempo en base a visitas a hogares del barrio
-               Output/peer_hogares.csv: base con una visita-hogar por fila donde a las variables de Output/visitas_personas_vars.csv se le suman variables de cantidad de TUS perdidas/ganandas/duplicadas en el "barrio" en distintos momentos del tiempo y agregados del barrio para distintos momentos del tiempo en base a visitas a hogares del barrio
+    Output:    Output/11b_cambios_peers_*: 14 bases wide con cambios en peers (pérdidas/ganancias de tarjetas/hogares), según distintas especificaciones de vecinos (m/n) y robustez 
 
 12) Objective: Checkear y armar base con historico de llegadas a puerta
     Code:      Code/12_llegadas_puerta.py
