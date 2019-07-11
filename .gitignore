@@ -37,6 +37,8 @@
 
 ## R
 *.Rhistory
+.Rproj.user
+.Rhistory
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
