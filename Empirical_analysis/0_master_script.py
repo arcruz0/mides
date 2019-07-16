@@ -28,21 +28,20 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Input/Anonimizadores_equivalencias/Parte2.csv              
     Output:    Output/visitas_hogares_vars.csv
                Output/visitas_hogares_vars.dta
-               Output/visitas_personas_TUS.csv
-               Output/visitas_personas_TUS.dta
+               Output/visitas_personas_vars.csv
+               Output/visitas_personas_vars.dta
 
 2)  Objective: Generar variables de umbrales de AFAM y TUS según individuos 
                están en programas especiales (ej. Jóvenes en RED) y reemplazar 
-               archivos con estas nuevas variables
+               archivos con estas nuevas variables. El archivo Output/visitas_hogares_vars.csv
+               incluirá cuatro nuevas variables dummies: "ventana0_cualquier_ps",
+               "ventana1_cualquier_ps", "ventana2_cualquier_ps", "ventana12atras2dsps_cualquier_ps".
     Code:      Code/2a_limpiar_ps.R
                Code/2b_generar_archivo_unico_ps.R
                Code/2c_unir_bases.R
-    Input:     Output/visitas_hogares_TUS.csv
+    Input:     Output/visitas_hogares_vars.csv
                Input/SIIAS/Programas_Sociales (todos los 11 archivos)
-    Output:    Output/2c_umbralesaj_ventana0.csv
-               Output/2c_umbralesaj_ventana1.csv
-               Output/2c_umbralesaj_ventana2.csv
-               Output/2c_umbralesaj_ventana12atras.csv
+    Output:    Output/visitas_hogares_vars.csv
 
 3)  Objective: Checkear base TUS y generar dos archivos (hogares y personas) 
                con datos mínimos de las visitas y datos completos de TUS
