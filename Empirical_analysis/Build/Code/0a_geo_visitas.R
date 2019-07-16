@@ -5,7 +5,7 @@
 ################################################################################
 
 # El script funciona teniendo abierto el RStudio Project
-## mides/Empirical_analysis/Build.Rproj
+## mides/Empirical_analysis/Empirical_analysis.Rproj
 library(here)
 
 # Paquetes
@@ -15,7 +15,8 @@ library(stringr)
 
 # Cargo base de datos visitas
 
-datosGeo <- fread(here("Input", "pedido_lihuen/producto_1_enmascarado.csv"), 
+datosGeo <- fread(here("Build", "Input", 
+                       "pedido_lihuen/producto_1_enmascarado.csv"), 
                   dec = ",") # interpreta "," como el separador decimal
 
 setnames(datosGeo, c("latitud", "longitud"), c("latitudGeo", "longitudGeo"))
@@ -24,7 +25,7 @@ datosGeo[, flowid := NULL]
 # Cargo/genero datos para localidades/departamentos
 
 localidades_ine <- foreign::read.dbf(
-  here("Input", "Tabla_de_Localidades_Censales_año_2011.dbf")
+  here("Build", "Input", "Tabla_de_Localidades_Censales_año_2011.dbf")
 ) %>% 
   as.data.table()
 localidades_ine <- localidades_ine[, list(NOMBRE_LOC, CODLOC)]
@@ -40,7 +41,8 @@ departamentos <- data.table(
 # Cargo datos geos enviados por Guillermo del MIDES
 
 datosGeoVisitas <- fread(
-  here("Input", "Visitas_Hogares_Muestra_enmascarado.csv"),
+  here("Build", "Input", 
+       "Visitas_Hogares_Muestra_enmascarado.csv"),
   select = c('flowcorrelativeid', 'template', 'codigo_geo','x', 'y',
              'departamento', 'localidad', 'direccionnombre','direccionnumero',
              'bis', 'apto','entrecalles1', 'entrecalles2', 'manzana', 'solar',
@@ -70,4 +72,4 @@ datosGeoMerged <- merge(datosGeoMerged, departamentos, all.x = T,
 
 # Guardo base temporalmente
 
-fwrite(datosGeoMerged, here("Temp", "0a_datos_geo_visitas.csv"))
+fwrite(datosGeoMerged, here("Build", "Temp", "0a_datos_geo_visitas.csv"))

@@ -4,7 +4,7 @@
 ################################################################################
 
 # El script funciona teniendo abierto el RStudio Project
-## mides/Empirical_analysis/Build.Rproj
+## mides/Empirical_analysis/Empirical_analysis.Rproj
 library(here)
 
 # Paquetes
@@ -15,14 +15,14 @@ library(dplyr)
 
 # Cargar base con geolocalizaciones originales ---------------------------------
 
-df_tus <- fread(file   = here("Temp", "0a_datos_geo_visitas.csv"),
+df_tus <- fread(file   = here("Build", "Temp", "0a_datos_geo_visitas.csv"),
                 select = c("flowcorrelativeid", "latitudGeo", "longitudGeo",
                            "nomDpto", "NOMBRE_LOC"))
 setnames(df_tus, "NOMBRE_LOC", "nomLoc")
 
 # Cargar base con geocoding de Google ------------------------------------------
 
-df_gc_limpio <- read_rds(here("Temp", "0c_df_gc_limpio.rds"))
+df_gc_limpio <- read_rds(here("Build", "Temp", "0c_df_gc_limpio.rds"))
 
 # calidadGeo: 
 #  1  = Geo data pasada por Guillermo del MIDES, 
@@ -80,4 +80,4 @@ count(df_tus_con_gc, calidadGeo, sort = T) %>% as.data.table()
 
 # Guardar archivo .csv ---------------------------------------------------------
 
-fwrite(df_tus_con_gc, file = here("Temp", "0d_geo_visitas.csv"))
+fwrite(df_tus_con_gc, file = here("Build", "Temp", "0d_geo_visitas.csv"))

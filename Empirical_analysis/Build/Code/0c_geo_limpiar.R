@@ -4,7 +4,7 @@
 ################################################################################
 
 # El script funciona teniendo abierto el RStudio Project
-## mides/Empirical_analysis/Build.Rproj
+## mides/Empirical_analysis/Empirical_analysis.Rproj
 library(here)
 
 # Paquetes
@@ -20,9 +20,9 @@ library(dplyr)
 
 # Cargar archivos creados en scripts anteriores:
 
-gc_lista <- read_rds(here("Temp", "0b_gc_lista.rds"))
+gc_lista <- read_rds(here("Build", "Temp", "0b_gc_lista.rds"))
 
-df_queries <- read_rds(here("Temp", "0b_df_por_geolocalizar2.rds"))
+df_queries <- read_rds(here("Build", "Temp", "0b_df_por_geolocalizar2.rds"))
 
 
 # Integrar los datos de la lista al data frame con los queries -----------------
@@ -109,4 +109,4 @@ df_gc_limpio <- sf_direcciones %>%
 
 # Guardar archivo temporal
 
-write_rds(df_gc_limpio, here("Temp", "0c_df_gc_limpio.rds"))
+write_rds(df_gc_limpio, here("Build", "Temp", "0c_df_gc_limpio.rds"))

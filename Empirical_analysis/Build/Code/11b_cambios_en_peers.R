@@ -3,7 +3,7 @@
 ################################################################################
 
 # El script funciona teniendo abierto el RStudio Project
-## mides/Empirical_analysis/Build.Rproj
+## mides/Empirical_analysis/Empirical_analysis.Rproj
 library(here)
 
 # Paquetes
@@ -17,7 +17,7 @@ library(glue)
 
 # Cargar las primeras 100 observaciones de la base -----------------------------
 
-df_tus_sm <- fread(file  = here("Output", "visitas_hogares_TUS.csv"),
+df_tus_sm <- fread(file  = here("Build", "Output", "visitas_hogares_TUS.csv"),
                    nrows = 100)
 
 # Cargar la base con la columnas que necesitamos  ------------------------------
@@ -26,10 +26,10 @@ cols <- c(1,
           grep("(^fechavisita$)|(^hogarcuantTus)|(^hogarcuantTusDoble)",   
                names(df_tus_sm)))
 
-df_tus_cambios <- fread(here("Output", "visitas_hogares_TUS.csv"),
+df_tus_cambios <- fread(here("Build", "Output", "visitas_hogares_TUS.csv"),
                         select = cols)
 df_tus_cambios <- cbind(df_tus_cambios, 
-                        fread(here("Output", "visitas_hogares_vars.csv"),
+                        fread(here("Build", "Output", "visitas_hogares_vars.csv"),
                               select = c("latitudGeo", "longitudGeo")))
 
 df_tus_cambios[!is.na(latitudGeo), rowNumberGeolocalizados := .I]
@@ -172,7 +172,7 @@ f_qCambios(c(NA, NA, NA), direccion = "perdidas", cantidad_de = "tarjetas") # NA
 
 ## Cargar vecinos:
 
-vecinos_5n <- readr::read_rds(here("Temp", "11a_vecinos_5n.rds"))
+vecinos_5n <- readr::read_rds(here("Build", "Temp", "11a_vecinos_5n.rds"))
 
 vecinos_obs1_5n <- vecinos_5n[[1]]
 
@@ -304,7 +304,7 @@ f_calc_cambios_en_vecinos <- function(rown_geo, obj_vecinos, rob = F){
 
 ## Vecinos 100m
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_100m.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_100m.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -319,11 +319,11 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_100m.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_100m.rds"))
 
 ## Vecinos 100m (robusto)
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_100m.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_100m.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -338,13 +338,13 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_100m_rob.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_100m_rob.rds"))
 
 
 
 ## Vecinos 250m
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_250m.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_250m.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -359,11 +359,11 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_250m.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_250m.rds"))
 
 ## Vecinos 250m (robusto)
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_250m.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_250m.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -378,13 +378,13 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_250m_rob.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_250m_rob.rds"))
 
 
 
 ## Vecinos 500m
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_500m.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_500m.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -399,11 +399,11 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_500m.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_500m.rds"))
 
 ## Vecinos 500m (robusto)
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_500m.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_500m.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -418,14 +418,14 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_500m_rob.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_500m_rob.rds"))
 
 
 
 
 ## Vecinos 1000m
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_1000m.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_1000m.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -440,11 +440,11 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_1000m.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_1000m.rds"))
 
 ## Vecinos 1000m (robusto)
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_1000m.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_1000m.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -459,13 +459,13 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_1000m_rob.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_1000m_rob.rds"))
 
 
 
 ## Vecinos 5n
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_5n.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_5n.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -480,11 +480,11 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_5n.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_5n.rds"))
 
 ## Vecinos 5n (robusto)
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_5n.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_5n.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -499,13 +499,13 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_5n_rob.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_5n_rob.rds"))
 
 
 
 ## Vecinos 8n
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_8n.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_8n.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -520,11 +520,11 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_8n.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_8n.rds"))
 
 ## Vecinos 8n (robusto)
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_8n.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_8n.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -539,13 +539,13 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_8n_rob.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_8n_rob.rds"))
 
 
 
 ## Vecinos 12n
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_12n.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_12n.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -560,11 +560,11 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_12n.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_12n.rds"))
 
 ## Vecinos 12n (robusto)
 
-vecinos <- readr::read_rds(here("Temp", "11a_vecinos_12n.rds"))
+vecinos <- readr::read_rds(here("Build", "Temp", "11a_vecinos_12n.rds"))
 
 names_df <- names(f_calc_cambios_en_vecinos(1, vecinos))
 
@@ -579,4 +579,4 @@ for (i in 1:l_obj){
 }
 setnames(df_procesado, old = names(df_procesado), new = names_df)
 
-readr::write_rds(df_procesado, here("Temp", "11b_cambios_peers_12n_rob.rds"))
+readr::write_rds(df_procesado, here("Build", "Temp", "11b_cambios_peers_12n_rob.rds"))

@@ -4,7 +4,7 @@
 ################################################################################
 
 # El script funciona teniendo abierto el RStudio Project
-## mides/Empirical_analysis/Build.Rproj
+## mides/Empirical_analysis/Empirical_analysis.Rproj
 library(here)
 
 # Paquetes
@@ -20,7 +20,8 @@ f_periodo <- function(anio, mes){
 
 # Limpiar y guardar datos PS 2009 ----------------------------------------------
 
-datos_2009 <- fread(here("Input", "SIIAS/Programas_Sociales/2009_PS_enmascarado.csv"), 
+datos_2009 <- fread(here("Build", "Input", 
+                         "SIIAS/Programas_Sociales/2009_PS_enmascarado.csv"), 
                     select = c("nro_documento", "fecha_dato", 
                                "mides_jer", "mides_cercanias", "mides_ucc"))
 
@@ -93,7 +94,7 @@ set(x = datos_2009_wide, j = v_nombres_no_ucc, value = NULL)
 ## Guardar csv en Temp/ps_limpio
 
 fwrite(datos_2009_wide, 
-       file = here("Temp", "ps_limpio/ps_limpio_2009.csv"))
+       file = here("Build", "Temp", "ps_limpio/ps_limpio_2009.csv"))
 
 # Función que generaliza -------------------------------------------------------
 
@@ -142,12 +143,12 @@ f_limpiar_ps <- function(archivo, anio_archivo){
   message("--Guardando archivo")
   
   fwrite(datos_wide, 
-         file = here("Temp", glue("ps_limpio/ps_limpio_{anio_archivo}.csv")))
+         file = here("Build", "Temp", glue("ps_limpio/ps_limpio_{anio_archivo}.csv")))
 }
 
 # Iteración para los demás años ------------------------------------------------
 
-v_archivos <- list.files(here("Input", "SIIAS/Programas_Sociales"),
+v_archivos <- list.files(here("Build", "Input", "SIIAS/Programas_Sociales"),
                          full.names = T)
 
 walk2(.x = v_archivos, .y = as.character(c(2008, 2010:2018)),

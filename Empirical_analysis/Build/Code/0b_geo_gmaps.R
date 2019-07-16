@@ -3,7 +3,7 @@
 ################################################################################
 
 # El script funciona teniendo abierto el RStudio Project
-## mides/Empirical_analysis/Build.Rproj
+## mides/Empirical_analysis/Empirical_analysis.Rproj
 library(here)
 
 # Paquetes
@@ -14,7 +14,8 @@ library(readxl)
 
 # Generar la base con filas por geolocalizar --------------------
 
-df_direcciones <- fread(file = here("Temp", "0a_datos_geo_visitas.csv"),
+df_direcciones <- fread(file = here("Build", "Temp", 
+                                    "0a_datos_geo_visitas.csv"),
                         select = c("flowcorrelativeid", 
                                    "departamento", "localidad",
                                    "latitudGeo", "longitudGeo",
@@ -39,7 +40,7 @@ df_por_geolocalizar[,
 
 # http://www.ine.gub.uy/c/document_library/get_file?uuid=220c14ae-7d92-4737-8e9d-9bb2991c40f1&groupId=10181
 localidades_completo <- read_excel(
-  here("Input", "Localidades_y_codigos_NUEVO_XLS.xls"), 
+  here("Build", "Input", "Localidades_y_codigos_NUEVO_XLS.xls"), 
   range = "A5:G1253",  
   col_names = c(
     "departamento_nombre", "departamento",
@@ -82,7 +83,8 @@ df_por_geolocalizar2[,
                        sep = ", "), 
                      by = 1:nrow(df_por_geolocalizar2)]
 
-readr::write_rds(df_por_geolocalizar2, here("Temp", "0b_df_por_geolocalizar2.rds"))
+readr::write_rds(df_por_geolocalizar2, 
+                 here("Build", "Temp", "0b_df_por_geolocalizar2.rds"))
 
 # Geocode ----------------------------------------------------------------------
 
@@ -100,4 +102,4 @@ gc_lista <- map2(.x = df_por_geolocalizar2$gmaps_query,
                    p_geocode(.x, output = "all")
                  })
 
-readr::write_rds(gc_lista, here("Temp", "0b_gc_lista.rds"))
+readr::write_rds(gc_lista, here("Build", "Temp", "0b_gc_lista.rds"))

@@ -4,7 +4,7 @@
 ################################################################################
 
 # El script funciona teniendo abierto el RStudio Project
-## mides/Empirical_analysis/Build.Rproj
+## mides/Empirical_analysis/Empirical_analysis.Rproj
 library(here)
 
 # Paquetes
@@ -12,8 +12,6 @@ library(here)
 library(data.table); setDTthreads(threads = 4)
 library(stringr)
 library(dplyr)
-# library(purrr)
-# library(glue)
 
 f_periodo <- function(anio, mes){
   return((anio - 2008) * 12 + mes)
@@ -34,7 +32,8 @@ f_dicotomizar <- function(x){
 # Cargar bases -----------------------------------------------------------------
 
 # Cada visita y su período correspondiente:
-df_hogares_tus <- fread(file = here("Output", "visitas_hogares_TUS.csv"),
+df_hogares_tus <- fread(file = here("Build", "Output", 
+                                    "visitas_hogares_TUS.csv"),
                         select = c("flowcorrelativeid", "fechavisita"))
 
 df_hogares_tus[, 
@@ -50,12 +49,12 @@ df_hogares_tus <- df_hogares_tus[, !c("fechavisita", "anio", "mes")]
 
 # Las personas y el hogar al que pertenecen (OJO?):
 dt_ids_visitas_y_personas <- fread(
-  here("Output", "visitas_personas_TUS.csv"),
+  here("Build", "Output", "visitas_personas_TUS.csv"),
   select = c("flowcorrelativeid", "nrodocumentoSIIAS")
 )
 
 # La base wide de políticas sociales:
-dt_ps <- fread(here("Temp", "ps_limpio/ps_limpio_completo.csv"))
+dt_ps <- fread(here("Build", "Temp", "ps_limpio/ps_limpio_completo.csv"))
 setnames(dt_ps, "nro_documento", "nrodocumentoSIIAS")
 setcolorder(dt_ps, c("nrodocumentoSIIAS", "anio_archivo"))
 
@@ -137,7 +136,8 @@ dt_ps_long_ventana2 <- dt_ps_long[between(dif_per, -2, 2) & q_beneficiarios > 0]
   summarize(q_beneficiarios = sum(q_beneficiarios)) %>% 
   tidyr::pivot_wider(names_from = programa, values_from = q_beneficiarios, 
                      values_fill = list(q_beneficiarios = 0)) %>%
-  magrittr::set_colnames(c("flowcorrelative_id", str_c("ventana2_", names(.)[2:4]))) %>% 
+  magrittr::set_colnames(c("flowcorrelative_id", 
+                           str_c("ventana2_", names(.)[2:4]))) %>% 
   mutate_at(vars(-flowcorrelative_id), f_dicotomizar) %>% 
   as.data.table()
 
@@ -147,26 +147,30 @@ dt_ps_long_ventana2[,
                     ),
                     by = .(g = 1:nrow(dt_ps_long_ventana2))]
 
-dt_ps_long_ventana12atras <- dt_ps_long[between(dif_per, -12, 0) & q_beneficiarios > 0]  %>% 
+dt_ps_long_ventana12atras <- dt_ps_long[between(dif_per, -12, 0) & 
+                                          q_beneficiarios > 0]  %>% 
   group_by(flowcorrelativeid, programa) %>% 
   summarize(q_beneficiarios = sum(q_beneficiarios)) %>% 
   tidyr::pivot_wider(names_from = programa, values_from = q_beneficiarios, 
                      values_fill = list(q_beneficiarios = 0)) %>%
-  magrittr::set_colnames(c("flowcorrelative_id", str_c("ventana12atras_", names(.)[2:4]))) %>%
+  magrittr::set_colnames(c("flowcorrelative_id", 
+                           str_c("ventana12atras_", names(.)[2:4]))) %>%
   mutate_at(vars(-flowcorrelative_id), f_dicotomizar) %>% 
   as.data.table()
 
 dt_ps_long_ventana12atras[, 
                     ventana12atras_cualquier_ps := f_dicotomizar(
-                      sum(ventana12atras_cercanias, ventana12atras_jer, ventana12atras_ucc)
+                      sum(ventana12atras_cercanias, 
+                          ventana12atras_jer, 
+                          ventana12atras_ucc)
                     ),
                     by = .(g = 1:nrow(dt_ps_long_ventana12atras))]
 
 readr::write_csv(dt_ps_long_ventana0, 
-                 here("Output", "2c_umbralesaj_ventana0.csv"))
+                 here("Build", "Output", "2c_umbralesaj_ventana0.csv"))
 readr::write_csv(dt_ps_long_ventana1, 
-                 here("Output", "2c_umbralesaj_ventana1.csv"))
+                 here("Build", "Output", "2c_umbralesaj_ventana1.csv"))
 readr::write_csv(dt_ps_long_ventana2, 
-                 here("Output", "2c_umbralesaj_ventana2.csv"))
+                 here("Build", "Output", "2c_umbralesaj_ventana2.csv"))
 readr::write_csv(dt_ps_long_ventana12atras, 
-                 here("Output", "2c_umbralesaj_ventana12atras.csv"))
+                 here("Build", "Output", "2c_umbralesaj_ventana12atras.csv"))

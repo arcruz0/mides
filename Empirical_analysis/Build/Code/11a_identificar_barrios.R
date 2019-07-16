@@ -5,7 +5,7 @@
 ################################################################################
 
 # El script funciona teniendo abierto el RStudio Project
-## mides/Empirical_analysis/Build.Rproj
+## mides/Empirical_analysis/Empirical_analysis.Rproj
 library(here)
 
 # Paquetes
@@ -21,10 +21,10 @@ library(nngeo) # vecinos k-nearest
 
 # Cargar base de hogares -------------------------------------------------------
 
-df_h_sm <- fread(file   = here("Output", "visitas_hogares_vars.csv"),
+df_h_sm <- fread(file   = here("Build", "Output", "visitas_hogares_vars.csv"),
                  nrows  = 100)
 
-df_h <- fread(file = here("Output", "visitas_hogares_vars.csv"),
+df_h <- fread(file = here("Build", "Output", "visitas_hogares_vars.csv"),
               select = c("flowcorrelativeid", "latitud",
                          "longitud", "asistente_de_campo_nom_id",
                          "supervisor_ced_id",
@@ -32,10 +32,10 @@ df_h <- fread(file = here("Output", "visitas_hogares_vars.csv"),
 
 # Cargar base de hogares TUS ---------------------------------------------------
 
-df_tus_sm <- fread(file  = here("Output", "visitas_hogares_TUS.csv"),
+df_tus_sm <- fread(file  = here("Build", "Output", "visitas_hogares_TUS.csv"),
                    nrows = 100)
 
-df_tus <- fread(file   = here("Output", "visitas_hogares_TUS.csv"),
+df_tus <- fread(file   = here("Build", "Output", "visitas_hogares_TUS.csv"),
                 select = c("flowcorrelativeid", 
                            "departamento", "localidad",
                            "latitudGeo", "longitudGeo", "fechavisita",
@@ -138,10 +138,10 @@ vecinos_1000m <- map2(
 
 ## Guardar estos vecinos temporalmente:
 
-readr::write_rds(vecinos_100m, here("Temp", "11a_vecinos_100m.rds"))
-readr::write_rds(vecinos_250m, here("Temp", "11a_vecinos_250m.rds"))
-readr::write_rds(vecinos_500m, here("Temp", "11a_vecinos_500m.rds"))
-readr::write_rds(vecinos_1000m, here("Temp", "11a_vecinos_1000m.rds"))
+readr::write_rds(vecinos_100m, here("Build", "Temp", "11a_vecinos_100m.rds"))
+readr::write_rds(vecinos_250m, here("Build", "Temp", "11a_vecinos_250m.rds"))
+readr::write_rds(vecinos_500m, here("Build", "Temp", "11a_vecinos_500m.rds"))
+readr::write_rds(vecinos_1000m, here("Build", "Temp", "11a_vecinos_1000m.rds"))
 
 rm(list = ls(pattern = "vecinos_\\d+m"))
 
@@ -178,9 +178,9 @@ vecinos_12n <- st_nn(sf_geolocalizados,
     .f = ~ .x[!.x %in% .y]
   )
 
-readr::write_rds(vecinos_5n, here("Temp", "11a_vecinos_5n.rds"))
-readr::write_rds(vecinos_8n, here("Temp", "11a_vecinos_8n.rds"))
-readr::write_rds(vecinos_12n, here("Temp", "11a_vecinos_12n.rds"))
+readr::write_rds(vecinos_5n, here("Build", "Temp", "11a_vecinos_5n.rds"))
+readr::write_rds(vecinos_8n, here("Build", "Temp", "11a_vecinos_8n.rds"))
+readr::write_rds(vecinos_12n, here("Build", "Temp", "11a_vecinos_12n.rds"))
 
 rm(list = ls(pattern = "vecinos_\\d+n"))
 
@@ -209,7 +209,3 @@ barrios_censales_a[, v_barrios_censales_a := .I]
 
 ggsave(plot = p_clas_a, filename = "figs/fig_clas_a.png",
        height = 6, width = 8)
-
-
-
-
