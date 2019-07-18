@@ -1,4 +1,5 @@
-''' 
+'''
+LIHUENNNNNNNNNNNNNNNNNN 
 Script that explains flow of programs to perform empirical analysis over MIDES datasets
 
 ********************************** BUILD **************************************
@@ -7,10 +8,10 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                en base a datos proporcionados por el departamento Geo del MIDES y georreferenciación
                propia via Google Maps API usando dirección proporcionada por el hogar al momento
                de la visita
-    Code:      0a_geo_visitas.R
-               0b_geo_gmaps.R
-               0c_geo_limpiar.R
-               0d_geo_unir_a_base.R
+    Code:      Code/0a_geo_visitas.R
+               Code/0b_geo_gmaps.R
+               Code/0c_geo_limpiar.R
+               Code/0d_geo_unir_a_base.R
     Input:     Input/pedido_lihuen/producto_1_enmascarado.csv
                Input/Visitas_Hogares_Muestra_enmascarado.csv
                Input/Localidades_y_codigos_NUEVO_XLS.xls
