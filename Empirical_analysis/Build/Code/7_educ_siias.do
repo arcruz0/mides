@@ -19,6 +19,13 @@ global varsKeep flowcorrelativeid fechavisita icc periodo year month umbral_nuev
 global periodosCES 40 48 52 60 64 72 76 78 81 84 88 90 93 96 100 102 105 108 111 112 113 114 115 116 117 118 119 120 123 124 125 126 127 128 129
 global periodosCETP 28 33 40 45 48 52 57 60 64 69 72 76 81 84 88 93 96 100 105 108 111 112 113 114 115 116 117 118 119 120 123 124 125 126 127 128 129
 
+* Matrices sobre las que voy a guardar chequeos pre-finitar base para el Analysis
+mat duplicPer = J(13,3,0)
+matrix colnames duplicPer = "Dupl CEIP" "Dupl CES" "Dupl CETP" 
+matrix rownames duplicPer = "1 Dup: pers-per" "1 Dup: pers unicas" "2 Dup: pers-per" "2 Dup: pers unicas" ///
+"3 Dup: pers-per" "3 Dup: pers unicas" "4 Dup: pers-per" "4 Dup: pers unicas" "5 Dup: pers-per" "5 Dup: pers unicas" ///
+"6 Dup: pers-per" "6 Dup: pers unicas" "Pers-per TOTAL"
+ 
 *** Cargo todos los datos CEIP-SIIAS en un mismo .dta que luego haré merge con base visita de personas
 
 ** Armo un archivo por base de CEIP-SIIAS
@@ -28,7 +35,7 @@ foreach yr in $years {
 }
 
 ** Merge todos los archivos de CEIP-SIIAS
-clear all
+clear
 foreach yr in $years {
 	append using CEIP_SIIAS_`yr'.dta
 }
@@ -37,15 +44,21 @@ foreach yr in $years {
 rename documento nrodocumentoSIIAS
 replace fecha_dato = ïfecha_dato if fecha_dato == ""
 
-** Varios chequeos de la base
+*** Varios chequeos y correcciones de la base
 
 * Check: Cuántos individuos aparecen más de una vez?
 duplicates tag nrodocumentoSIIAS fecha_dato, generate(id_nino)
-tab id_nino
-list fecha_dato nrodocumentoSIIAS cod_departamento_escuela cod_grado_escolar if id_nino==1
-**** CAMBIAR ESTO LUEGO: POR AHORA SE ELIMINAN OBSERVACIONES CON CÉDULAS-FECHAS REPETIDAS
-drop if id_nino==1
+total id_nino
+mat res=e(b)
+mat duplicPer[1,1]=res
+distinct nrodocumentoSIIAS if id_nino==1
+mat duplicPer[2,1]=r(ndistinct)
 
+log using listCEIP.smcl, replace
+sort nrodocumentoSIIAS fecha_dato
+listsome fecha_dato nrodocumentoSIIAS cod_departamento_escuela cod_grado_escolar numero_escuela if id_nino==1, maximum (100)
+log close
+translate listCEIP.smcl listCEIP.pdf, replace
 
 ** Corrijo outliers
 drop ïfecha_dato
@@ -112,6 +125,48 @@ replace codGradoEscolar = -1 if cod_grado_escolar=="-1"
 
 drop cod_grado_escolar
 
+* Contabilizo total de personas-periodos cargados
+gen uno=1
+total uno
+mat res=e(b)
+mat duplicPer[13,1]=res
+
+**** Corrijo observaciones repetidas (Algoritmo: para aquellas obs totalmente repetidas, me quedo con una obs. Para el resto, me quedo con obs
+* con máximo codGradoEscolar. En caso de empate entre codGradoEscolar, dejo una de ellas y pongo missing el número de escuela. Si ambas estan en
+* mismo cod_departamento_escuela, dejo dicho código y sino lo pongo missing).
+
+
+* Corrijo obs totalmente repetidas
+duplicates tag nrodocumentoSIIAS fecha_dato cod_departamento_escuela codGradoEscolar numero_escuela, generate(id_nino2)
+
+gen filtrar=0
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 2 if _n==_N & id_nino2==1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 1 if _n==_N-1 & id_nino2==1
+drop if filtrar==1
+
+* Corrijo obs quedandome con aquella/s con máximo grado escolar (dentro de las no idénticamente repetidas)
+gegen codEscolar = max(codGradoEscolar) if id_nino==1 & id_nino2==0, by(nrodocumentoSIIAS fecha_dato) 
+drop if codGradoEscolar< codEscolar & id_nino==1 & id_nino2==0
+
+* Corrijo obs que quedaron empatadas en codGradoEscolar: dejo solo una de ellas, missing numero de escuela y corrijo cod_departamento_escuela
+duplicates tag nrodocumentoSIIAS fecha_dato cod_departamento_escuela codGradoEscolar, generate(id_nino3)
+replace filtrar=0
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 2 if _n==_N & id_nino3==1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 1 if _n==_N-1 & id_nino3==1
+drop if filtrar==1
+replace numero_escuela = . if id_nino3==1
+
+replace numero_escuela = . if id_nino==1 & id_nino2==0 & id_nino3==0
+replace cod_departamento_escuela = . if id_nino==1 & id_nino2==0 & id_nino3==0
+duplicates tag nrodocumentoSIIAS fecha_dato cod_departamento_escuela codGradoEscolar, generate(id_nino4)
+replace filtrar=0
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 2 if _n==_N & id_nino4==1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 1 if _n==_N-1 & id_nino4==1
+drop if filtrar==1
+
+drop id_nino id_nino2 id_nino3 id_nino4 uno filtrar codEscolar
+
+
 * Genero variable de si individuo está en base CEIP y guardo base
 gen enCEIP = 1
 save CEIP_SIIAS_merged.dta, replace
@@ -125,7 +180,7 @@ foreach yr in $years {
 }
 
 ** Merge todos los archivos de CES-SIIAS
-clear all
+clear
 foreach yr in $years {
 	append using CES_SIIAS_`yr'.dta
 }
@@ -137,21 +192,78 @@ rename grado grado_liceo
 
 ** Varios chequeos de la base
 
-* Check: Cuántos individuos aparecen más de una vez?
-duplicates tag nrodocumentoSIIAS fecha_dato, generate(id_nino)
-tab id_nino
-list fecha_dato nrodocumentoSIIAS grado_liceo cod_liceo if id_nino==1
-**** CAMBIAR ESTO LUEGO: POR AHORA SE ELIMINAN OBSERVACIONES CON CÉDULAS-FECHAS REPETIDAS
-drop if id_nino!=0
-
-* Check: Hay outliers en la base?
-tab grado_liceo
-tab cod_liceo
+* Contabilizo total de personas-periodos cargados
+gen uno=1
+total uno
+mat res=e(b)
+mat duplicPer[13,2]=res
 
 ** Corrijo outliers
 replace grado_liceo=. if grado_liceo==0
 replace cod_liceo=. if cod_liceo == -2 // En codiguera dice que número -2 corresponde a dato incorrecto
 replace cod_liceo=. if cod_liceo == -1 // En codiguera dice que número -1 corresponde a dato no especificado
+
+* Check: Hay outliers en la base en estas variables?
+tab grado_liceo
+tab cod_liceo
+
+* Check: Cuántos individuos aparecen más de una vez?
+duplicates tag nrodocumentoSIIAS fecha_dato, generate(id_nino)
+forvalues i=1(1)5 {
+	total uno if id_nino==`i'
+	mat res=e(b)
+	mat duplicPer[1+(`i'-1)*2,2]=res
+	distinct nrodocumentoSIIAS if id_nino==`i'
+	mat duplicPer[(`i')*2,2]=r(ndistinct)
+}
+
+log using listCES.smcl, replace
+sort nrodocumentoSIIAS fecha_dato
+listsome fecha_dato nrodocumentoSIIAS grado_liceo cod_liceo if id_nino==1, maximum(100)
+listsome fecha_dato nrodocumentoSIIAS grado_liceo cod_liceo if id_nino==2, maximum(100)
+listsome fecha_dato nrodocumentoSIIAS grado_liceo cod_liceo if id_nino==3, maximum(100)
+listsome fecha_dato nrodocumentoSIIAS grado_liceo cod_liceo if id_nino==4, maximum(100)
+listsome fecha_dato nrodocumentoSIIAS grado_liceo cod_liceo if id_nino==5, maximum(100)
+listsome fecha_dato nrodocumentoSIIAS grado_liceo cod_liceo if id_nino==6, maximum(100)
+log close
+translate listCES.smcl listCES.pdf, replace
+
+**** Corrijo observaciones repetidas (Algoritmo: para aquellas obs totalmente repetidas, me quedo con una obs. Luego, me quedo con obs
+* por persona-periodo con máximo grado_liceo. En caso de empate entre grado_liceo, dejo una de ellas y pongo missing el cod_liceo).
+
+* Corrijo obs totalmente repetidas
+duplicates tag nrodocumentoSIIAS fecha_dato grado_liceo cod_liceo, generate(id_nino2)
+
+gen filtrar=0
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 1 if _n==_N & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 2 if _n==_N-1 & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 3 if _n==_N-2 & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 4 if _n==_N-3 & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 5 if _n==_N-4 & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 6 if _n==_N-5 & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 7 if _n==_N-6 & id_nino2>=1 & id_nino2!=.
+drop if filtrar>=2 & filtrar!=.
+
+* Corrijo obs quedandome con aquella/s con máximo grado escolar
+gegen grado_liceo2 = max(grado_liceo) if id_nino>=1, by(nrodocumentoSIIAS fecha_dato) 
+drop if grado_liceo< grado_liceo2 & id_nino>=1
+drop if grado_liceo==. & grado_liceo2!=. & id_nino>=1
+
+* Corrijo obs que quedaron empatadas en grado_liceo: dejo solo una de ellas y missing en cod_liceo
+duplicates tag nrodocumentoSIIAS fecha_dato grado_liceo, generate(id_nino3)
+replace filtrar=0
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 1 if _n==_N & id_nino3>=1 & id_nino3!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 2 if _n==_N-1 & id_nino3>=1 & id_nino3!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 3 if _n==_N-2 & id_nino3>=1 & id_nino3!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 4 if _n==_N-3 & id_nino3>=1 & id_nino3!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 5 if _n==_N-4 & id_nino3>=1 & id_nino3!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 6 if _n==_N-5 & id_nino3>=1 & id_nino3!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 7 if _n==_N-6 & id_nino3>=1 & id_nino3!=.
+drop if filtrar>=2 & filtrar!=.
+replace cod_liceo = . if id_nino3>=1 & id_nino3!=.
+
+drop id_nino id_nino2 id_nino3 uno filtrar grado_liceo2
+
 
 * Genero variable de si individuo está en base CES
 gen enCES = 1
@@ -166,7 +278,7 @@ foreach yr in $years {
 }
 
 ** Merge todos los archivos de CETP-SIIAS
-clear all
+clear
 foreach yr in $years {
 	append using CETP_SIIAS_`yr'.dta
 }
@@ -177,23 +289,127 @@ rename ïfecha_dato fecha_dato
 rename grado grado_cetp
 ** Varios chequeos de la base
 
-* Check: Cuántos individuos aparecen más de una vez?
-duplicates tag nrodocumentoSIIAS fecha_dato, generate(id_nino)
-tab id_nino
-list fecha_dato nrodocumentoSIIAS grado_cetp cod_nivel cod_reparticion if id_nino!=0
-**** CAMBIAR ESTO LUEGO: POR AHORA SE ELIMINAN OBSERVACIONES CON CÉDULAS-FECHAS REPETIDAS
-drop if id_nino!=0
-
 * Check: Hay outliers en la base?
 *** GRADO 0 TIENE SENTIDO PARA CETP??
+log using listTabsCETP.smcl, replace
+sort nrodocumentoSIIAS fecha_dato
 tab grado_cetp
 tab cod_nivel
+log close
+translate listTabsCETP.smcl listTabsCETP.pdf, replace
 tab cod_reparticion
 
 ** Corrijo outliers
 replace grado_cetp=. if grado_cetp==-2
 replace cod_reparticion=. if cod_reparticion == -2 // En codiguera dice que número -2 corresponde a dato incorrecto
 replace cod_reparticion=. if cod_reparticion == -1 // En codiguera dice que número -1 corresponde a dato no especificado
+
+* Contabilizo total de personas-periodos cargados
+gen uno=1
+total uno
+mat res=e(b)
+mat duplicPer[13,3]=res
+
+
+* Check: Cuántos individuos aparecen más de una vez?
+duplicates tag nrodocumentoSIIAS fecha_dato, generate(id_nino)
+forvalues i=1(1)6 {
+	total uno if id_nino==`i'
+	mat res=e(b)
+	mat duplicPer[1+(`i'-1)*2,3]=res
+	distinct nrodocumentoSIIAS if id_nino==`i'
+	mat duplicPer[(`i')*2,3]=r(ndistinct)
+}
+
+
+log using listCETP.smcl, replace
+sort nrodocumentoSIIAS fecha_dato
+listsome fecha_dato nrodocumentoSIIAS grado_cetp cod_nivel cod_reparticion if id_nino==1, maximum(100)
+listsome fecha_dato nrodocumentoSIIAS grado_cetp cod_nivel cod_reparticion if id_nino==2, maximum(100)
+listsome fecha_dato nrodocumentoSIIAS grado_cetp cod_nivel cod_reparticion if id_nino==3, maximum(100)
+listsome fecha_dato nrodocumentoSIIAS grado_cetp cod_nivel cod_reparticion if id_nino==4, maximum(100)
+listsome fecha_dato nrodocumentoSIIAS grado_cetp cod_nivel cod_reparticion if id_nino==5, maximum(100)
+listsome fecha_dato nrodocumentoSIIAS grado_cetp cod_nivel cod_reparticion if id_nino==6, maximum(100)
+log close
+translate listCETP.smcl listCETP.pdf, replace
+
+
+
+**** Corrijo observaciones repetidas (Algoritmo: para aquellas obs totalmente repetidas, me quedo con una obs. Para el resto, me quedo con obs
+* con máximo cod_nivel (asumiendo que codigo 4 en realidad es en realidad levemente menos que codigo 1)
+* En caso de empate entre cod_nivel, pueden haber tres casos: empatan en grado_cetp, cod_reparticion o en ninguna. Si hay empate en grado_cetp, dejar
+* una sola obs con ese grado_cetp pero con cod_reparticion missing. Si hay empate en cod_reparticion, dejar la variable con el máximo grado_cetp.
+* Si no hay empate, quedarme con una obs y dejar missing en grado_cetp y cod_reparticion. Nota: ver que NFP es como una especie de subset de Educacion Media Básica (ver https://www.utu.edu.uy/utu/inscripciones/2018/octubre/como-y-en-que-me-anoto-en-UTU.pdf)
+
+
+* Corrijo obs totalmente repetidas
+duplicates tag fecha_dato nrodocumentoSIIAS grado_cetp cod_nivel cod_reparticion, generate(id_nino2)
+
+gen filtrar=0
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 1 if _n==_N & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 2 if _n==_N-1 & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 3 if _n==_N-2 & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 4 if _n==_N-3 & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 5 if _n==_N-4 & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 6 if _n==_N-5 & id_nino2>=1 & id_nino2!=.
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 7 if _n==_N-6 & id_nino2>=1 & id_nino2!=.
+drop if filtrar>=2 & filtrar!=.
+
+* Corrijo obs quedandome con aquella/s con máximo cod_nivel (poniendo codigo 1 a NFP para que quede como mismo nivel que Educacion Media Basica)
+gen cod_nivel_NFP1=cod_nivel
+replace cod_nivel_NFP1 = 0 if cod_nivel==4
+gegen cod_nivel2 = max(cod_nivel_NFP1) if id_nino>=1, by(nrodocumentoSIIAS fecha_dato) 
+drop if cod_nivel_NFP1< cod_nivel2 & id_nino>=1
+drop if cod_nivel_NFP1==. & cod_nivel2!=. & id_nino>=1
+
+* Corrijo obs que quedaron empatadas en cod_nivel y empatadas en grado_cetp: quedarme con una y poner missing en cod_reparticion
+duplicates tag nrodocumentoSIIAS fecha_dato cod_nivel grado_cetp, generate(id_nino3)
+replace filtrar=0
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 1 if _n==_N & id_nino3>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 2 if _n==_N-1 & id_nino3>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 3 if _n==_N-2 & id_nino3>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 4 if _n==_N-3 & id_nino3>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 5 if _n==_N-4 & id_nino3>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 6 if _n==_N-5 & id_nino3>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 7 if _n==_N-6 & id_nino3>=1
+drop if filtrar>=2 & filtrar!=.
+
+replace cod_reparticion = . if id_nino3>=1
+
+* Corrijo obs que quedaron empatadas en cod_nivel y en cod_reparticion: quedarme con la que tiene el maximo grado_cetp
+duplicates tag nrodocumentoSIIAS fecha_dato cod_nivel cod_reparticion, generate(id_nino4)
+gegen grado_cetp2 = max(grado_cetp) if id_nino4>=1, by(nrodocumentoSIIAS fecha_dato) 
+drop if grado_cetp< grado_cetp2 & id_nino4>=1
+drop if grado_cetp==. & grado_cetp2!=. & id_nino4>=1
+
+replace filtrar=0
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 1 if _n==_N & id_nino4>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 2 if _n==_N-1 & id_nino4>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 3 if _n==_N-2 & id_nino4>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 4 if _n==_N-3 & id_nino4>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 5 if _n==_N-4 & id_nino4>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 6 if _n==_N-5 & id_nino4>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 7 if _n==_N-6 & id_nino4>=1
+drop if filtrar>=2 & filtrar!=.
+
+* Corrijo obs que quedaron empatadas en cod_nivel pero en nada más: me quedo con obs con máximo grado_cetp
+duplicates tag nrodocumentoSIIAS fecha_dato cod_nivel , generate(id_nino5)
+gegen grado_cetp3 = max(grado_cetp) if id_nino5>=1, by(nrodocumentoSIIAS fecha_dato) 
+drop if grado_cetp< grado_cetp3 & id_nino5>=1
+drop if grado_cetp==. & grado_cetp3!=. & id_nino5>=1
+
+replace filtrar=0
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 1 if _n==_N & id_nino5>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 2 if _n==_N-1 & id_nino5>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 3 if _n==_N-2 & id_nino5>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 4 if _n==_N-3 & id_nino5>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 5 if _n==_N-4 & id_nino5>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 6 if _n==_N-5 & id_nino5>=1
+bysort fecha_dato nrodocumentoSIIAS (uno):replace filtrar = 7 if _n==_N-6 & id_nino5>=1
+drop if filtrar>=2 & filtrar!=.
+
+drop id_nino id_nino2 id_nino3 id_nino4 id_nino5 uno filtrar grado_cetp2 grado_cetp3 cod_nivel_NFP1 cod_nivel2
+
 
 * Genero variable de si individuo está en base CETP
 gen enCETP = 1
@@ -927,3 +1143,191 @@ drop _merge
 
 * Guardo base hogares en csv para exportar
 export delimited using ../Output/visitas_hogares_educ_siias.csv, replace
+
+
+**** Procesamientos posteriores al armado de las bases y necesario para los chequeos de la base
+mat summPer = J(17,1,0)
+matrix colnames summPer = Value
+matrix rownames summPer = "Mean Age" "Mean Age, Students" "Mean Age, CEIP Students" "Mean Age, CES Students" "Mean Age, CETP Students" ///
+ "Mean Female" "Mean Female, Students" "Mean Female, CEIP Students" "Mean Female, CES Students" "Mean Female, CETP Students" ///
+ "Share CEIP" "Share CES" "Share CETP" "Share CEIP and CES" "Share CEIP and CETP" "Share CES and CETP" "Share CEIP, CES, CETP"
+
+mat summPerYear = J(19,4,0)
+matrix rownames summPerYear = Inicial0 Inicial1 Inicial2 Inicial3 Inicial4 Inicial5 Prim1 Prim2 Prim3 Prim4 Prim5 Prim6 Sec1 Sec2 Sec3 Sec4 Sec5 Sec6 CETP
+matrix colnames summPerYear = "N" "Mean Age" "Min Age" "Max Age"
+
+** Procesamientos necesarios con la base de personas
+clear
+import delimited ../Output/visitas_personas_educ_siias.csv, clear case(preserve)
+merge 1:1 flowcorrelativeid nrodocumentoSIIAS using ../Output/visitas_personas_vars.dta, keep(master matched) keepusing(nrodocumentoDAES sexo edadVisitaNac anosEduc asiste)
+drop _merge
+gen female = .
+replace female =1 if sexo==2
+replace female =0 if sexo==1
+
+summarize edadVisitaNac
+return list
+mat summPer[1,1] = r(mean)
+
+summarize edadVisitaNac if (zeroenCEIP==1 | zeroenCES==1 | zeroenCETP==1)
+return list
+mat summPer[2,1] = r(mean)
+
+summarize edadVisitaNac if zeroenCEIP==1
+return list
+mat summPer[3,1] = r(mean)
+
+summarize edadVisitaNac if zeroenCES==1
+return list
+mat summPer[4,1] = r(mean)
+
+summarize edadVisitaNac if zeroenCETP==1
+return list
+mat summPer[5,1] = r(mean)
+
+summarize female
+return list
+mat summPer[6,1] = r(mean)
+
+summarize female if (zeroenCEIP==1 | zeroenCES==1 | zeroenCETP==1)
+return list
+mat summPer[7,1] = r(mean)
+
+summarize female if zeroenCEIP==1
+return list
+mat summPer[8,1] = r(mean)
+
+summarize female if zeroenCES==1
+return list
+mat summPer[9,1] = r(mean)
+
+summarize female if zeroenCETP==1
+return list
+mat summPer[10,1] = r(mean)
+
+summarize zeroenCEIP
+return list
+mat summPer[11,1] = r(mean)
+
+summarize zeroenCES
+return list
+mat summPer[12,1] = r(mean)
+
+summarize zeroenCETP
+return list
+mat summPer[13,1] = r(mean)
+
+gen zeroCEIPyCES = 0
+replace zeroCEIPyCES =1 if zeroenCEIP==1 & zeroenCES ==1
+gen zeroCEIPyCETP = 0
+replace zeroCEIPyCETP =1 if zeroenCEIP==1 & zeroenCETP ==1
+gen zeroCESyCETP = 0
+replace zeroCESyCETP =1 if zeroenCES==1 & zeroenCETP ==1
+gen zeroCEIPyCESyCETP = 0
+replace zeroCEIPyCESyCETP =1 if zeroenCEIP==1 & zeroenCES==1 & zeroenCETP ==1
+
+summarize zeroCEIPyCES
+return list
+mat summPer[14,1] = r(mean)
+
+summarize zeroCEIPyCETP
+return list
+mat summPer[15,1] = r(mean)
+
+summarize zeroCESyCETP
+return list
+mat summPer[16,1] = r(mean)
+
+summarize zeroCEIPyCESyCETP
+return list
+mat summPer[17,1] = r(mean)
+
+
+gen one =1
+forvalues i = 1(1)5 {
+	total one if abs(zerocodGradoEscolar - `i'/10)<0.00001
+	ereturn list
+	mat summPerYear[`i'+1,1] = e(b)
+	summarize edadVisitaNac if abs(zerocodGradoEscolar - `i'/10)<0.00001
+	return list
+	mat summPerYear[`i'+1,2] = r(mean)
+	mat summPerYear[`i'+1,3] = r(min)
+	mat summPerYear[`i'+1,4] = r(max)
+}
+forvalues i = 1(1)6 {
+	total one if (zerocodGradoEscolar ==`i' | abs(zerocodGradoEscolar - 1 - `i'/10)<0.00001)
+	ereturn list
+	mat summPerYear[`i'+6,1] = e(b)
+	summarize edadVisitaNac if (zerocodGradoEscolar ==`i' | abs(zerocodGradoEscolar - 1 - `i'/10)<0.00001)
+	return list
+	mat summPerYear[`i'+6,2] = r(mean)
+	mat summPerYear[`i'+6,3] = r(min)
+	mat summPerYear[`i'+6,4] = r(max)
+}
+forvalues i = 1(1)6 {
+	total one if (abs(zerocodGradoEscolar - 2 - `i'/10)<0.00001 | zerogrado_liceo==`i')
+	ereturn list
+	mat summPerYear[`i'+12,1] = e(b)
+	summarize edadVisitaNac if (abs(zerocodGradoEscolar - 2 - `i'/10)<0.00001 | zerogrado_liceo==`i')
+	return list
+	mat summPerYear[`i'+12,2] = r(mean)
+	mat summPerYear[`i'+12,3] = r(min)
+	mat summPerYear[`i'+12,4] = r(max)
+}
+total one if zeroenCETP==1
+ereturn list
+mat summPerYear[19,1] = e(b)
+summarize edadVisitaNac if zeroenCETP==1
+return list
+mat summPerYear[19,2] = r(mean)
+mat summPerYear[19,3] = r(min)
+mat summPerYear[19,4] = r(max)
+
+** Procesamientros necesarios con la base de hogares
+
+** Export matrices y resultados a LaTeX
+esttab matrix(summPerYear) using summPerYearEduc.tex, replace style(tex) align(ccccc)
+esttab matrix(summPer) using summPerEduc.tex, replace style(tex) align(cc)
+esttab matrix(duplicPer) using duplicPer.tex, replace style(tex) align(ccc)
+
+**** Armo archivo de chequeo para LaTeX
+file close _all
+file open myfile using "check_Educ_SIIAS.txt", write replace
+file write myfile "Cosas a revisar son las siguientes:" _n
+file write myfile "\begin{itemize}" _n
+file write myfile "\item Tabulaciones y estadisticos descriptivos de la muestra" _n
+file write myfile "\item Individuos repetidos: numeros y caracteristicas" _n
+file write myfile "\end{itemize}"
+file write myfile "\subsection{Tabulaciones y estadisticos descriptivos de la muestra}" _n
+file write myfile "Voy a mostrar dos tablas con datos de los individuos al momento de la visita. Veo que puede haber algun tema de educacion (aparecen personas muy jovenes en secundaria), aunque por ahora no modofique eso" _n
+file write myfile "\begin{figure}[H]" _n
+file write myfile "\centering" _n
+file write myfile "\caption{Summary Stats: Education SIIAS (at time 0)}" _n
+file write myfile "\input{../Temp/summPerEduc.tex}" _n
+file write myfile "\end{figure}" _n
+file write myfile "\begin{figure}[H]" _n
+file write myfile "\centering" _n
+file write myfile "\caption{Summary Stats per education year: Education SIIAS (at time 0)}" _n
+file write myfile "\input{../Temp/summPerYearEduc.tex}" _n
+file write myfile "\end{figure}" _n
+file write myfile "\subsection{Individuos repetidos: numeros y caracteristicas}" _n
+file write myfile "Primero muestro individuos-periodos e individuos (distinct) repetidos en muestra de CEIP o CES o CETP. Con repetidos, me refiero a que aparecen en base al menos dos veces en un mismo mes aunque puedan no ser 100% repetidos (i.e. aparecer en distintos grados, escuelas, etc)" _n
+file write myfile "Que se hace con obs repetidas? Al final nos terminamos quedando con una sola mediante diversos procedimientos segun se trate de datos CEIP, CES o CETP. Ver do file por detalles pero a modo resumen:" _n
+file write myfile "CEIP: Algoritmo: para aquellas obs totalmente repetidas, me quedo con una obs. Para el resto, me quedo con obs con maximo codGradoEscolar. En caso de empate entre codGradoEscolar, dejo una de ellas y pongo missing el numero de escuela. Si ambas estan en mismo cod\_departamento\_escuela, dejo dicho codigo y sino lo pongo missing" _n
+file write myfile "CES: Algoritmo: para aquellas obs totalmente repetidas, me quedo con una obs. Para el resto, me quedo con obs con maximo grado\_liceo. En caso de empate entre grado\_liceo, dejo una de ellas y pongo missing el cod\_liceo" _n
+file write myfile "CETP: Algoritmo: para aquellas obs totalmente repetidas, me quedo con una obs. Para el resto, me quedo con obs con maximo cod\_nivel (asumiendo que codigo 4 en realidad es en realidad levemente menos que codigo 1) En caso de empate entre cod\_nivel, pueden haber tres casos: empatan en grado\_cetp, cod\_reparticion o en ninguna. Si hay empate en grado\_cetp, dejar una sola obs con ese grado\_cetp pero con cod\_reparticion missing. Si hay empate en cod\_reparticion, dejar la variable con el maximo grado\_cetp. Si no hay empate, dejar missing en grado\_cetp y cod\_reparticion. Nota: ver que NFP es como una especie de subset de Educacion Media Basica (ver https://www.utu.edu.uy/utu/inscripciones/2018/octubre/como-y-en-que-me-anoto-en-UTU.pdf)" _n
+file write myfile "\begin{figure}[H]" _n
+file write myfile "\centering" _n
+file write myfile "\caption{Duplicados}" _n
+file write myfile "\input{../Temp/duplicPer.tex}" _n
+file write myfile "\end{figure}" _n
+file write myfile "Un problema que se vislumbra en los datos CETP son relativos a la variable grado\_cetp. Hay 3 variables adicionales (ademas de cedula y mes) en CETP: grado\_cetp, cod\_nivel y cod\_reparticion" _n
+file write myfile "No hay codiguera para grado\_cetp y toma valores entre -2 y 3. Si bien asumo que -2 es como missing value, no se que es 0 ni los otros valores. Se podria consultar a Correa del MIDES los codigos de la variable." _n
+file write myfile "Muestro de listado de individuos repetidos para CEIP, CES, CETP pero reducido (no muestro todos los casos sino un max de 200)" _n
+file write myfile "\includepdf[page=-]{listCEIP.pdf}" _n
+file write myfile "\includepdf[page=-]{listCES.pdf}" _n
+file write myfile "\includepdf[page=-]{listCETP.pdf}" _n
+file write myfile "\includepdf[page=-]{listTabsCETP.pdf}" _n
+file close myfile
+
+
