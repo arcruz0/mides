@@ -117,14 +117,52 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Output/BPS_SIIAS_personas.dta
                Temp/check_BPS_SIIAS.tex
 
-9)  Objective: Checkear base Programas Sociales-SIIAS y generar dos archivos 
+9)  Objective: Checkear base Programas Sociales-SIIAS y generar dos archivos por programa
                (hogares y personas) con datos mínimos de las visitas y de Prog. Sociales SIIAS
     Code:      Code/9_prog_soc_siias.do
     Input:     Output/visitas_hogares_vars.csv
                Output/visitas_personas_vars.csv
                Input/SIIAS/Programas_Sociales (todos los 11 archivos)
-    Output:    Output/visitas_hogares_prog_soc_siias.csv
-               Output/visitas_personas_prog_soc_siias.csv
+    Output:    Output/visitas_personas_bps_afam_ley_benef.csv
+               Output/visitas_hogares_bps_afam_ley_benef.csv
+               Output/visitas_personas_bps_afam_ley_atrib.csv
+               Output/visitas_hogares_bps_afam_ley_atrib.csv
+               Output/visitas_personas_bps_pens_vejez.csv
+               Output/visitas_hogares_bps_pens_vejez.csv
+               Output/visitas_personas_bps_sol_habit_am.csv
+               Output/visitas_hogares_bps_sol_habit_am.csv
+               Output/visitas_personas_mvotma_rubv.csv
+               Output/visitas_hogares_mvotma_rubv.csv
+               Output/visitas_personas_inau_t_comp.csv
+               Output/visitas_hogares_inau_t_comp.csv
+               Output/visitas_personas_inau_disc_t_comp.csv
+               Output/visitas_hogares_inau_disc_t_comp.csv
+               Output/visitas_personas_inau_caif.csv
+               Output/visitas_hogares_inau_caif.csv
+               Output/visitas_personas_inau_club_niños.csv
+               Output/visitas_hogares_inau_club_niños.csv
+               Output/visitas_personas_inau_ctros_juveniles.csv
+               Output/visitas_hogares_inau_ctros_juveniles.csv
+               Output/visitas_personas_mid_asist_vejez.csv
+               Output/visitas_hogares_mid_asist_vejez.csv
+               Output/visitas_personas_mides_canasta_serv.csv
+               Output/visitas_hogares_mides_canasta_serv.csv
+               Output/visitas_personas_mides_jer.csv
+               Output/visitas_hogares_mides_jer.csv
+               Output/visitas_personas_mides_cercanias.csv
+               Output/visitas_hogares_mides_cercanias.csv
+               Output/visitas_personas_mides_ucc.csv
+               Output/visitas_hogares_mides_ucc.csv
+               Output/visitas_personas_mides_uy_trab.csv
+               Output/visitas_hogares_mides_uy_trab.csv
+               Output/visitas_personas_mides_monotributo.csv
+               Output/visitas_hogares_mides_monotributo.csv
+               Output/visitas_personas_mides_inda_snc.csv
+               Output/visitas_hogares_mides_inda_snc.csv
+               Output/visitas_personas_mides_inda_paec.csv
+               Output/visitas_hogares_mides_inda_paec.csv
+               Output/visitas_personas_mides_inda_panrn.csv
+               Output/visitas_hogares_mides_inda_panrn.csv
                Temp/check_prog_soc_siias.tex
 
 10) Objective: Checkear base de solicitud de visitas (y cotejarla con proxy 

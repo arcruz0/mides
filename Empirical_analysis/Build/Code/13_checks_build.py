@@ -57,5 +57,8 @@ checksBuildTex.write('\input{' + directory + '/check_Educ_SIIAS.txt} \n')
 checksBuildTex.write('\section{BPS SIIAS} \n')
 checksBuildTex.write('\input{' + directory + '/check_BPS_SIIAS.txt} \n')
 
+checksBuildTex.write('\section{Programas Sociales SIIAS} \n')
+checksBuildTex.write('\input{' + directory + '/check_prog_soc_siias.txt} \n')
+
 checksBuildTex.write('\end{document} \n')
 checksBuildTex.close()

@@ -35,17 +35,28 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 
 
 *** Cargo todos los datos Programas sociales-SIIAS en un mismo .dta con una fila por cédula
+	
+	** Matriz de chequeos
+	mat summBlankProgSIIAS = J(11,4,0)
+	mat colnames summBlankProgSIIAS = "pers-peri" "pers unica" "pers-peri NO blank" "pers unica NO blank" 
+	mat rownames summBlankProgSIIAS = 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018
 
 	** Armo un archivo por base de BPS-SNIS
 	foreach yr in $years {
 		import delimited ../Input/SIIAS/Programas_Sociales/`yr'_PS_enmascarado.csv, clear case(preserve)
 		rename inau_club_niÃos inau_club_niños
 		rename mides_asistencia_vejez mid_asist_vejez
+		distinct nro_documento
+		mat summBlankProgSIIAS[`yr'-2007,1] = r(N)
+		mat summBlankProgSIIAS[`yr'-2007,2] = r(ndistinct) 
 		drop if bps_afam_ley_benef + bps_afam_ley_atrib + bps_pens_vejez + bps_sol_habit_am + mvotma_rubv + inau_t_comp + inau_disc_t_comp + inau_caif + inau_club_niños + inau_ctros_juveniles + mid_asist_vejez + mides_canasta_serv + mides_jer + mides_cercanias + mides_ucc + mides_uy_trab + mides_monotributo + mides_inda_snc + mides_inda_paec + mides_inda_panrn == 0
+		distinct nro_documento
+		mat summBlankProgSIIAS[`yr'-2007,3] = r(N)
+		mat summBlankProgSIIAS[`yr'-2007,4] = r(ndistinct) 
 		save PS_`yr'.dta, replace
 	}
 
-	** Merge todos los archivos de BPS-SNIS
+	** Merge todos los archivos de Programas sociales-SIIAS
 	clear all
 	foreach yr in $years {
 		append using PS_`yr'.dta
@@ -167,8 +178,27 @@ foreach var in $allVars {
 }
 	
 	
+**** Procesamientos posteriores al armado de las bases y necesario para los chequeos de la base
 
+** Export matrices y resultados a LaTeX
+esttab matrix(summBlankProgSIIAS) using summBlankProgSIIAS.tex, replace style(tex) align(cccc)
 
+**** Armo archivo de chequeo para LaTeX
+file close _all
+file open myfile using "check_prog_soc_siias.txt", write replace
+file write myfile "Cosas a revisar son las siguientes:" _n
+file write myfile "\begin{itemize}" _n
+file write myfile "\item Conteo de observaciones y numero de individuos totalmente vacias por base" _n
+file write myfile "\item Individuos repetidos: numeros y caracteristicas" _n
+file write myfile "\end{itemize}"
+file write myfile "\subsection{Conteo de observaciones y numero de individuos totalmente vacias por base}" _n
+file write myfile "Hay 11 bases que tienen datos de los programas sociales (una por cada batch de individuos supuestamente) y lo extraño es que cuando las cargo, me da un montón de filas en blanco (osea, base tiene un individuo pero con 0 en cada variable, cuando le entendí a Correa que no nos iban a pasar datos de individuos q no tenian valores positivos para la variable que nos pasaran" _n
+file write myfile "\begin{figure}[H]" _n
+file write myfile "\centering" _n
+file write myfile "\caption{Personas y periodos totales y vacios, segun base cargada}" _n
+file write myfile "\input{../Temp/summBlankProgSIIAS.tex}" _n
+file write myfile "\end{figure}" _n
+file close myfile
 
 
 	
