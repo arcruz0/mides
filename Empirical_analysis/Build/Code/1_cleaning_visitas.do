@@ -55,33 +55,16 @@ drop _merge
 tostring fechavisita, generate(fecha_string)
 generate year = substr(fecha_string, 1, 4)
 generate month = substr(fecha_string, 5, 2)
-generate day = substr(fecha_string, 7, 2)
 destring year, replace
 destring month, replace
-destring day, replace
 drop fecha_string
 generate periodo = (year-2008)*12 + month	// Genero variable que se llama período y que es 1 si estas en ene-2008, 2 si feb-2008, etc
 
 * parentesco
 replace parentesco = . if parentesco == 0
 
-* edad_visita y fechanacimiento: corroboro que edad_visita sea consistente con fecha de nacimiento y momento de la visita
-tostring fechanacimiento, generate(fechaNacString)
-generate yearNacimiento = substr(fechaNacString, 1, 4)
-generate mesNacimiento = substr(fechaNacString, 5, 2)
-generate dayNacimiento = substr(fechaNacString, 7, 2)
-destring yearNacimiento, replace
-destring mesNacimiento, replace
-destring dayNacimiento, replace
-
-gen edadVisitaNac = .
-replace edadVisitaNac = year - yearNacimiento if (mesNacimiento<month | mesNacimiento==month & dayNacimiento<=day)
-replace edadVisitaNac = year - yearNacimiento - 1 if (mesNacimiento>month | mesNacimiento==month & dayNacimiento>day)
-replace edadVisitaNac = . if (edadVisitaNac<0 | edadVisitaNac>=99)
-
-replace fechanacimiento=. if edadVisitaNac==.
-
-drop fechaNacString yearNacimiento mesNacimiento dayNacimiento edad_visita
+* edad_visita
+replace edad_visita = . if (edad_visita == -35) | (edad_visita == -2) | (edad_visita == -1) | (edad_visita > 117)
 
 * sexo
 replace sexo = . if sexo == 0
@@ -106,22 +89,22 @@ replace situacionlaboral =. if (situacionlaboral == 99 | situacionlaboral==0)
 * Primero genero algunas variables que voy a querer tener a nivel de hogar respecto a número de integrantes
 gen miembros = 1
 gen miembrosMenores = 0
-replace miembrosMenores = 1 if edadVisitaNac<18 & edadVisitaNac!=.
+replace miembrosMenores = 1 if edad_visita<18 & edad_visita!=.
 
 gen miembrosMenores10 = 0
-replace miembrosMenores10 = 1 if edadVisitaNac<10 & edadVisitaNac!=.
+replace miembrosMenores10 = 1 if edad_visita<10 & edad_visita!=.
 
 gen miembrosMenores5 = 0
-replace miembrosMenores5 = 1 if edadVisitaNac<5 & edadVisitaNac!=.
+replace miembrosMenores5 = 1 if edad_visita<5 & edad_visita!=.
 
 gen miembrosMenores3 = 0
-replace miembrosMenores3 = 1 if edadVisitaNac<3 & edadVisitaNac!=.
+replace miembrosMenores3 = 1 if edad_visita<3 & edad_visita!=.
 
 gen miembrosMenores2 = 0
-replace miembrosMenores2 = 1 if edadVisitaNac<2 & edadVisitaNac!=.
+replace miembrosMenores2 = 1 if edad_visita<2 & edad_visita!=.
 
 gen miembrosMenores1 = 0
-replace miembrosMenores1 = 1 if edadVisitaNac<1 & edadVisitaNac!=.
+replace miembrosMenores1 = 1 if edad_visita<1 & edad_visita!=.
 
 * Las genero por hogar
 global varsIng ingtotalessintransferencias ingafam ingafamotro ingjubypendiscapacidad ingjubypeninvalidez ingjubypenasistenciavejez ingjubypencajabancaria ingjubypencajaprofesional ingjubypencajanotarial ingjubypencajamilitar ingjubypencajapolicial ingotrosbeneficios ingtarjetaalimentaria
@@ -134,13 +117,13 @@ drop miembros miembrosMenores10 miembrosMenores5 miembrosMenores3 miembrosMenore
 
 * Variables del clima educativo a nivel del hogar
 gen añosEducAdults = .
-replace añosEducAdults = años_educ if edadVisitaNac>= 18 & edadVisitaNac!=.
+replace añosEducAdults = años_educ if edad_visita>= 18 & edad_visita!=.
 
 gen añosEducAdults25 = .
-replace añosEducAdults25 = años_educ if edadVisitaNac>= 25 & edadVisitaNac!=.
+replace añosEducAdults25 = años_educ if edad_visita>= 25 & edad_visita!=.
 
 gen añosEducMinors = .
-replace añosEducMinors = años_educ if edadVisitaNac< 18 & edadVisitaNac!=.
+replace añosEducMinors = años_educ if edad_visita< 18 & edad_visita!=.
 
 
 gegen hogAnosEduc = mean(años_educ), by(flowcorrelativeid)
