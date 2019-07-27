@@ -37,9 +37,9 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 *** Cargo todos los datos Programas sociales-SIIAS en un mismo .dta con una fila por cédula
 	
 	** Matriz de chequeos
-	mat summBlankProgSIIAS = J(11,4,0)
+	mat summBlankProgSIIAS = J(12,4,0)
 	mat colnames summBlankProgSIIAS = "pers-peri" "pers unica" "pers-peri NO blank" "pers unica NO blank" 
-	mat rownames summBlankProgSIIAS = 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018
+	mat rownames summBlankProgSIIAS = 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 TOTAL
 
 	** Armo un archivo por base de BPS-SNIS
 	foreach yr in $years {
@@ -55,7 +55,12 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 		mat summBlankProgSIIAS[`yr'-2007,4] = r(ndistinct) 
 		save PS_`yr'.dta, replace
 	}
-
+	
+	forvalues i=1(1)4 {
+		mat summBlankProgSIIAS[12,`i'] = summBlankProgSIIAS[1,`i'] + summBlankProgSIIAS[2,`i'] + summBlankProgSIIAS[3,`i'] + summBlankProgSIIAS[4,`i'] + summBlankProgSIIAS[5,`i'] +summBlankProgSIIAS[6,`i'] + ///
+		summBlankProgSIIAS[7,`i'] + summBlankProgSIIAS[8,`i'] + summBlankProgSIIAS[9,`i'] + summBlankProgSIIAS[10,`i'] + summBlankProgSIIAS[11,`i']
+	}
+	
 	** Merge todos los archivos de Programas sociales-SIIAS
 	clear all
 	foreach yr in $years {
@@ -81,6 +86,7 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 	* comienzan despues por lo que pongo missing por 0 para esos casos
 	replace bps_afam_ley_benef=. if periodo==129
 	replace bps_afam_ley_atrib=. if periodo==129
+	replace mvotma_rubv=. if periodo<=48
 	replace mides_canasta_serv =. if periodo<=84
 	replace mides_jer =. if periodo<=60
 	replace mides_cercanias=. if periodo<=68
@@ -89,6 +95,19 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 	replace mides_inda_snc=. if periodo<=74 | periodo>=124
 	replace mides_inda_paec=. if periodo<=74 | periodo>=124
 	replace mides_inda_panrn=. if periodo<=74 | periodo>=124
+	
+	
+	
+	* Contabilizo cantidad de 1 por variable y por año
+	mat summProgSIIAS = J(20,10,0)
+	mat colnames summProgSIIAS = 2010 2011 2012 2013 2014 2015 2016 2017 2018 TOTAL 
+	mat rownames summProgSIIAS = bps_afam_ley_benef bps_afam_ley_atrib bps_pens_vejez bps_sol_habit_am mvotma_rubv inau_t_comp inau_disc_t_comp inau_caif inau_club_niños inau_ctros_juveniles mid_asist_vejez mides_canasta_serv mides_jer mides_cercanias mides_ucc mides_uy_trab mides_monotributo mides_inda_snc mides_inda_paec mides_inda_panrn
+	
+	foreach var in $allVars {
+		forvalues i=1(1)9 {
+			total `var' if year== 2009 + `i'
+		}
+	}
 	
 	* Guardo base de programas sociales totales para luego dividir por variable
 	save prog_soc_total.dta, replace

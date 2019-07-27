@@ -19,7 +19,7 @@ rm(list = ls())
 
 library(dplyr)
 
-setwd("/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Build/Input/CNV")
+setwd("C:/Alejandro/Research/MIDES/Empirical_analysis/Build/Input/SIIAS/CNV")
 ###
 
 
@@ -54,7 +54,7 @@ rm( cnv08, cnv09, cnv10, cnv11, cnv12, cnv13,
 
 # equivalencias daes siias ------------------------------------------------
 getwd()
-setwd ("../equivalencias_DAES.SIIAS")
+setwd ("../../Anonimizadores_equivalencias")
 
 equiv1 <- read.csv("Parte1.csv", sep= ";")
 equiv2 <- read.csv("Parte2.csv", sep= ";")
@@ -73,7 +73,7 @@ equiv<- equiv %>%
 
 
 cnv<- cnv %>% 
-  left_join(equiv, c( "documento_niño" = "nro_documento_SIIAS"  ))
+  left_join(equiv, c( "documento_niÃ.o" = "nro_documento_SIIAS"  ))
 
 head(cnv)
 
@@ -83,19 +83,19 @@ rm(equiv)
 # load afam ---------------------------------------------------------------
 
 
-setwd ("/Users/lihuennocetto/Dropbox/mides_local_processing/mides/Empirical_analysis/Build/Input/2015_AFAM_enmascarado")
+setwd ("C:/Alejandro/Research/MIDES/Empirical_analysis/Build/Input")
 
 
 
 
-afam15 <-  read.csv ("2015_1_AFAM_enmascarado.csv", sep = ",") %>% 
+afam15 <-  read.csv ("2015_1_AFAM_enmascarado/2015_1_AFAM_enmascarado.csv", sep = ",") %>% 
   select ("idnucleo","persidpersona","cobro", "categoriabeneficiario","estadobeneficiario", 
                       "persidgenerante","fechanacimiento",
                       "sexo","categoriape", "nrodocumento", "year", "month")
 
 
 
-afam15_2 <-  read.csv ("2015_2_AFAM_enmascarado.csv", sep = ",") %>% 
+afam15_2 <-  read.csv ("2015_2_AFAM_enmascarado/2015_2_AFAM_enmascarado.csv", sep = ",") %>% 
   select ("idnucleo","persidpersona","cobro", "categoriabeneficiario","estadobeneficiario", 
           "persidgenerante","fechanacimiento",
           "sexo","categoriape", "nrodocumento", "year", "month")
@@ -113,7 +113,7 @@ afam2015cnv<- afam2015 %>%
 
 
 afam2015cnv<- afam2015cnv %>% 
-      group_by(idnucleo) %>% filter(any(!is.na(documento_niño)))
+      group_by(idnucleo) %>% filter(any(!is.na(documento_niÃ.o)))
 
 
 
