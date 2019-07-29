@@ -1,4 +1,4 @@
-''' 
+'''
 Script that explains flow of programs to perform empirical analysis over MIDES datasets
 
 ********************************** BUILD **************************************
@@ -7,10 +7,10 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                en base a datos proporcionados por el departamento Geo del MIDES y georreferenciación
                propia via Google Maps API usando dirección proporcionada por el hogar al momento
                de la visita
-    Code:      0a_geo_visitas.R
-               0b_geo_gmaps.R
-               0c_geo_limpiar.R
-               0d_geo_unir_a_base.R
+    Code:      Code/0a_geo_visitas.R
+               Code/0b_geo_gmaps.R
+               Code/0c_geo_limpiar.R
+               Code/0d_geo_unir_a_base.R
     Input:     Input/pedido_lihuen/producto_1_enmascarado.csv
                Input/Visitas_Hogares_Muestra_enmascarado.csv
                Input/Localidades_y_codigos_NUEVO_XLS.xls
@@ -95,7 +95,7 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
 
 7)  Objective: Checkear base Educ-SIIAS y generar dos archivos (hogares y personas) 
                con datos mínimos de las visitas y datos SIIAS-Educacion
-    Code:      Code/7_educ_siias
+    Code:      Code/7_educ_siias.do
     Input:     Output/visitas_hogares_vars.csv
                Output/visitas_personas_vars.csv
                Input/SIIAS/Educacion (todos los 33 archivos)
@@ -116,14 +116,52 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Output/BPS_SIIAS_personas.dta
                Temp/check_BPS_SIIAS.tex
 
-9)  Objective: Checkear base Programas Sociales-SIIAS y generar dos archivos 
+9)  Objective: Checkear base Programas Sociales-SIIAS y generar dos archivos por programa
                (hogares y personas) con datos mínimos de las visitas y de Prog. Sociales SIIAS
     Code:      Code/9_prog_soc_siias.do
     Input:     Output/visitas_hogares_vars.csv
                Output/visitas_personas_vars.csv
                Input/SIIAS/Programas_Sociales (todos los 11 archivos)
-    Output:    Output/visitas_hogares_prog_soc_siias.csv
-               Output/visitas_personas_prog_soc_siias.csv
+    Output:    Output/visitas_personas_bps_afam_ley_benef.csv
+               Output/visitas_hogares_bps_afam_ley_benef.csv
+               Output/visitas_personas_bps_afam_ley_atrib.csv
+               Output/visitas_hogares_bps_afam_ley_atrib.csv
+               Output/visitas_personas_bps_pens_vejez.csv
+               Output/visitas_hogares_bps_pens_vejez.csv
+               Output/visitas_personas_bps_sol_habit_am.csv
+               Output/visitas_hogares_bps_sol_habit_am.csv
+               Output/visitas_personas_mvotma_rubv.csv
+               Output/visitas_hogares_mvotma_rubv.csv
+               Output/visitas_personas_inau_t_comp.csv
+               Output/visitas_hogares_inau_t_comp.csv
+               Output/visitas_personas_inau_disc_t_comp.csv
+               Output/visitas_hogares_inau_disc_t_comp.csv
+               Output/visitas_personas_inau_caif.csv
+               Output/visitas_hogares_inau_caif.csv
+               Output/visitas_personas_inau_club_niños.csv
+               Output/visitas_hogares_inau_club_niños.csv
+               Output/visitas_personas_inau_ctros_juveniles.csv
+               Output/visitas_hogares_inau_ctros_juveniles.csv
+               Output/visitas_personas_mid_asist_vejez.csv
+               Output/visitas_hogares_mid_asist_vejez.csv
+               Output/visitas_personas_mides_canasta_serv.csv
+               Output/visitas_hogares_mides_canasta_serv.csv
+               Output/visitas_personas_mides_jer.csv
+               Output/visitas_hogares_mides_jer.csv
+               Output/visitas_personas_mides_cercanias.csv
+               Output/visitas_hogares_mides_cercanias.csv
+               Output/visitas_personas_mides_ucc.csv
+               Output/visitas_hogares_mides_ucc.csv
+               Output/visitas_personas_mides_uy_trab.csv
+               Output/visitas_hogares_mides_uy_trab.csv
+               Output/visitas_personas_mides_monotributo.csv
+               Output/visitas_hogares_mides_monotributo.csv
+               Output/visitas_personas_mides_inda_snc.csv
+               Output/visitas_hogares_mides_inda_snc.csv
+               Output/visitas_personas_mides_inda_paec.csv
+               Output/visitas_hogares_mides_inda_paec.csv
+               Output/visitas_personas_mides_inda_panrn.csv
+               Output/visitas_hogares_mides_inda_panrn.csv
                Temp/check_prog_soc_siias.tex
 
 10) Objective: Checkear base de solicitud de visitas (y cotejarla con proxy 
@@ -270,8 +308,7 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Input:     Input/MIDES/visitas_hogares_TUS.csv
                Input/MIDES/visitas_personas_TUS.csv
                Input/MIDES/visitas_hogares_vars.csv
-               Input/MIDES/visitas_personas_vars.csv
-               
+               Input/MIDES/visitas_personas_vars.csv        
     Output: 
         
 7)  Objective: Generar variables de lo que "sucedió" en tu barrio.
@@ -279,8 +316,7 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Input:     Input/MIDES/visitas_hogares_TUS.csv
                Input/MIDES/visitas_personas_TUS.csv
                Input/MIDES/visitas_hogares_vars.csv
-               Input/MIDES/visitas_personas_vars.csv
-               
+               Input/MIDES/visitas_personas_vars.csv           
     Output: 
         
 9)  Objective: Mirar impactos por meses antes y después de visita con variables AFAM.
@@ -288,17 +324,14 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
     Input:     Input/MIDES/visitas_hogares_TUS.csv
                Input/MIDES/visitas_personas_TUS.csv
                Input/MIDES/visitas_hogares_AFAM.csv
-               Input/MIDES/visitas_personas_AFAM.csv
-               
+               Input/MIDES/visitas_personas_AFAM.csv        
     Output:
 
 10) Objective: Mirar impactos ganar/perder en revisitas para grupos 
                con mismos inobservables
     Code:      Code/10_revisitados_inobservables.py
                Code/10_revisitados_inobservables.do
-    Input:     Temp/vars_personas_revisitadas.csv
-
-               
+    Input:     Temp/vars_personas_revisitadas.csv         
     Output:
 
 11) Objective: Mirar second stage de impacto TUS en BPS-SIIAS.
@@ -308,27 +341,25 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Code/11d_bps_siias_stata_graphs.py
                Code/11e_bps_siias_latex.py
     Input:     Input/MIDES/BPS_SIIAS_hogares.csv
-               Input/MIDES/BPS_SIIAS_personas.csv
-            
+               Input/MIDES/BPS_SIIAS_personas.csv         
     Output:    Output/11_bps_siias.tex
       
-12) Objective: Mirar second stage de impacto TUS en Educ-SIIAS.
+12) Objective: Mirar second stage de impacto TUS en Educ-SIIAS y en gap ("mentira")
+               en educación declarada y según datos SIIAS.
     Code:      Code/12a_educ_siias_RDD.py
                Code/12b_educ_siias_RDD.do
                Code/12c_educ_siias_DID.do
                Code/12d_educ_siias_stata_graphs.py
                Code/12e_educ_siias_latex.py
     Input:     Input/MIDES/visitas_hogares_educ_siias.csv
-               Input/MIDES/visitas_personas_educ_siias.csv
-            
+               Input/MIDES/visitas_personas_educ_siias.csv       
     Output:    Output/12_educ_siias.tex
         
 13) Objective: Mirar second stage de impacto TUS en CNV-SIIAS.
     Code:      Code/13_cnv_siias.py
                Code/13_cnv_siias.do
     Input:     Input/MIDES/visitas_hogares_cnv_siias.csv
-               Input/MIDES/visitas_personas_cnv_siias.csv
-            
+               Input/MIDES/visitas_personas_cnv_siias.csv        
     Output:    Output/13_cnv_siias.tex
         
 14) Objective: Mirar second stage de impacto TUS en Programas Sociales-SIIAS.
@@ -338,8 +369,7 @@ Script that explains flow of programs to perform empirical analysis over MIDES d
                Code/14d_prog_soc_siias_stata_graphs.py
                Code/14e_prog_soc_siias_latex.py
     Input:     Input/MIDES/visitas_hogares_prog_soc_siias.csv
-               Input/MIDES/visitas_personas_prog_soc_siias.csv
-            
+               Input/MIDES/visitas_personas_prog_soc_siias.csv         
     Output:    Output/14_prog_soc_siias.tex
  
 15) Objective: Mirar second stage de impacto TUS en solicitudes de visitas

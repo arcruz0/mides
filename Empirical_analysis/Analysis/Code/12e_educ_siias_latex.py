@@ -63,7 +63,7 @@ educTex.write('\\addtolength{\hoffset}{-2cm} \n')
 educTex.write('\graphicspath{ {' + directory + '/} } \n')
 educTex.write('\\begin{document} \n')
 educTex.write('\maketitle \n')
-educTex.write('\section{Binscatters wituout controls} \n')
+educTex.write('\section{Binscatters without controls} \n')
 for initTUS in initialTUS:
     for out in outcomesRDD:
         for region in ['all', 'mdeo', 'int']:
