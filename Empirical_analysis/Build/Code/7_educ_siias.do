@@ -290,7 +290,6 @@ rename grado grado_cetp
 ** Varios chequeos de la base
 
 * Check: Hay outliers en la base?
-*** GRADO 0 TIENE SENTIDO PARA CETP??
 log using listTabsCETP.smcl, replace
 sort nrodocumentoSIIAS fecha_dato
 tab grado_cetp
@@ -420,7 +419,7 @@ merge 1:1 nrodocumentoSIIAS fecha_dato using CEIP_SIIAS_merged.dta
 drop _merge
 merge 1:1 nrodocumentoSIIAS fecha_dato using CES_SIIAS_merged.dta
 drop _merge
-drop id_nino
+
 
 gen year = substr(fecha_dato, 1, 4)
 generate month = substr(fecha_dato, 6, 2)

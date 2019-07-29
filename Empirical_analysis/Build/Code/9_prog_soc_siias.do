@@ -16,7 +16,7 @@ global perbps_afam_ley_benef 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 
 global perbps_afam_ley_atrib 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128
 global perbps_pens_vejez 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
 global perbps_sol_habit_am 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
-global permvotma_rubv 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
+global permvotma_rubv 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
 global perinau_t_comp 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
 global perinau_disc_t_comp 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
 global perinau_caif 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
@@ -62,7 +62,7 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 	}
 	
 	** Merge todos los archivos de Programas sociales-SIIAS
-	clear all
+	clear
 	foreach yr in $years {
 		append using PS_`yr'.dta
 	}
@@ -79,7 +79,6 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 	drop fecha_dato
 
 	generate periodo = (year-2008)*12 + month
-	drop year month
 	
 	** Cambio 0 por missing: en base que me pasaron hay datos para todas las variables desde ene-2010 (25)
 	* hasta set-2018 (129) pero en codiguera que me pasaron se muestra para muchas variables valores
@@ -97,19 +96,61 @@ global permides_inda_panrn 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92
 	replace mides_inda_panrn=. if periodo<=74 | periodo>=124
 	
 	
-	
 	* Contabilizo cantidad de 1 por variable y por año
 	mat summProgSIIAS = J(20,10,0)
 	mat colnames summProgSIIAS = 2010 2011 2012 2013 2014 2015 2016 2017 2018 TOTAL 
 	mat rownames summProgSIIAS = bps_afam_ley_benef bps_afam_ley_atrib bps_pens_vejez bps_sol_habit_am mvotma_rubv inau_t_comp inau_disc_t_comp inau_caif inau_club_niños inau_ctros_juveniles mid_asist_vejez mides_canasta_serv mides_jer mides_cercanias mides_ucc mides_uy_trab mides_monotributo mides_inda_snc mides_inda_paec mides_inda_panrn
 	
+	scalar iter = 0
 	foreach var in $allVars {
+		scalar iter = iter +1
 		forvalues i=1(1)9 {
-			total `var' if year== 2009 + `i'
+			cap total `var' if year== 2009 + `i'
+			mat res=0
+			cap mat res=e(b)
+			mat summProgSIIAS[iter,`i'] = res
+			mat summProgSIIAS[iter,10] = summProgSIIAS[iter,10] + summProgSIIAS[iter,`i'] 
 		}
 	}
 	
+	
+	* Contabilizo cantidad de distintos individuos con 1 por variable y por año
+	mat summProgUnicosSIIAS = J(20,10,0)
+	mat colnames summProgUnicosSIIAS = 2010 2011 2012 2013 2014 2015 2016 2017 2018 TOTAL 
+	mat rownames summProgUnicosSIIAS = bps_afam_ley_benef bps_afam_ley_atrib bps_pens_vejez bps_sol_habit_am mvotma_rubv inau_t_comp inau_disc_t_comp inau_caif inau_club_niños inau_ctros_juveniles mid_asist_vejez mides_canasta_serv mides_jer mides_cercanias mides_ucc mides_uy_trab mides_monotributo mides_inda_snc mides_inda_paec mides_inda_panrn
+	
+	scalar iter = 0
+	foreach var in $allVars {
+		scalar iter = iter +1
+		forvalues i=1(1)9 {
+			distinct nrodocumentoSIIAS if `var'==1 & year== 2009 + `i'
+			mat summProgUnicosSIIAS[iter,`i'] = r(ndistinct)
+			mat summProgUnicosSIIAS[iter,10] = summProgUnicosSIIAS[iter,10] + summProgUnicosSIIAS[iter,`i'] 
+		}
+	}
+	
+	* Check si hay observaciones repetidas (y corrijo por esto)
+	log using repetidosProgSocSIIAS.smcl, replace
+	duplicates tag nrodocumentoSIIAS periodo, gen(repetido)
+	tab repetido
+	duplicates tag nrodocumentoSIIAS periodo bps_afam_ley_benef bps_afam_ley_atrib bps_pens_vejez bps_sol_habit_am mvotma_rubv inau_t_comp inau_disc_t_comp inau_caif inau_club_niños inau_ctros_juveniles mid_asist_vejez mides_canasta_serv mides_jer mides_cercanias mides_ucc mides_uy_trab mides_monotributo mides_inda_snc mides_inda_paec mides_inda_panrn, gen(totalRepetido)
+	tab totalRepetido
+	tab repetido totalRepetido
+	log close
+	translate repetidosProgSocSIIAS.smcl repetidosProgSocSIIAS.pdf, replace
+	
+	gen uno=1
+	gen filtrar=0
+	bysort periodo nrodocumentoSIIAS (uno):replace filtrar = 2 if _n==_N & totalRepetido==1
+	bysort periodo nrodocumentoSIIAS (uno):replace filtrar = 1 if _n==_N-1 & totalRepetido==1
+	drop if filtrar==1
+	
 	* Guardo base de programas sociales totales para luego dividir por variable
+	esttab matrix(summBlankProgSIIAS) using summBlankProgSIIAS.tex, replace style(tex) align(cccc)
+	esttab matrix(summProgSIIAS) using summProgSIIAS.tex, replace style(tex) align(cccccccccc)
+	esttab matrix(summProgUnicosSIIAS) using summProgUnicosSIIAS.tex, replace style(tex) align(cccccccccc)
+	
+	drop year month repetido totalRepetido uno filtrar
 	save prog_soc_total.dta, replace
 
 *** Armo dos archivos del tipo visitas_hogares_PROGRAMA.csv y visitas_personas_PROGRAMA.csv 
@@ -128,7 +169,7 @@ foreach var in $allVars {
 	
 	** Colapso data para que haya una cédula por fila
 	drop `var' periodo
-	gcollapse (mean) `var'*, by(nrodocumentoSIIAS)
+	gcollapse (max) `var'*, by(nrodocumentoSIIAS)
 
 	save `var'_merged.dta, replace
 	clear all
@@ -139,14 +180,13 @@ foreach var in $allVars {
 	merge m:1 nrodocumentoSIIAS using `var'_merged.dta, keep (master match)
 	drop _merge
 	
-	** VER SI ESTO ES NECESARIO SIQUIERA PORQUE CREO Q BASE DE PROGRAMAS SOCIALES TIENE A TODOS LOS INDIVIDUOS
 	** Cambio missing por zeros cuando corresponde
 	forvalues i=25/129 {
 		cap replace `var'`i' = 0 if `var'`i' == .
 	}
 	
 	** Genero variables a nivel de personas meses antes o después o durante visita:
-	* Genero 49 variables por variable: osea 49 variables del tipo tipo_afiliacion según +- fecha visita (en realidad creo algunas más post visita; 5 años)
+	* Genero 60+1+24 variables por variable: osea 85 variables del tipo tipo_afiliacion según +- fecha visita (5 años post, momento visita y 2 años pre)
 	forvalues i = 1/60 {
 		generate mas`var'`i'=.
 			forvalues j = 25/129 { 
@@ -198,9 +238,20 @@ foreach var in $allVars {
 	
 	
 **** Procesamientos posteriores al armado de las bases y necesario para los chequeos de la base
+clear all
+
+* Corroboro para que variables sucede que siempre que sos beneficiario, nunca dejas de serlo
+mat summSeriesProgSIIAS10 = J(20,9,0)
+mat colnames summSeriesProgSIIAS10 = dic2010 dic2011 dic2012 dic2013 dic2014 dic2015 dic2016 dic2017 dic2018 
+mat rownames summSeriesProgSIIAS10 = bps_afam_ley_benef bps_afam_ley_atrib bps_pens_vejez bps_sol_habit_am mvotma_rubv inau_t_comp inau_disc_t_comp inau_caif inau_club_niños inau_ctros_juveniles mid_asist_vejez mides_canasta_serv mides_jer mides_cercanias mides_ucc mides_uy_trab mides_monotributo mides_inda_snc mides_inda_paec mides_inda_panrn
+
+foreach var in $allVars {
+	
+`var'_merged.dta
+}
 
 ** Export matrices y resultados a LaTeX
-esttab matrix(summBlankProgSIIAS) using summBlankProgSIIAS.tex, replace style(tex) align(cccc)
+
 
 **** Armo archivo de chequeo para LaTeX
 file close _all
@@ -209,16 +260,36 @@ file write myfile "Cosas a revisar son las siguientes:" _n
 file write myfile "\begin{itemize}" _n
 file write myfile "\item Conteo de observaciones y numero de individuos totalmente vacias por base" _n
 file write myfile "\item Individuos repetidos: numeros y caracteristicas" _n
+file write myfile "\item Checkeo de variables que son 1 por siempre una vez activas" _n
 file write myfile "\end{itemize}"
+
 file write myfile "\subsection{Conteo de observaciones y numero de individuos totalmente vacias por base}" _n
 file write myfile "Hay 11 bases que tienen datos de los programas sociales (una por cada batch de individuos supuestamente) y lo extraño es que cuando las cargo, me da un montón de filas en blanco (osea, base tiene un individuo pero con 0 en cada variable, cuando le entendí a Correa que no nos iban a pasar datos de individuos q no tenian valores positivos para la variable que nos pasaran" _n
+file wirte myfile "Primero veo eso de observaciones en blanco. Luego miro, para cada una de las 20 variables, cuantas personas-periodos estan en cada programa por year. Y luego miro cuantas personas unicas hay en cada programa en cada year." _n
 file write myfile "\begin{figure}[H]" _n
 file write myfile "\centering" _n
 file write myfile "\caption{Personas y periodos totales y vacios, segun base cargada}" _n
 file write myfile "\input{../Temp/summBlankProgSIIAS.tex}" _n
 file write myfile "\end{figure}" _n
+file write myfile "\begin{figure}[H]" _n
+file write myfile "\centering" _n
+file write myfile "\caption{Personas-periodos en programas (20) por year}" _n
+file write myfile "\input{../Temp/summProgSIIAS.tex}" _n
+file write myfile "\end{figure}" _n
+file write myfile "\begin{figure}[H]" _n
+file write myfile "\centering" _n
+file write myfile "\caption{Personas unicas en programas (20) por year}" _n
+file write myfile "\input{../Temp/summProgUnicosSIIAS.tex}" _n
+file write myfile "\end{figure}" _n
+
+file write myfile "\subsection{Individuos repetidos: numeros y caracteristicas}" _n
+file write myfile "Primero me fijo cuantos individuos repetidos (cedula y periodo) hay y luego cuantos individuos totalmente repetidos hay (cedula, periodo y mismo valor en todas las variables)"_n
+file write myfile "Por suerte veo que todos los repetidos son totalmente repetidos, por lo que simplemente me quedo con una observacion por cedula-periodo repetida" _n
+file write myfile "\includepdf[page=-]{repetidosProgSocSIIAS.pdf}" _n
+
+file write myfile "\subsection{Checkeo de variables que son 1 por siempre una vez activas}" _n
+file write myfile "En una reunion que tuve con Correa y Lagaixo en la oficia de Correa en el SIIAS, ella me dijo que alguna de las variables que nosotros estabamos pidiendo nunca se desactivaban una vez que eran activas (e.j. si ingresabas al programa, luego seguias apareciendo como en el programa aunque ya no lo estuvieras)."_n
+file write myfile "Las variables en las que me dijo que esto sucedia eran:... (encontrar foto donde las tengo, no las recuerdo pero creo eran algunos programas MIDES y los programas de vivienda)" _n
+file write myfile "Para corroborar esto, voy a mirar que sucede a lo largo del tiempo para el conjunto de indiviuos que tienen un programa a estas fechas: enero2010, enero2013, enero2015, enero2016" _n
+file write myfile
 file close myfile
-
-
-	
-
